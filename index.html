@@ -686,8 +686,7 @@ main{padding:0 15px}
   margin:0 0 7px 2px;
 }
 
-.form-input,
-.form-select{
+.form-input{
   width:100%;
   background:var(--card2);
   color:#fff;
@@ -698,32 +697,8 @@ main{padding:0 15px}
   outline:none;
 }
 
-.form-input:focus,
-.form-select:focus{
+.form-input:focus{
   border-color:rgba(0,237,115,.55);
-}
-
-.form-select option{
-  background:#101e19;
-  color:#fff;
-}
-
-.phone-box{
-  display:grid;
-  grid-template-columns:74px 1fr;
-  gap:8px;
-}
-
-.phone-prefix{
-  background:#14231d;
-  border:1px solid var(--border);
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--green);
-  font-weight:900;
-  font-size:12px;
 }
 
 .auth-switch{
@@ -790,6 +765,36 @@ main{padding:0 15px}
   cursor:pointer;
 }
 
+.google-button{
+  width:100%;
+  border:1px solid var(--border);
+  background:#fff;
+  color:#171717;
+  font-size:12px;
+  font-weight:800;
+  padding:13px;
+  border-radius:11px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.auth-divider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:15px 0;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.auth-divider::before,
+.auth-divider::after{
+  content:"";
+  height:1px;
+  background:var(--border);
+  flex:1;
+}
+
 .status-badge{
   display:inline-block;
   color:var(--green);
@@ -802,7 +807,7 @@ main{padding:0 15px}
   margin-top:10px;
 }
 
-.account-phone{
+.account-email{
   color:var(--muted);
   font-size:11px;
   margin-top:6px;
@@ -920,7 +925,7 @@ d'explications pour mieux comprendre chaque choix.
 
 <p>Accédez aux analyses sportives complètes préparées chaque jour.</p>
 
-<button class="primary-button">
+<button class="primary-button" onclick="premiumAction()">
 Débloquer toutes les analyses
 </button>
 
@@ -1304,8 +1309,6 @@ Contacter sur WhatsApp
 <p>Gérez votre compte et vos services CouponIQ.</p>
 </div>
 
-<!-- NON CONNECTÉ -->
-
 <div id="guestProfile">
 
 <div class="profile-card">
@@ -1337,8 +1340,6 @@ Créer un compte
 
 </div>
 
-<!-- CONNECTÉ -->
-
 <div id="connectedProfile" style="display:none">
 
 <div class="profile-card">
@@ -1347,8 +1348,8 @@ Créer un compte
 
 <h2 id="profileName">Utilisateur CouponIQ</h2>
 
-<div class="account-phone" id="profilePhone">
-+226 00 00 00 00
+<div class="account-email" id="profileEmail">
+utilisateur@email.com
 </div>
 
 <div class="status-badge">
@@ -1412,107 +1413,35 @@ Se déconnecter
 
 <div id="loginMessage" class="form-message"></div>
 
-<div class="form-group">
+<button class="google-button" onclick="loginWithGoogle()">
+Continuer avec Google
+</button>
 
-<label>Pays</label>
-
-<select id="loginCountry"
-class="form-select"
-onchange="updatePrefix('loginCountry','loginPrefix')">
-
-<option value="+226">Burkina Faso (+226)</option>
-<option value="+225">Côte d'Ivoire (+225)</option>
-<option value="+223">Mali (+223)</option>
-<option value="+221">Sénégal (+221)</option>
-<option value="+228">Togo (+228)</option>
-<option value="+229">Bénin (+229)</option>
-<option value="+227">Niger (+227)</option>
-<option value="+233">Ghana (+233)</option>
-<option value="+234">Nigeria (+234)</option>
-<option value="+237">Cameroun (+237)</option>
-<option value="+224">Guinée (+224)</option>
-<option value="+232">Sierra Leone (+232)</option>
-<option value="+231">Liberia (+231)</option>
-<option value="+220">Gambie (+220)</option>
-<option value="+245">Guinée-Bissau (+245)</option>
-<option value="+238">Cap-Vert (+238)</option>
-<option value="+222">Mauritanie (+222)</option>
-<option value="+212">Maroc (+212)</option>
-<option value="+213">Algérie (+213)</option>
-<option value="+216">Tunisie (+216)</option>
-<option value="+218">Libye (+218)</option>
-<option value="+20">Égypte (+20)</option>
-<option value="+249">Soudan (+249)</option>
-<option value="+211">Soudan du Sud (+211)</option>
-<option value="+251">Éthiopie (+251)</option>
-<option value="+291">Érythrée (+291)</option>
-<option value="+253">Djibouti (+253)</option>
-<option value="+252">Somalie (+252)</option>
-<option value="+254">Kenya (+254)</option>
-<option value="+256">Ouganda (+256)</option>
-<option value="+250">Rwanda (+250)</option>
-<option value="+257">Burundi (+257)</option>
-<option value="+255">Tanzanie (+255)</option>
-<option value="+243">RD Congo (+243)</option>
-<option value="+242">Congo (+242)</option>
-<option value="+241">Gabon (+241)</option>
-<option value="+240">Guinée équatoriale (+240)</option>
-<option value="+236">République centrafricaine (+236)</option>
-<option value="+235">Tchad (+235)</option>
-<option value="+244">Angola (+244)</option>
-<option value="+260">Zambie (+260)</option>
-<option value="+265">Malawi (+265)</option>
-<option value="+258">Mozambique (+258)</option>
-<option value="+263">Zimbabwe (+263)</option>
-<option value="+267">Botswana (+267)</option>
-<option value="+264">Namibie (+264)</option>
-<option value="+27">Afrique du Sud (+27)</option>
-<option value="+268">Eswatini (+268)</option>
-<option value="+266">Lesotho (+266)</option>
-<option value="+261">Madagascar (+261)</option>
-<option value="+230">Maurice (+230)</option>
-<option value="+248">Seychelles (+248)</option>
-<option value="+269">Comores (+269)</option>
-<option value="+239">São Tomé-et-Príncipe (+239)</option>
-
-</select>
-
-</div>
+<div class="auth-divider">OU</div>
 
 <div class="form-group">
-
-<label>Numéro de téléphone</label>
-
-<div class="phone-box">
-
-<div class="phone-prefix" id="loginPrefix">
-+226
-</div>
+<label>Adresse email</label>
 
 <input
-id="loginPhone"
+id="loginEmail"
 class="form-input"
-type="tel"
-inputmode="numeric"
-placeholder="Votre numéro">
-
-</div>
-
+type="email"
+autocomplete="email"
+placeholder="exemple@email.com">
 </div>
 
 <div class="form-group">
-
 <label>Mot de passe</label>
 
 <input
 id="loginPassword"
 class="form-input"
 type="password"
+autocomplete="current-password"
 placeholder="Votre mot de passe">
-
 </div>
 
-<div class="forgot">
+<div class="forgot" onclick="resetPassword()">
 Mot de passe oublié ?
 </div>
 
@@ -1547,134 +1476,60 @@ Créer un compte
 
 <h2>Créer mon <span>compte</span></h2>
 
-<p>Rejoignez CouponIQ depuis votre pays.</p>
+<p>Créez gratuitement votre compte CouponIQ.</p>
 
 </div>
 
 <div id="registerMessage" class="form-message"></div>
 
-<div class="form-group">
+<button class="google-button" onclick="loginWithGoogle()">
+Continuer avec Google
+</button>
 
+<div class="auth-divider">OU</div>
+
+<div class="form-group">
 <label>Nom et prénom</label>
 
 <input
 id="registerName"
 class="form-input"
 type="text"
+autocomplete="name"
 placeholder="Votre nom et prénom">
-
 </div>
 
 <div class="form-group">
-
-<label>Pays</label>
-
-<select id="registerCountry"
-class="form-select"
-onchange="updatePrefix('registerCountry','registerPrefix')">
-
-<option value="+226">Burkina Faso (+226)</option>
-<option value="+225">Côte d'Ivoire (+225)</option>
-<option value="+223">Mali (+223)</option>
-<option value="+221">Sénégal (+221)</option>
-<option value="+228">Togo (+228)</option>
-<option value="+229">Bénin (+229)</option>
-<option value="+227">Niger (+227)</option>
-<option value="+233">Ghana (+233)</option>
-<option value="+234">Nigeria (+234)</option>
-<option value="+237">Cameroun (+237)</option>
-<option value="+224">Guinée (+224)</option>
-<option value="+232">Sierra Leone (+232)</option>
-<option value="+231">Liberia (+231)</option>
-<option value="+220">Gambie (+220)</option>
-<option value="+245">Guinée-Bissau (+245)</option>
-<option value="+238">Cap-Vert (+238)</option>
-<option value="+222">Mauritanie (+222)</option>
-<option value="+212">Maroc (+212)</option>
-<option value="+213">Algérie (+213)</option>
-<option value="+216">Tunisie (+216)</option>
-<option value="+218">Libye (+218)</option>
-<option value="+20">Égypte (+20)</option>
-<option value="+249">Soudan (+249)</option>
-<option value="+211">Soudan du Sud (+211)</option>
-<option value="+251">Éthiopie (+251)</option>
-<option value="+291">Érythrée (+291)</option>
-<option value="+253">Djibouti (+253)</option>
-<option value="+252">Somalie (+252)</option>
-<option value="+254">Kenya (+254)</option>
-<option value="+256">Ouganda (+256)</option>
-<option value="+250">Rwanda (+250)</option>
-<option value="+257">Burundi (+257)</option>
-<option value="+255">Tanzanie (+255)</option>
-<option value="+243">RD Congo (+243)</option>
-<option value="+242">Congo (+242)</option>
-<option value="+241">Gabon (+241)</option>
-<option value="+240">Guinée équatoriale (+240)</option>
-<option value="+236">République centrafricaine (+236)</option>
-<option value="+235">Tchad (+235)</option>
-<option value="+244">Angola (+244)</option>
-<option value="+260">Zambie (+260)</option>
-<option value="+265">Malawi (+265)</option>
-<option value="+258">Mozambique (+258)</option>
-<option value="+263">Zimbabwe (+263)</option>
-<option value="+267">Botswana (+267)</option>
-<option value="+264">Namibie (+264)</option>
-<option value="+27">Afrique du Sud (+27)</option>
-<option value="+268">Eswatini (+268)</option>
-<option value="+266">Lesotho (+266)</option>
-<option value="+261">Madagascar (+261)</option>
-<option value="+230">Maurice (+230)</option>
-<option value="+248">Seychelles (+248)</option>
-<option value="+269">Comores (+269)</option>
-<option value="+239">São Tomé-et-Príncipe (+239)</option>
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>Numéro de téléphone</label>
-
-<div class="phone-box">
-
-<div class="phone-prefix" id="registerPrefix">
-+226
-</div>
+<label>Adresse email</label>
 
 <input
-id="registerPhone"
+id="registerEmail"
 class="form-input"
-type="tel"
-inputmode="numeric"
-placeholder="Votre numéro">
-
-</div>
-
+type="email"
+autocomplete="email"
+placeholder="exemple@email.com">
 </div>
 
 <div class="form-group">
-
 <label>Mot de passe</label>
 
 <input
 id="registerPassword"
 class="form-input"
 type="password"
+autocomplete="new-password"
 placeholder="Choisissez un mot de passe">
-
 </div>
 
 <div class="form-group">
-
 <label>Confirmer le mot de passe</label>
 
 <input
 id="registerConfirm"
 class="form-input"
 type="password"
+autocomplete="new-password"
 placeholder="Confirmez votre mot de passe">
-
 </div>
 
 <button class="primary-button" onclick="registerUser()">
@@ -1728,7 +1583,29 @@ Profil
 
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+
+/* SUPABASE */
+
+const SUPABASE_URL =
+"https://zkgdhjjvgfpwpwoevieb.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_UCwOPMZn1sJaj3vbDu3Zzw_fZBu2V-6";
+
+const supabaseClient =
+window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_PUBLISHABLE_KEY
+);
+
+const SITE_URL =
+"https://couponiq.github.io/couponiq/";
+
+let currentUser=null;
+
 
 /* EXEMPLES VISUELS POUR LE PROTOTYPE */
 
@@ -1845,7 +1722,11 @@ function openPage(pageId){
   page.classList.remove("active");
  });
 
- document.getElementById(pageId).classList.add("active");
+ const page=document.getElementById(pageId);
+
+ if(!page) return;
+
+ page.classList.add("active");
 
  document.querySelectorAll(".nav-item").forEach(item=>{
   item.classList.remove("active");
@@ -1968,144 +1849,319 @@ function copyCode(id,button){
 }
 
 
-/* INDICATIF PAYS */
+/* MESSAGES */
 
-function updatePrefix(selectId,prefixId){
+function showMessage(id,text,type){
 
- const select=document.getElementById(selectId);
- const prefix=document.getElementById(prefixId);
+ const message=document.getElementById(id);
 
- prefix.textContent=select.value;
+ if(!message) return;
+
+ message.className="form-message "+type;
+ message.textContent=text;
 }
 
+function clearMessage(id){
 
-/* PETITE SIMULATION DE COMPTE
-   SUPABASE REMPLACERA CECI PLUS TARD */
+ const message=document.getElementById(id);
 
-let demoUser=null;
-
-
-/* INSCRIPTION */
-
-function registerUser(){
-
- const name=document.getElementById("registerName").value.trim();
- const country=document.getElementById("registerCountry");
- const prefix=country.value;
- const countryName=country.options[country.selectedIndex].text.split(" (")[0];
-
- let phone=document.getElementById("registerPhone").value.trim();
- const password=document.getElementById("registerPassword").value;
- const confirm=document.getElementById("registerConfirm").value;
-
- const message=document.getElementById("registerMessage");
+ if(!message) return;
 
  message.className="form-message";
  message.textContent="";
+}
 
- phone=phone.replace(/\s+/g,"");
 
- if(!name || !phone || !password || !confirm){
+/* TRADUCTION SIMPLE DES ERREURS */
 
-  message.className="form-message error";
-  message.textContent="Veuillez remplir tous les champs.";
+function authErrorMessage(error){
+
+ const text=(error?.message || "").toLowerCase();
+
+ if(text.includes("invalid login credentials")){
+  return "Email ou mot de passe incorrect.";
+ }
+
+ if(text.includes("user already registered")){
+  return "Un compte existe déjà avec cette adresse email.";
+ }
+
+ if(text.includes("password should be")){
+  return "Le mot de passe doit contenir au moins 6 caractères.";
+ }
+
+ if(text.includes("email not confirmed")){
+  return "Veuillez confirmer votre adresse email avant de vous connecter.";
+ }
+
+ if(text.includes("invalid email")){
+  return "Veuillez saisir une adresse email valide.";
+ }
+
+ if(text.includes("rate limit")){
+  return "Trop de tentatives. Veuillez patienter quelques instants.";
+ }
+
+ return error?.message || "Une erreur est survenue. Veuillez réessayer.";
+}
+
+
+/* INSCRIPTION SUPABASE */
+
+async function registerUser(){
+
+ clearMessage("registerMessage");
+
+ const name=
+ document.getElementById("registerName").value.trim();
+
+ const email=
+ document.getElementById("registerEmail").value.trim().toLowerCase();
+
+ const password=
+ document.getElementById("registerPassword").value;
+
+ const confirm=
+ document.getElementById("registerConfirm").value;
+
+ if(!name || !email || !password || !confirm){
+
+  showMessage(
+   "registerMessage",
+   "Veuillez remplir tous les champs.",
+   "error"
+  );
+
   return;
  }
 
  if(password.length<6){
 
-  message.className="form-message error";
-  message.textContent="Le mot de passe doit contenir au moins 6 caractères.";
+  showMessage(
+   "registerMessage",
+   "Le mot de passe doit contenir au moins 6 caractères.",
+   "error"
+  );
+
   return;
  }
 
  if(password!==confirm){
 
-  message.className="form-message error";
-  message.textContent="Les deux mots de passe ne correspondent pas.";
+  showMessage(
+   "registerMessage",
+   "Les deux mots de passe ne correspondent pas.",
+   "error"
+  );
+
   return;
  }
 
- demoUser={
-  name:name,
-  country:countryName,
-  prefix:prefix,
-  phone:phone,
-  fullPhone:prefix+" "+phone,
-  role:"GRATUIT"
- };
+ const {data,error}=
+ await supabaseClient.auth.signUp({
 
- updateProfile();
+  email:email,
 
- message.className="form-message success";
- message.textContent="Compte créé avec succès.";
+  password:password,
 
- setTimeout(()=>{
+  options:{
+   data:{
+    full_name:name,
+    role:"GRATUIT"
+   },
+   emailRedirectTo:SITE_URL
+  }
+
+ });
+
+ if(error){
+
+  showMessage(
+   "registerMessage",
+   authErrorMessage(error),
+   "error"
+  );
+
+  return;
+ }
+
+ if(data.session){
+
+  currentUser=data.user;
+
+  updateProfile();
+
   openPage("profile");
- },600);
+
+ }else{
+
+  showMessage(
+   "registerMessage",
+   "Compte créé. Vérifiez votre email pour confirmer votre inscription.",
+   "success"
+  );
+
+ }
 
 }
 
 
-/* CONNEXION DE DÉMONSTRATION */
+/* CONNEXION EMAIL */
 
-function loginUser(){
+async function loginUser(){
 
- const prefix=document.getElementById("loginCountry").value;
- let phone=document.getElementById("loginPhone").value.trim();
- const password=document.getElementById("loginPassword").value;
+ clearMessage("loginMessage");
 
- const message=document.getElementById("loginMessage");
+ const email=
+ document.getElementById("loginEmail").value.trim().toLowerCase();
 
- message.className="form-message";
- message.textContent="";
+ const password=
+ document.getElementById("loginPassword").value;
 
- phone=phone.replace(/\s+/g,"");
+ if(!email || !password){
 
- if(!phone || !password){
+  showMessage(
+   "loginMessage",
+   "Veuillez saisir votre email et votre mot de passe.",
+   "error"
+  );
 
-  message.className="form-message error";
-  message.textContent="Veuillez saisir votre numéro et votre mot de passe.";
   return;
  }
 
- /*
- Pour le prototype uniquement.
- Quand Supabase sera connecté, cette partie vérifiera
- réellement le numéro et le mot de passe.
- */
+ const {data,error}=
+ await supabaseClient.auth.signInWithPassword({
+  email:email,
+  password:password
+ });
 
- demoUser={
-  name:"Utilisateur CouponIQ",
-  prefix:prefix,
-  phone:phone,
-  fullPhone:prefix+" "+phone,
-  role:"GRATUIT"
- };
+ if(error){
+
+  showMessage(
+   "loginMessage",
+   authErrorMessage(error),
+   "error"
+  );
+
+  return;
+ }
+
+ currentUser=data.user;
 
  updateProfile();
+
  openPage("profile");
+}
+
+
+/* CONNEXION GOOGLE */
+
+async function loginWithGoogle(){
+
+ const {error}=
+ await supabaseClient.auth.signInWithOAuth({
+
+  provider:"google",
+
+  options:{
+   redirectTo:SITE_URL
+  }
+
+ });
+
+ if(error){
+
+  const activeLogin=
+  document.getElementById("login").classList.contains("active");
+
+  showMessage(
+   activeLogin ? "loginMessage" : "registerMessage",
+   authErrorMessage(error),
+   "error"
+  );
+
+ }
 
 }
 
 
-/* MISE À JOUR DU PROFIL */
+/* MOT DE PASSE OUBLIÉ */
+
+async function resetPassword(){
+
+ clearMessage("loginMessage");
+
+ const email=
+ document.getElementById("loginEmail").value.trim().toLowerCase();
+
+ if(!email){
+
+  showMessage(
+   "loginMessage",
+   "Saisissez d'abord votre adresse email.",
+   "error"
+  );
+
+  return;
+ }
+
+ const {error}=
+ await supabaseClient.auth.resetPasswordForEmail(
+  email,
+  {
+   redirectTo:SITE_URL
+  }
+ );
+
+ if(error){
+
+  showMessage(
+   "loginMessage",
+   authErrorMessage(error),
+   "error"
+  );
+
+  return;
+ }
+
+ showMessage(
+  "loginMessage",
+  "Un lien de récupération a été envoyé à votre adresse email.",
+  "success"
+ );
+}
+
+
+/* PROFIL */
 
 function updateProfile(){
 
- const guest=document.getElementById("guestProfile");
- const connected=document.getElementById("connectedProfile");
+ const guest=
+ document.getElementById("guestProfile");
 
- if(demoUser){
+ const connected=
+ document.getElementById("connectedProfile");
+
+ if(currentUser){
 
   guest.style.display="none";
   connected.style.display="block";
 
-  document.getElementById("profileName").textContent=demoUser.name;
-  document.getElementById("profilePhone").textContent=demoUser.fullPhone;
+  const metadata=currentUser.user_metadata || {};
+
+  const name=
+  metadata.full_name ||
+  metadata.name ||
+  currentUser.email?.split("@")[0] ||
+  "Utilisateur CouponIQ";
+
+  document.getElementById("profileName").textContent=name;
+
+  document.getElementById("profileEmail").textContent=
+  currentUser.email || "";
 
   const firstLetter=
-  demoUser.name.trim().charAt(0).toUpperCase();
+  name.trim().charAt(0).toUpperCase();
 
   document.getElementById("profileInitial").textContent=
   firstLetter || "C";
@@ -2122,15 +2178,63 @@ function updateProfile(){
 
 /* DÉCONNEXION */
 
-function logoutUser(){
+async function logoutUser(){
 
- demoUser=null;
+ await supabaseClient.auth.signOut();
+
+ currentUser=null;
 
  updateProfile();
 
  openPage("profile");
-
 }
+
+
+/* ACTION PREMIUM */
+
+function premiumAction(){
+
+ if(!currentUser){
+  openPage("register");
+  return;
+ }
+
+ openPage("profile");
+}
+
+
+/* RESTAURATION DE SESSION */
+
+async function initializeAuth(){
+
+ const {data}=await supabaseClient.auth.getSession();
+
+ currentUser=data.session?.user || null;
+
+ updateProfile();
+}
+
+
+/* SURVEILLANCE DE CONNEXION */
+
+supabaseClient.auth.onAuthStateChange(
+ (event,session)=>{
+
+  currentUser=session?.user || null;
+
+  updateProfile();
+
+  if(event==="SIGNED_IN"){
+   openPage("profile");
+  }
+
+ }
+);
+
+
+/* DÉMARRAGE */
+
+initializeAuth();
 
 </script>
 
