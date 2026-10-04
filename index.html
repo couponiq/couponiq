@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050a08">
+<meta name="theme-color" content="#07110d">
+
 <title>CouponIQ - Analyses sportives</title>
 
 <style>
@@ -13,337 +14,633 @@
   padding:0;
 }
 
+:root{
+  --bg:#050806;
+  --panel:#0b110e;
+  --panel2:#101713;
+  --border:#1c2922;
+  --green:#00ef72;
+  --green2:#00c95f;
+  --text:#f5f7f6;
+  --muted:#8e9993;
+  --orange:#ff9f2d;
+  --red:#ff4d5a;
+}
+
 body{
   font-family:Arial,Helvetica,sans-serif;
-  background:#050806;
-  color:#fff;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(0,239,114,.08), transparent 28%),
+    radial-gradient(circle at 85% 40%, rgba(0,239,114,.04), transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
 }
+
+button{
+  font-family:inherit;
+}
+
+/* STRUCTURE */
 
 .app{
-  width:100%;
-  max-width:430px;
-  min-height:100vh;
+  max-width:1450px;
   margin:auto;
-  background:#080d0b;
-  padding-bottom:85px;
+  padding:30px;
 }
 
-/* HEADER */
-.header{
-  padding:20px 18px 18px;
-  background:
-    radial-gradient(circle at 80% 10%,rgba(0,255,110,.15),transparent 35%),
-    #070c0a;
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:5px 0 28px;
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:11px;
+  gap:14px;
 }
 
 .logo{
-  width:58px;
-  height:58px;
-  border-radius:14px;
-  object-fit:cover;
-}
-
-.brand-text h1{
-  font-size:24px;
-  line-height:1;
-}
-
-.brand-text h1 span{
-  color:#00ef6f;
-}
-
-.brand-text p{
-  color:#aab5af;
-  font-size:12px;
-  margin-top:6px;
-}
-
-.sport-label{
-  display:inline-block;
-  margin-top:17px;
-  padding:7px 11px;
-  border:1px solid #164b32;
-  background:#0b1c14;
-  color:#29f589;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
-}
-
-.header h2{
-  font-size:26px;
-  margin-top:13px;
-  line-height:1.15;
-}
-
-.header-description{
-  color:#a8b0ac;
-  font-size:14px;
-  line-height:1.5;
-  margin-top:8px;
-}
-
-/* PREMIUM */
-.premium{
-  margin:15px;
-  padding:17px;
+  width:68px;
+  height:68px;
+  object-fit:contain;
   border-radius:16px;
-  background:#0d1511;
-  border:1px solid #1c2a23;
 }
 
-.premium-top{
+.brand-name{
+  font-size:30px;
+  font-weight:800;
+}
+
+.brand-name span{
+  color:var(--green);
+}
+
+.brand-sub{
+  color:var(--muted);
+  font-size:14px;
+  margin-top:4px;
+}
+
+.sport-badge{
+  border:1px solid rgba(0,239,114,.25);
+  background:rgba(0,239,114,.07);
+  color:var(--green);
+  padding:10px 16px;
+  border-radius:30px;
+  font-size:13px;
+  font-weight:700;
+}
+
+/* HERO */
+
+.hero{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:24px;
+  margin-bottom:24px;
+}
+
+.hero-main{
+  min-height:310px;
+  padding:42px;
+  border-radius:28px;
+  border:1px solid var(--border);
+  background:
+    linear-gradient(120deg,rgba(0,239,114,.09),transparent 48%),
+    var(--panel);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-main:after{
+  content:"";
+  position:absolute;
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  background:rgba(0,239,114,.05);
+  right:-90px;
+  bottom:-120px;
+}
+
+.small-title{
+  display:inline-block;
+  color:var(--green);
+  border:1px solid rgba(0,239,114,.22);
+  background:rgba(0,239,114,.07);
+  border-radius:30px;
+  padding:8px 14px;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:22px;
+}
+
+.hero h1{
+  font-size:44px;
+  line-height:1.08;
+  max-width:700px;
+  margin-bottom:17px;
+}
+
+.hero-description{
+  color:#b5bdb9;
+  max-width:650px;
+  line-height:1.65;
+  font-size:16px;
+}
+
+.hero-points{
   display:flex;
-  justify-content:space-between;
-  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:28px;
 }
 
-.premium h3{
-  font-size:17px;
+.hero-point{
+  background:#101713;
+  border:1px solid var(--border);
+  padding:10px 14px;
+  border-radius:12px;
+  font-size:13px;
+  color:#c8cfcb;
+}
+
+/* ABONNEMENT */
+
+.premium{
+  background:
+    linear-gradient(145deg,rgba(0,239,114,.12),rgba(0,239,114,.02)),
+    var(--panel);
+  border:1px solid rgba(0,239,114,.22);
+  border-radius:28px;
+  padding:32px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.premium-label{
+  color:var(--green);
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:14px;
+}
+
+.premium h2{
+  font-size:27px;
+  margin-bottom:9px;
+}
+
+.premium-text{
+  color:var(--muted);
+  line-height:1.5;
+  font-size:14px;
 }
 
 .price{
-  font-weight:bold;
-  color:#fff;
+  margin:26px 0;
 }
 
-.premium p{
-  margin-top:8px;
-  color:#8f9b95;
-  font-size:13px;
-  line-height:1.45;
+.price strong{
+  font-size:38px;
+}
+
+.price span{
+  color:var(--muted);
 }
 
 .subscribe{
   width:100%;
-  border:0;
-  margin-top:14px;
-  padding:14px;
-  border-radius:11px;
-  background:#00ed6a;
-  color:#021108;
-  font-weight:bold;
+  border:none;
+  padding:16px;
+  border-radius:14px;
+  background:linear-gradient(90deg,var(--green),#00d86a);
+  color:#041009;
   font-size:15px;
+  font-weight:800;
   cursor:pointer;
 }
 
-/* SECTION */
-.section{
-  padding:8px 15px;
+/* CONTENU */
+
+.dashboard{
+  display:grid;
+  grid-template-columns:1.35fr .65fr;
+  gap:24px;
 }
 
-.section-title{
+.section{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:25px;
+  padding:28px;
+}
+
+.section-head{
   display:flex;
   justify-content:space-between;
-  align-items:end;
-  margin-bottom:13px;
+  align-items:center;
+  gap:15px;
+  margin-bottom:22px;
 }
 
-.section-title h2{
-  font-size:20px;
+.section-head h2{
+  font-size:23px;
 }
 
-.section-title span{
-  font-size:11px;
-  color:#78857e;
+.section-head span{
+  color:var(--muted);
+  font-size:13px;
 }
 
-/* COUPONS */
-.coupon{
+/* ANALYSES */
+
+.analysis-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.analysis{
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:22px;
+  min-height:230px;
   position:relative;
-  margin-bottom:12px;
-  padding:16px;
-  background:#0c1410;
-  border:1px solid #1b2922;
-  border-radius:14px;
-  overflow:hidden;
+  transition:.2s;
 }
 
-.coupon.green{
-  border-left:4px solid #00ef6f;
+.analysis:hover{
+  transform:translateY(-2px);
+  border-color:#2c4035;
 }
 
-.coupon.orange{
-  border-left:4px solid #ff8a00;
+.analysis.confidence{
+  border-top:3px solid var(--green);
 }
 
-.coupon.red{
-  border-left:4px solid #ff3939;
+.analysis.combine{
+  border-top:3px solid var(--orange);
 }
 
-.coupon-label{
+.analysis.challenge{
+  border-top:3px solid var(--red);
+}
+
+.analysis-type{
   font-size:11px;
-  font-weight:bold;
-  color:#87938d;
-  text-transform:uppercase;
+  font-weight:800;
+  color:var(--muted);
+  margin-bottom:14px;
 }
 
-.coupon h3{
-  margin-top:7px;
-  font-size:19px;
+.analysis h3{
+  font-size:21px;
+  margin-bottom:17px;
 }
 
-.cote{
+.odds{
   display:flex;
-  align-items:end;
-  gap:7px;
-  margin-top:10px;
+  align-items:flex-end;
+  gap:8px;
+  margin-bottom:17px;
 }
 
-.cote strong{
-  font-size:31px;
+.odds strong{
+  font-size:37px;
 }
 
-.cote span{
-  color:#8f9b95;
+.odds span{
+  color:var(--muted);
   font-size:12px;
-  margin-bottom:5px;
+  padding-bottom:6px;
 }
 
-.coupon p{
-  color:#929d97;
-  font-size:12px;
-  margin-top:6px;
+.analysis p{
+  color:var(--muted);
+  line-height:1.5;
+  font-size:13px;
 }
 
 .lock{
   position:absolute;
-  right:15px;
-  top:20px;
-  width:36px;
-  height:36px;
+  right:18px;
+  top:18px;
+  width:34px;
+  height:34px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   border-radius:10px;
-  background:#141d18;
+  background:#17201b;
+  font-size:16px;
+}
+
+/* PANNEAU DROITE */
+
+.right-column{
   display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:18px;
+  flex-direction:column;
+  gap:24px;
 }
 
-/* HISTORY */
-.history{
-  margin:12px 15px;
-  padding:16px;
-  background:#0c1410;
-  border:1px solid #1b2922;
-  border-radius:15px;
+.summary{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:25px;
+  padding:26px;
 }
 
-.history-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:13px;
+.summary h2{
+  font-size:21px;
+  margin-bottom:7px;
 }
 
-.history-head h3{
-  font-size:17px;
-}
-
-.history-head a{
-  color:#00e96a;
-  font-size:12px;
-}
-
-.result{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:12px 0;
-  border-bottom:1px solid #18221d;
-}
-
-.result:last-child{
-  border-bottom:0;
-}
-
-.result-left{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.check{
-  width:23px;
-  height:23px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#00e96a;
-  color:#05200f;
+.summary-intro{
+  color:var(--muted);
   font-size:13px;
-  font-weight:bold;
-}
-
-.lost{
-  background:#ff4141;
-  color:#fff;
-}
-
-.result-name{
-  font-size:13px;
-  font-weight:bold;
-}
-
-.result-date{
-  color:#748078;
-  font-size:11px;
-  margin-top:3px;
-}
-
-.result-odd{
-  font-weight:bold;
-  font-size:13px;
-}
-
-/* RESPONSIBLE */
-.notice{
-  margin:15px;
-  padding:14px;
-  border-radius:12px;
-  background:#0b1210;
-  border:1px solid #17221d;
-  color:#808b85;
-  font-size:11px;
   line-height:1.5;
+  margin-bottom:22px;
 }
 
-/* NAV */
-.nav{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:430px;
-  height:70px;
+.target{
   display:flex;
-  justify-content:space-around;
+  justify-content:space-between;
   align-items:center;
-  background:#080d0b;
-  border-top:1px solid #18231e;
+  padding:16px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.target:last-child{
+  border-bottom:none;
+}
+
+.target-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--green);
+}
+
+.dot.orange{
+  background:var(--orange);
+}
+
+.dot.red{
+  background:var(--red);
+}
+
+.target-name{
+  font-size:14px;
+  font-weight:700;
+}
+
+.target-sub{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+.target-odd{
+  font-size:20px;
+  font-weight:800;
+}
+
+/* HISTORIQUE */
+
+.history{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:25px;
+  padding:26px;
+}
+
+.history-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.history-header h2{
+  font-size:21px;
+}
+
+.history-header button{
+  background:none;
+  border:none;
+  color:var(--green);
+  cursor:pointer;
+  font-weight:700;
+}
+
+.history-info{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:20px;
+}
+
+.day{
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:17px;
+  margin-bottom:11px;
+}
+
+.day-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.day-title{
+  font-weight:800;
+  font-size:14px;
+}
+
+.day-date{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.day-analysis{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:8px 0;
+  font-size:12px;
+  color:#c1c9c5;
+}
+
+.waiting{
+  color:#78827d;
+  font-size:11px;
+}
+
+/* MESSAGE RESPONSABLE */
+
+.notice{
+  margin-top:24px;
+  border:1px solid var(--border);
+  background:#080d0a;
+  border-radius:18px;
+  padding:18px 20px;
+  color:#7f8b85;
+  font-size:12px;
+  line-height:1.55;
+}
+
+/* NAVIGATION */
+
+.nav{
+  margin-top:25px;
+  border:1px solid var(--border);
+  background:#080d0a;
+  border-radius:20px;
+  padding:13px;
+  display:flex;
+  justify-content:center;
+  gap:8px;
 }
 
 .nav-item{
+  min-width:120px;
+  padding:11px 18px;
   text-align:center;
-  color:#69766f;
-  font-size:10px;
-}
-
-.nav-icon{
-  font-size:20px;
-  margin-bottom:4px;
+  border-radius:12px;
+  color:var(--muted);
+  font-size:13px;
 }
 
 .nav-item.active{
-  color:#00ed6a;
+  color:var(--green);
+  background:rgba(0,239,114,.08);
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+
+  .app{
+    padding:18px;
+  }
+
+  .hero{
+    grid-template-columns:1fr;
+  }
+
+  .dashboard{
+    grid-template-columns:1fr;
+  }
+
+  .analysis-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:36px;
+  }
+
+  .sport-badge{
+    display:none;
+  }
+
+  .hero-main{
+    padding:30px;
+  }
+
+  .analysis{
+    min-height:auto;
+  }
+}
+
+@media(max-width:600px){
+
+  .app{
+    padding:12px;
+  }
+
+  .topbar{
+    padding-bottom:18px;
+  }
+
+  .logo{
+    width:55px;
+    height:55px;
+  }
+
+  .brand-name{
+    font-size:24px;
+  }
+
+  .brand-sub{
+    font-size:11px;
+  }
+
+  .hero-main,
+  .premium,
+  .section,
+  .summary,
+  .history{
+    border-radius:20px;
+  }
+
+  .hero-main{
+    padding:25px 20px;
+    min-height:auto;
+  }
+
+  .hero h1{
+    font-size:31px;
+  }
+
+  .hero-description{
+    font-size:14px;
+  }
+
+  .hero-points{
+    display:none;
+  }
+
+  .premium{
+    padding:23px;
+  }
+
+  .section{
+    padding:18px;
+  }
+
+  .section-head{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:5px;
+  }
+
+  .nav{
+    position:sticky;
+    bottom:8px;
+    justify-content:space-around;
+  }
+
+  .nav-item{
+    min-width:0;
+    padding:10px 8px;
+    flex:1;
+    font-size:11px;
+  }
 }
 </style>
 </head>
@@ -352,216 +649,397 @@ body{
 
 <div class="app">
 
-  <header class="header">
+  <header class="topbar">
 
     <div class="brand">
       <img src="logo-couponiq.png" class="logo" alt="Logo CouponIQ">
 
-      <div class="brand-text">
-        <h1>Coupon<span>IQ</span></h1>
-        <p>L'analyse derrière chaque choix.</p>
+      <div>
+        <div class="brand-name">
+          Coupon<span>IQ</span>
+        </div>
+
+        <div class="brand-sub">
+          L'analyse derrière chaque choix.
+        </div>
       </div>
     </div>
 
-    <div class="sport-label">
-      ⚽ ANALYSES SPORTIVES
+    <div class="sport-badge">
+      ANALYSES SPORTIVES
     </div>
-
-    <h2>Des analyses de matchs préparées chaque jour.</h2>
-
-    <p class="header-description">
-      Étudiez nos sélections sportives et prenez des décisions
-      plus éclairées grâce à une analyse structurée.
-    </p>
 
   </header>
 
 
-  <section class="premium">
+  <section class="hero">
 
-    <div class="premium-top">
-      <h3>Accès Premium</h3>
-      <div class="price">1 000 F / mois</div>
-    </div>
+    <div class="hero-main">
 
-    <p>
-      Accédez aux analyses du jour, aux explications détaillées
-      et aux résultats des 30 derniers jours.
-    </p>
-
-    <button class="subscribe">
-      Activer mon abonnement
-    </button>
-
-  </section>
-
-
-  <section class="section">
-
-    <div class="section-title">
-      <h2>Analyses du jour</h2>
-      <span>Disponibles dès 09h30</span>
-    </div>
-
-
-    <div class="coupon green">
-
-      <div class="coupon-label">
-        Analyse sportive • Confiance du jour
+      <div class="small-title">
+        ANALYSES DE MATCHS
       </div>
 
-      <h3>Confiance du jour</h3>
+      <h1>
+        Des analyses sportives préparées chaque jour.
+      </h1>
 
-      <div class="cote">
-        <strong>5.00</strong>
-        <span>Cote cible</span>
-      </div>
-
-      <p>
-        Sélection sportive analysée avec un niveau de risque maîtrisé.
+      <p class="hero-description">
+        Retrouvez chaque jour des sélections de matchs étudiées et
+        accompagnées d'explications pour vous aider à prendre des
+        décisions plus éclairées.
       </p>
 
-      <div class="lock">🔒</div>
+      <div class="hero-points">
+
+        <div class="hero-point">
+          Analyses quotidiennes
+        </div>
+
+        <div class="hero-point">
+          Explications détaillées
+        </div>
+
+        <div class="hero-point">
+          Historique 30 jours
+        </div>
+
+      </div>
 
     </div>
 
 
-    <div class="coupon orange">
+    <div class="premium">
 
-      <div class="coupon-label">
-        Analyse sportive • Combiné du jour
+      <div>
+
+        <div class="premium-label">
+          COUPONIQ PREMIUM
+        </div>
+
+        <h2>
+          Débloquez toutes les analyses
+        </h2>
+
+        <p class="premium-text">
+          Accédez aux analyses sportives du jour, aux détails des
+          sélections et à l'historique des 30 derniers jours.
+        </p>
+
       </div>
 
-      <h3>Combiné du jour</h3>
+      <div>
 
-      <div class="cote">
-        <strong>10.00</strong>
-        <span>Cote cible</span>
+        <div class="price">
+          <strong>1 000 F</strong>
+          <span>/ 30 jours</span>
+        </div>
+
+        <button class="subscribe">
+          Activer mon abonnement
+        </button>
+
       </div>
-
-      <p>
-        Plusieurs événements sélectionnés et analysés pour le combiné du jour.
-      </p>
-
-      <div class="lock">🔒</div>
-
-    </div>
-
-
-    <div class="coupon red">
-
-      <div class="coupon-label">
-        Analyse sportive • Challenge
-      </div>
-
-      <h3>Challenge 50</h3>
-
-      <div class="cote">
-        <strong>50.00</strong>
-        <span>Cote cible</span>
-      </div>
-
-      <p>
-        Sélection à cote élevée destinée aux utilisateurs recherchant un challenge.
-      </p>
-
-      <div class="lock">🔒</div>
 
     </div>
 
   </section>
 
 
-  <section class="history">
+  <main class="dashboard">
 
-    <div class="history-head">
-      <h3>Résultats des 30 derniers jours</h3>
-      <a>Voir tout</a>
-    </div>
+    <!-- GAUCHE -->
 
+    <section class="section">
 
-    <div class="result">
+      <div class="section-head">
 
-      <div class="result-left">
+        <h2>
+          Analyses sportives du jour
+        </h2>
 
-        <div class="check">✓</div>
-
-        <div>
-          <div class="result-name">Confiance du jour</div>
-          <div class="result-date">03 octobre</div>
-        </div>
+        <span>
+          Disponibles dès 09h30
+        </span>
 
       </div>
 
-      <div class="result-odd">5.10</div>
 
-    </div>
+      <div class="analysis-grid">
+
+        <article class="analysis confidence">
+
+          <div class="lock">🔒</div>
+
+          <div class="analysis-type">
+            CONFIANCE DU JOUR
+          </div>
+
+          <h3>
+            Confiance du jour
+          </h3>
+
+          <div class="odds">
+            <strong>5.00</strong>
+            <span>Cote cible</span>
+          </div>
+
+          <p>
+            Une sélection sportive étudiée avec une approche
+            plus prudente.
+          </p>
+
+        </article>
 
 
-    <div class="result">
+        <article class="analysis combine">
 
-      <div class="result-left">
+          <div class="lock">🔒</div>
 
-        <div class="check">✓</div>
+          <div class="analysis-type">
+            COMBINÉ DU JOUR
+          </div>
 
-        <div>
-          <div class="result-name">Combiné du jour</div>
-          <div class="result-date">02 octobre</div>
-        </div>
+          <h3>
+            Combiné du jour
+          </h3>
+
+          <div class="odds">
+            <strong>10.00</strong>
+            <span>Cote cible</span>
+          </div>
+
+          <p>
+            Plusieurs événements sélectionnés et analysés
+            pour composer le combiné du jour.
+          </p>
+
+        </article>
+
+
+        <article class="analysis challenge">
+
+          <div class="lock">🔒</div>
+
+          <div class="analysis-type">
+            CHALLENGE
+          </div>
+
+          <h3>
+            Challenge 50
+          </h3>
+
+          <div class="odds">
+            <strong>50.00</strong>
+            <span>Cote cible</span>
+          </div>
+
+          <p>
+            Une sélection à cote élevée destinée aux utilisateurs
+            recherchant un challenge.
+          </p>
+
+        </article>
 
       </div>
 
-      <div class="result-odd">10.40</div>
 
-    </div>
-
-
-    <div class="result">
-
-      <div class="result-left">
-
-        <div class="check lost">×</div>
-
-        <div>
-          <div class="result-name">Challenge 50</div>
-          <div class="result-date">01 octobre</div>
-        </div>
-
+      <div class="notice">
+        CouponIQ fournit des analyses sportives à titre informatif.
+        Aucun résultat n'est garanti. Les utilisateurs restent responsables
+        de leurs propres décisions.
       </div>
 
-      <div class="result-odd">50.25</div>
-
-    </div>
-
-  </section>
+    </section>
 
 
-  <div class="notice">
-    CouponIQ fournit des analyses sportives à titre informatif.
-    Aucune analyse ne garantit un résultat ou un gain.
-    Jouez de manière responsable.
-  </div>
+    <!-- DROITE -->
+
+    <aside class="right-column">
+
+      <section class="summary">
+
+        <h2>
+          Programme du jour
+        </h2>
+
+        <p class="summary-intro">
+          Trois formats d'analyses sportives sont préparés quotidiennement.
+        </p>
+
+
+        <div class="target">
+
+          <div class="target-left">
+
+            <div class="dot"></div>
+
+            <div>
+              <div class="target-name">
+                Confiance du jour
+              </div>
+
+              <div class="target-sub">
+                Analyse sportive
+              </div>
+            </div>
+
+          </div>
+
+          <div class="target-odd">
+            5
+          </div>
+
+        </div>
+
+
+        <div class="target">
+
+          <div class="target-left">
+
+            <div class="dot orange"></div>
+
+            <div>
+              <div class="target-name">
+                Combiné du jour
+              </div>
+
+              <div class="target-sub">
+                Plusieurs sélections
+              </div>
+            </div>
+
+          </div>
+
+          <div class="target-odd">
+            10
+          </div>
+
+        </div>
+
+
+        <div class="target">
+
+          <div class="target-left">
+
+            <div class="dot red"></div>
+
+            <div>
+              <div class="target-name">
+                Challenge 50
+              </div>
+
+              <div class="target-sub">
+                Challenge à cote élevée
+              </div>
+            </div>
+
+          </div>
+
+          <div class="target-odd">
+            50
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <section class="history">
+
+        <div class="history-header">
+
+          <h2>
+            Historique
+          </h2>
+
+          <button>
+            Voir les 30 jours
+          </button>
+
+        </div>
+
+        <p class="history-info">
+          Retrouvez ici les analyses sportives des journées précédentes.
+          Les résultats seront renseignés après les matchs.
+        </p>
+
+
+        <div class="day">
+
+          <div class="day-top">
+
+            <div class="day-title">
+              Hier
+            </div>
+
+            <div class="day-date">
+              Journée précédente
+            </div>
+
+          </div>
+
+          <div class="day-analysis">
+            <span>Confiance du jour</span>
+            <span class="waiting">Résultat à renseigner</span>
+          </div>
+
+          <div class="day-analysis">
+            <span>Combiné du jour</span>
+            <span class="waiting">Résultat à renseigner</span>
+          </div>
+
+          <div class="day-analysis">
+            <span>Challenge 50</span>
+            <span class="waiting">Résultat à renseigner</span>
+          </div>
+
+        </div>
+
+
+        <div class="day">
+
+          <div class="day-top">
+
+            <div class="day-title">
+              Journées précédentes
+            </div>
+
+            <div class="day-date">
+              Jusqu'à 30 jours
+            </div>
+
+          </div>
+
+          <div class="day-analysis">
+            <span>Historique complet</span>
+            <span class="waiting">Disponible ici</span>
+          </div>
+
+        </div>
+
+      </section>
+
+    </aside>
+
+  </main>
 
 
   <nav class="nav">
 
     <div class="nav-item active">
-      <div class="nav-icon">⌂</div>
       Accueil
     </div>
 
     <div class="nav-item">
-      <div class="nav-icon">▥</div>
       Analyses
     </div>
 
     <div class="nav-item">
-      <div class="nav-icon">◷</div>
       Historique
     </div>
 
     <div class="nav-item">
-      <div class="nav-icon">○</div>
       Profil
     </div>
 
