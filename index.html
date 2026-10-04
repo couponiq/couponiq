@@ -4,32 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#07110d">
+
   <title>CouponIQ - Analyses sportives</title>
 
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     :root {
-      --bg: #050b09;
-      --card: #0d1714;
-      --card2: #111d19;
-      --border: rgba(255,255,255,.08);
-      --text: #f5f7f6;
-      --muted: #8f9d98;
-      --green: #00ed72;
-      --green2: #00b95c;
-      --orange: #ffae35;
-      --red: #ff4d5e;
+      --green: #00ed73;
+      --green2: #00bd5c;
+      --bg: #06100c;
+      --card: #0d1915;
+      --card2: #101e19;
+      --border: #1c3028;
+      --text: #ffffff;
+      --muted: #94a49d;
+      --orange: #ffad42;
+      --red: #ff5b69;
     }
 
     body {
       font-family: Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at 50% 0%, rgba(0,237,114,.10), transparent 30%),
+        radial-gradient(circle at top right, rgba(0,237,115,.09), transparent 30%),
         var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -39,16 +40,17 @@
       width: 100%;
       max-width: 520px;
       margin: auto;
-      padding: 0 16px 100px;
+      min-height: 100vh;
+      padding-bottom: 92px;
     }
 
     /* HEADER */
 
     .header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 18px 0 12px;
+      justify-content: space-between;
+      padding: 18px 18px 12px;
     }
 
     .brand {
@@ -57,150 +59,163 @@
       gap: 10px;
     }
 
-    .logo {
+    .brand img {
       width: 48px;
       height: 48px;
-      border-radius: 13px;
-      object-fit: cover;
+      object-fit: contain;
+      border-radius: 12px;
     }
 
     .brand-name {
-      font-size: 23px;
+      font-size: 24px;
       font-weight: 800;
+      letter-spacing: -1px;
     }
 
     .brand-name span {
       color: var(--green);
     }
 
-    .brand-subtitle {
+    .brand-sub {
       color: var(--muted);
       font-size: 11px;
-      margin-top: 3px;
+      margin-top: 2px;
     }
 
-    .bell {
+    .notification {
       width: 40px;
       height: 40px;
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 13px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--card);
       font-size: 18px;
+      background: var(--card);
+    }
+
+    main {
+      padding: 0 16px;
     }
 
     /* INTRO */
 
     .intro {
       margin-top: 10px;
-      padding: 20px;
+      padding: 22px 18px;
+      background:
+        linear-gradient(135deg, rgba(0,237,115,.10), transparent 55%),
+        var(--card);
       border: 1px solid var(--border);
       border-radius: 22px;
-      background:
-        linear-gradient(135deg, rgba(0,237,114,.10), transparent 60%),
-        var(--card);
     }
 
-    .tag {
+    .badge {
       display: inline-block;
       color: var(--green);
+      background: rgba(0,237,115,.09);
+      border: 1px solid rgba(0,237,115,.20);
+      padding: 7px 10px;
+      border-radius: 50px;
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: .5px;
-      margin-bottom: 10px;
+      letter-spacing: .7px;
+      margin-bottom: 13px;
     }
 
     .intro h1 {
       font-size: 27px;
       line-height: 1.12;
+      letter-spacing: -.7px;
       margin-bottom: 10px;
     }
 
     .intro p {
       color: var(--muted);
+      line-height: 1.55;
       font-size: 14px;
-      line-height: 1.5;
     }
 
     /* PREMIUM */
 
     .premium {
       margin-top: 14px;
-      padding: 17px;
-      border-radius: 18px;
-      border: 1px solid rgba(0,237,114,.20);
-      background: linear-gradient(
-        135deg,
-        rgba(0,237,114,.12),
-        rgba(0,237,114,.03)
-      );
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(0,237,115,.27);
+      background:
+        linear-gradient(135deg, rgba(0,237,115,.12), rgba(0,237,115,.02)),
+        var(--card);
     }
 
     .premium-top {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
-      align-items: center;
+      align-items: flex-start;
+      gap: 12px;
     }
 
     .premium-title {
+      font-size: 18px;
       font-weight: 800;
-      font-size: 16px;
     }
 
-    .price {
+    .premium-price {
+      font-size: 22px;
       font-weight: 900;
-      font-size: 18px;
       white-space: nowrap;
+    }
+
+    .premium-price small {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
     }
 
     .premium p {
       color: var(--muted);
-      font-size: 12px;
-      margin: 8px 0 14px;
-      line-height: 1.4;
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 8px 0 15px;
     }
 
     .subscribe {
-      display: block;
       width: 100%;
-      border: 0;
-      border-radius: 13px;
-      padding: 14px;
-      background: linear-gradient(90deg, var(--green), var(--green2));
-      color: #021108;
-      font-size: 14px;
+      border: none;
+      background: linear-gradient(90deg, var(--green), #00d96a);
+      color: #021009;
+      font-size: 15px;
       font-weight: 900;
+      padding: 15px;
+      border-radius: 13px;
       cursor: pointer;
     }
 
     /* ANALYSES */
 
-    .section-head {
+    .section-title {
       display: flex;
       justify-content: space-between;
       align-items: end;
-      margin: 24px 2px 12px;
+      margin: 25px 2px 12px;
     }
 
-    .section-head h2 {
-      font-size: 20px;
+    .section-title h2 {
+      font-size: 21px;
     }
 
-    .section-head span {
-      font-size: 11px;
+    .section-title span {
       color: var(--muted);
+      font-size: 11px;
     }
 
     .analysis-card {
       position: relative;
-      padding: 16px;
-      margin-bottom: 11px;
-      border: 1px solid var(--border);
-      border-radius: 17px;
       background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 17px 17px 16px 20px;
+      margin-bottom: 11px;
       overflow: hidden;
     }
 
@@ -225,192 +240,206 @@
       background: var(--red);
     }
 
-    .card-top {
+    .analysis-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
     }
 
-    .category {
-      font-size: 10px;
+    .analysis-type {
+      font-size: 11px;
       font-weight: 800;
-      color: var(--muted);
-      letter-spacing: .5px;
+      letter-spacing: .7px;
+    }
+
+    .confidence .analysis-type {
+      color: var(--green);
+    }
+
+    .combined .analysis-type {
+      color: var(--orange);
+    }
+
+    .challenge .analysis-type {
+      color: var(--red);
     }
 
     .lock {
-      font-size: 16px;
+      font-size: 17px;
     }
 
     .analysis-card h3 {
-      font-size: 18px;
-      margin-bottom: 7px;
+      margin-top: 7px;
+      font-size: 20px;
     }
 
     .odd-row {
       display: flex;
       align-items: baseline;
       gap: 8px;
-      margin-bottom: 7px;
+      margin-top: 8px;
     }
 
     .odd {
-      font-size: 27px;
+      font-size: 33px;
       font-weight: 900;
     }
 
     .odd-label {
       color: var(--muted);
-      font-size: 11px;
+      font-size: 12px;
     }
 
     .analysis-card p {
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.4;
+      font-size: 13px;
+      line-height: 1.45;
+      margin-top: 8px;
     }
 
     /* HISTORIQUE */
 
     .history {
-      margin-top: 24px;
+      margin-top: 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 17px;
     }
 
-    .history-title {
+    .history-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      align-items: center;
+      margin-bottom: 6px;
     }
 
-    .history-title h2 {
+    .history-header h2 {
       font-size: 20px;
     }
 
-    .history-title a {
+    .history-header a {
       color: var(--green);
       font-size: 12px;
       font-weight: 700;
       text-decoration: none;
     }
 
-    .history-box {
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background: var(--card);
-      overflow: hidden;
+    .history-description {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      margin-bottom: 15px;
     }
 
-    .history-day {
-      padding: 14px 15px 9px;
+    .yesterday {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 14px;
+    }
+
+    .yesterday-title {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 12px;
     }
 
-    .history-day strong {
-      font-size: 14px;
+    .yesterday-title strong {
+      font-size: 15px;
     }
 
-    .history-day span {
+    .yesterday-title span {
       color: var(--muted);
       font-size: 11px;
     }
 
-    .history-row {
+    .history-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 15px;
-      border-top: 1px solid var(--border);
-      gap: 10px;
+      gap: 12px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
     }
 
-    .history-info strong {
-      display: block;
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .history-name {
       font-size: 13px;
-      margin-bottom: 3px;
-    }
-
-    .history-info small {
-      color: var(--muted);
-      font-size: 10px;
+      font-weight: 700;
     }
 
     .pending {
-      color: #aab5b1;
-      background: rgba(255,255,255,.05);
-      border-radius: 20px;
-      padding: 6px 9px;
+      color: #b7c2bd;
+      background: #17231e;
+      border: 1px solid #24372f;
+      border-radius: 50px;
+      padding: 6px 8px;
       font-size: 10px;
       white-space: nowrap;
     }
 
     .history-note {
+      margin-top: 13px;
       color: var(--muted);
       font-size: 11px;
-      line-height: 1.45;
-      margin-top: 10px;
-      padding: 0 3px;
+      line-height: 1.5;
     }
 
-    /* NAVIGATION */
+    /* BOTTOM NAV */
 
     .bottom-nav {
       position: fixed;
-      bottom: 0;
       left: 50%;
+      bottom: 0;
       transform: translateX(-50%);
       width: 100%;
       max-width: 520px;
-      height: 72px;
-      background: rgba(7,15,12,.97);
+      background: rgba(7,16,12,.97);
       border-top: 1px solid var(--border);
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      z-index: 50;
+      padding: 9px 4px 10px;
+      z-index: 20;
     }
 
     .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      color: #78857f;
+      text-align: center;
+      color: #778780;
       font-size: 10px;
     }
 
     .nav-icon {
       font-size: 18px;
+      margin-bottom: 4px;
     }
 
     .nav-item.active {
       color: var(--green);
+      font-weight: 700;
     }
 
-    /* DESKTOP */
+    .responsible {
+      text-align: center;
+      color: #66756f;
+      font-size: 10px;
+      line-height: 1.5;
+      padding: 18px 14px 4px;
+    }
+
+    /* ORDINATEUR */
 
     @media (min-width: 800px) {
       .app {
-        max-width: 900px;
-        padding-left: 25px;
-        padding-right: 25px;
-      }
-
-      .analysis-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-      }
-
-      .analysis-card {
-        margin-bottom: 0;
+        max-width: 620px;
       }
 
       .bottom-nav {
-        max-width: 900px;
+        max-width: 620px;
       }
     }
   </style>
@@ -418,36 +447,36 @@
 
 <body>
 
-  <main class="app">
+<div class="app">
 
-    <header class="header">
+  <header class="header">
 
-      <div class="brand">
-        <img
-          src="logo-ouponiq.png"
-          alt="Logo CouponIQ"
-          class="logo"
-        >
+    <div class="brand">
+      <img src="logo-ouponiq.png" alt="Logo CouponIQ">
 
-        <div>
-          <div class="brand-name">
-            Coupon<span>IQ</span>
-          </div>
+      <div>
+        <div class="brand-name">
+          Coupon<span>IQ</span>
+        </div>
 
-          <div class="brand-subtitle">
-            L'analyse derrière chaque choix.
-          </div>
+        <div class="brand-sub">
+          L'analyse derrière chaque choix.
         </div>
       </div>
+    </div>
 
-      <div class="bell">♧</div>
+    <div class="notification">
+      ♢
+    </div>
 
-    </header>
+  </header>
 
+
+  <main>
 
     <section class="intro">
 
-      <div class="tag">
+      <div class="badge">
         ANALYSES SPORTIVES
       </div>
 
@@ -471,15 +500,16 @@
           CouponIQ Premium
         </div>
 
-        <div class="price">
+        <div class="premium-price">
           1 000 F
+          <small>/ 30 jours</small>
         </div>
 
       </div>
 
       <p>
-        30 jours d'accès aux analyses du jour, aux explications
-        détaillées et à l'historique des 30 derniers jours.
+        Accédez aux analyses sportives du jour, aux explications détaillées
+        et à l'historique des 30 derniers jours.
       </p>
 
       <button class="subscribe">
@@ -489,7 +519,7 @@
     </section>
 
 
-    <div class="section-head">
+    <div class="section-title">
 
       <h2>Analyses du jour</h2>
 
@@ -500,89 +530,126 @@
     </div>
 
 
-    <section class="analysis-grid">
+    <section class="analysis-card confidence">
 
-      <article class="analysis-card confidence">
+      <div class="analysis-head">
 
-        <div class="card-top">
-          <div class="category">
-            CONFIANCE DU JOUR
-          </div>
-
-          <div class="lock">🔒</div>
+        <div class="analysis-type">
+          CONFIANCE DU JOUR
         </div>
 
-        <h3>Confiance du jour</h3>
-
-        <div class="odd-row">
-          <div class="odd">5.00</div>
-          <div class="odd-label">Cote cible</div>
+        <div class="lock">
+          🔒
         </div>
 
-        <p>
-          Sélection sportive étudiée avec une approche plus prudente.
-        </p>
+      </div>
 
-      </article>
+      <h3>
+        Confiance du jour
+      </h3>
 
+      <div class="odd-row">
 
-      <article class="analysis-card combined">
-
-        <div class="card-top">
-          <div class="category">
-            COMBINÉ DU JOUR
-          </div>
-
-          <div class="lock">🔒</div>
+        <div class="odd">
+          5.00
         </div>
 
-        <h3>Combiné du jour</h3>
-
-        <div class="odd-row">
-          <div class="odd">10.00</div>
-          <div class="odd-label">Cote cible</div>
+        <div class="odd-label">
+          Cote cible
         </div>
 
-        <p>
-          Plusieurs événements sélectionnés et analysés pour composer
-          le combiné du jour.
-        </p>
+      </div>
 
-      </article>
+      <p>
+        Une sélection sportive étudiée avec une approche plus prudente.
+      </p>
+
+    </section>
 
 
-      <article class="analysis-card challenge">
+    <section class="analysis-card combined">
 
-        <div class="card-top">
-          <div class="category">
-            CHALLENGE 50
-          </div>
+      <div class="analysis-head">
 
-          <div class="lock">🔒</div>
+        <div class="analysis-type">
+          COMBINÉ DU JOUR
         </div>
 
-        <h3>Challenge 50</h3>
-
-        <div class="odd-row">
-          <div class="odd">50.00</div>
-          <div class="odd-label">Cote cible</div>
+        <div class="lock">
+          🔒
         </div>
 
-        <p>
-          Sélection à cote élevée pour les utilisateurs recherchant
-          un challenge.
-        </p>
+      </div>
 
-      </article>
+      <h3>
+        Combiné du jour
+      </h3>
+
+      <div class="odd-row">
+
+        <div class="odd">
+          10.00
+        </div>
+
+        <div class="odd-label">
+          Cote cible
+        </div>
+
+      </div>
+
+      <p>
+        Plusieurs événements sélectionnés et analysés pour composer
+        le combiné du jour.
+      </p>
+
+    </section>
+
+
+    <section class="analysis-card challenge">
+
+      <div class="analysis-head">
+
+        <div class="analysis-type">
+          CHALLENGE 50
+        </div>
+
+        <div class="lock">
+          🔒
+        </div>
+
+      </div>
+
+      <h3>
+        Challenge 50
+      </h3>
+
+      <div class="odd-row">
+
+        <div class="odd">
+          50.00
+        </div>
+
+        <div class="odd-label">
+          Cote cible
+        </div>
+
+      </div>
+
+      <p>
+        Une sélection à cote élevée destinée aux utilisateurs recherchant
+        un challenge.
+      </p>
 
     </section>
 
 
     <section class="history">
 
-      <div class="history-title">
+      <div class="history-header">
 
-        <h2>Historique</h2>
+        <h2>
+          Historique
+        </h2>
 
         <a href="#">
           Voir les 30 jours
@@ -590,12 +657,19 @@
 
       </div>
 
+      <p class="history-description">
+        Retrouvez les analyses des journées précédentes et leurs résultats
+        une fois les matchs terminés.
+      </p>
 
-      <div class="history-box">
 
-        <div class="history-day">
+      <div class="yesterday">
 
-          <strong>Hier</strong>
+        <div class="yesterday-title">
+
+          <strong>
+            Hier
+          </strong>
 
           <span>
             Analyses de la journée
@@ -604,11 +678,10 @@
         </div>
 
 
-        <div class="history-row">
+        <div class="history-item">
 
-          <div class="history-info">
-            <strong>Confiance du jour</strong>
-            <small>Cote cible 5.00</small>
+          <div class="history-name">
+            Confiance du jour
           </div>
 
           <div class="pending">
@@ -618,11 +691,10 @@
         </div>
 
 
-        <div class="history-row">
+        <div class="history-item">
 
-          <div class="history-info">
-            <strong>Combiné du jour</strong>
-            <small>Cote cible 10.00</small>
+          <div class="history-name">
+            Combiné du jour
           </div>
 
           <div class="pending">
@@ -632,11 +704,10 @@
         </div>
 
 
-        <div class="history-row">
+        <div class="history-item">
 
-          <div class="history-info">
-            <strong>Challenge 50</strong>
-            <small>Cote cible 50.00</small>
+          <div class="history-name">
+            Challenge 50
           </div>
 
           <div class="pending">
@@ -649,38 +720,46 @@
 
 
       <p class="history-note">
-        Les résultats sont renseignés après les matchs.
-        L'historique conservera les analyses des 30 derniers jours.
+        Les résultats seront renseignés après les matchs.
+        Aucun résultat n'est attribué automatiquement.
       </p>
 
     </section>
 
+
+    <div class="responsible">
+      CouponIQ fournit des analyses sportives à titre informatif.
+      Aucun résultat n'est garanti.
+    </div>
+
   </main>
 
+</div>
 
-  <nav class="bottom-nav">
 
-    <div class="nav-item active">
-      <div class="nav-icon">⌂</div>
-      <div>Accueil</div>
-    </div>
+<nav class="bottom-nav">
 
-    <div class="nav-item">
-      <div class="nav-icon">▥</div>
-      <div>Analyses</div>
-    </div>
+  <div class="nav-item active">
+    <div class="nav-icon">⌂</div>
+    Accueil
+  </div>
 
-    <div class="nav-item">
-      <div class="nav-icon">◷</div>
-      <div>Historique</div>
-    </div>
+  <div class="nav-item">
+    <div class="nav-icon">▥</div>
+    Analyses
+  </div>
 
-    <div class="nav-item">
-      <div class="nav-icon">○</div>
-      <div>Profil</div>
-    </div>
+  <div class="nav-item">
+    <div class="nav-icon">◷</div>
+    Historique
+  </div>
 
-  </nav>
+  <div class="nav-item">
+    <div class="nav-icon">○</div>
+    Profil
+  </div>
+
+</nav>
 
 </body>
 </html>
