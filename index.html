@@ -1,765 +1,1053 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07110d">
-
-  <title>CouponIQ - Analyses sportives</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --green: #00ed73;
-      --green2: #00bd5c;
-      --bg: #06100c;
-      --card: #0d1915;
-      --card2: #101e19;
-      --border: #1c3028;
-      --text: #ffffff;
-      --muted: #94a49d;
-      --orange: #ffad42;
-      --red: #ff5b69;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(0,237,115,.09), transparent 30%),
-        var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 520px;
-      margin: auto;
-      min-height: 100vh;
-      padding-bottom: 92px;
-    }
-
-    /* HEADER */
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 18px 12px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brand img {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-      border-radius: 12px;
-    }
-
-    .brand-name {
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -1px;
-    }
-
-    .brand-name span {
-      color: var(--green);
-    }
-
-    .brand-sub {
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 2px;
-    }
-
-    .notification {
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      background: var(--card);
-    }
-
-    main {
-      padding: 0 16px;
-    }
-
-    /* INTRO */
-
-    .intro {
-      margin-top: 10px;
-      padding: 22px 18px;
-      background:
-        linear-gradient(135deg, rgba(0,237,115,.10), transparent 55%),
-        var(--card);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-    }
-
-    .badge {
-      display: inline-block;
-      color: var(--green);
-      background: rgba(0,237,115,.09);
-      border: 1px solid rgba(0,237,115,.20);
-      padding: 7px 10px;
-      border-radius: 50px;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: .7px;
-      margin-bottom: 13px;
-    }
-
-    .intro h1 {
-      font-size: 27px;
-      line-height: 1.12;
-      letter-spacing: -.7px;
-      margin-bottom: 10px;
-    }
-
-    .intro p {
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: 14px;
-    }
-
-    /* PREMIUM */
-
-    .premium {
-      margin-top: 14px;
-      padding: 18px;
-      border-radius: 20px;
-      border: 1px solid rgba(0,237,115,.27);
-      background:
-        linear-gradient(135deg, rgba(0,237,115,.12), rgba(0,237,115,.02)),
-        var(--card);
-    }
-
-    .premium-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .premium-title {
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .premium-price {
-      font-size: 22px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .premium-price small {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    .premium p {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-      margin: 8px 0 15px;
-    }
-
-    .subscribe {
-      width: 100%;
-      border: none;
-      background: linear-gradient(90deg, var(--green), #00d96a);
-      color: #021009;
-      font-size: 15px;
-      font-weight: 900;
-      padding: 15px;
-      border-radius: 13px;
-      cursor: pointer;
-    }
-
-    /* ANALYSES */
-
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      margin: 25px 2px 12px;
-    }
-
-    .section-title h2 {
-      font-size: 21px;
-    }
-
-    .section-title span {
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .analysis-card {
-      position: relative;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 17px 17px 16px 20px;
-      margin-bottom: 11px;
-      overflow: hidden;
-    }
-
-    .analysis-card::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-    }
-
-    .confidence::before {
-      background: var(--green);
-    }
-
-    .combined::before {
-      background: var(--orange);
-    }
-
-    .challenge::before {
-      background: var(--red);
-    }
-
-    .analysis-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .analysis-type {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: .7px;
-    }
-
-    .confidence .analysis-type {
-      color: var(--green);
-    }
-
-    .combined .analysis-type {
-      color: var(--orange);
-    }
-
-    .challenge .analysis-type {
-      color: var(--red);
-    }
-
-    .lock {
-      font-size: 17px;
-    }
-
-    .analysis-card h3 {
-      margin-top: 7px;
-      font-size: 20px;
-    }
-
-    .odd-row {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .odd {
-      font-size: 33px;
-      font-weight: 900;
-    }
-
-    .odd-label {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .analysis-card p {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-      margin-top: 8px;
-    }
-
-    /* HISTORIQUE */
-
-    .history {
-      margin-top: 20px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 17px;
-    }
-
-    .history-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .history-header h2 {
-      font-size: 20px;
-    }
-
-    .history-header a {
-      color: var(--green);
-      font-size: 12px;
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .history-description {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-      margin-bottom: 15px;
-    }
-
-    .yesterday {
-      background: var(--card2);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 14px;
-    }
-
-    .yesterday-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .yesterday-title strong {
-      font-size: 15px;
-    }
-
-    .yesterday-title span {
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .history-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding: 11px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .history-item:last-child {
-      border-bottom: none;
-    }
-
-    .history-name {
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .pending {
-      color: #b7c2bd;
-      background: #17231e;
-      border: 1px solid #24372f;
-      border-radius: 50px;
-      padding: 6px 8px;
-      font-size: 10px;
-      white-space: nowrap;
-    }
-
-    .history-note {
-      margin-top: 13px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.5;
-    }
-
-    /* BOTTOM NAV */
-
-    .bottom-nav {
-      position: fixed;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 520px;
-      background: rgba(7,16,12,.97);
-      border-top: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      padding: 9px 4px 10px;
-      z-index: 20;
-    }
-
-    .nav-item {
-      text-align: center;
-      color: #778780;
-      font-size: 10px;
-    }
-
-    .nav-icon {
-      font-size: 18px;
-      margin-bottom: 4px;
-    }
-
-    .nav-item.active {
-      color: var(--green);
-      font-weight: 700;
-    }
-
-    .responsible {
-      text-align: center;
-      color: #66756f;
-      font-size: 10px;
-      line-height: 1.5;
-      padding: 18px 14px 4px;
-    }
-
-    /* ORDINATEUR */
-
-    @media (min-width: 800px) {
-      .app {
-        max-width: 620px;
-      }
-
-      .bottom-nav {
-        max-width: 620px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07110d">
+
+<title>CouponIQ - Analyses sportives</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --green:#00ed73;
+  --bg:#06100c;
+  --card:#0d1915;
+  --card2:#101e19;
+  --border:#1c3028;
+  --text:#fff;
+  --muted:#94a49d;
+  --orange:#ffad42;
+  --red:#ff5b69;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at top right,rgba(0,237,115,.08),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+.app{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:90px;
+}
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 18px 12px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.brand img{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+  border-radius:12px;
+}
+
+.brand-name{
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+
+.brand-name span{
+  color:var(--green);
+}
+
+.brand-sub{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:2px;
+}
+
+.notification{
+  width:40px;
+  height:40px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--card);
+}
+
+main{
+  padding:0 16px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* ACCUEIL */
+
+.intro{
+  margin-top:10px;
+  padding:22px 18px;
+  background:
+    linear-gradient(135deg,rgba(0,237,115,.10),transparent 55%),
+    var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+}
+
+.badge{
+  display:inline-block;
+  color:var(--green);
+  background:rgba(0,237,115,.09);
+  border:1px solid rgba(0,237,115,.20);
+  padding:7px 10px;
+  border-radius:50px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.7px;
+  margin-bottom:13px;
+}
+
+.intro h1{
+  font-size:27px;
+  line-height:1.12;
+  margin-bottom:10px;
+}
+
+.intro p{
+  color:var(--muted);
+  line-height:1.55;
+  font-size:14px;
+}
+
+/* ABONNEMENT */
+
+.premium{
+  margin-top:14px;
+  padding:18px;
+  border-radius:20px;
+  border:1px solid rgba(0,237,115,.27);
+  background:
+    linear-gradient(135deg,rgba(0,237,115,.12),rgba(0,237,115,.02)),
+    var(--card);
+}
+
+.premium-top{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.premium-title{
+  font-size:18px;
+  font-weight:800;
+}
+
+.premium-price{
+  font-size:22px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.premium-price small{
+  font-size:11px;
+  color:var(--muted);
+  font-weight:500;
+}
+
+.premium p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.45;
+  margin:8px 0 15px;
+}
+
+.subscribe{
+  width:100%;
+  border:none;
+  background:linear-gradient(90deg,var(--green),#00d96a);
+  color:#021009;
+  font-size:15px;
+  font-weight:900;
+  padding:15px;
+  border-radius:13px;
+  cursor:pointer;
+}
+
+/* TITRES */
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin:25px 2px 12px;
+}
+
+.section-title h2{
+  font-size:21px;
+}
+
+.section-title span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* ANALYSES */
+
+.analysis-card{
+  position:relative;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:17px 17px 16px 20px;
+  margin-bottom:11px;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.analysis-card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+}
+
+.confidence::before{
+  background:var(--green);
+}
+
+.combined::before{
+  background:var(--orange);
+}
+
+.challenge::before{
+  background:var(--red);
+}
+
+.analysis-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.analysis-type{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.7px;
+}
+
+.confidence .analysis-type{
+  color:var(--green);
+}
+
+.combined .analysis-type{
+  color:var(--orange);
+}
+
+.challenge .analysis-type{
+  color:var(--red);
+}
+
+.analysis-card h3{
+  margin-top:7px;
+  font-size:20px;
+}
+
+.odd-row{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  margin-top:8px;
+}
+
+.odd{
+  font-size:33px;
+  font-weight:900;
+}
+
+.odd-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.analysis-card p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.45;
+  margin-top:8px;
+}
+
+.lock{
+  font-size:16px;
+}
+
+/* PAGE ANALYSES */
+
+.page-header{
+  margin:10px 0 20px;
+}
+
+.page-header h1{
+  font-size:27px;
+  margin-bottom:7px;
+}
+
+.page-header p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.today-info{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px 14px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--card);
+  margin-bottom:15px;
+}
+
+.today-info strong{
+  font-size:13px;
+}
+
+.today-info span{
+  color:var(--green);
+  font-size:11px;
+  font-weight:700;
+}
+
+.unlock-box{
+  margin-top:18px;
+  padding:18px;
+  text-align:center;
+  border:1px solid rgba(0,237,115,.25);
+  border-radius:18px;
+  background:rgba(0,237,115,.05);
+}
+
+.unlock-box h3{
+  font-size:17px;
+  margin-bottom:7px;
+}
+
+.unlock-box p{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+  margin-bottom:14px;
+}
+
+/* HISTORIQUE */
+
+.history-box{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:16px;
+  margin-bottom:13px;
+}
+
+.history-date{
+  margin-bottom:12px;
+}
+
+.history-date strong{
+  font-size:16px;
+}
+
+.history-date div{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.history-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.history-item:last-child{
+  border-bottom:none;
+}
+
+.history-name{
+  font-size:13px;
+  font-weight:700;
+}
+
+.pending{
+  color:#b7c2bd;
+  background:#17231e;
+  border:1px solid #24372f;
+  border-radius:50px;
+  padding:6px 8px;
+  font-size:10px;
+  white-space:nowrap;
+}
+
+/* PROFIL */
+
+.profile-card{
+  text-align:center;
+  padding:25px 18px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+}
+
+.avatar{
+  width:72px;
+  height:72px;
+  margin:0 auto 12px;
+  border-radius:50%;
+  background:rgba(0,237,115,.12);
+  border:2px solid var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+}
+
+.profile-card h2{
+  font-size:20px;
+}
+
+.profile-card p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px;
+}
+
+.profile-option{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:16px;
+  margin-top:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:13px;
+}
+
+.profile-option span:last-child{
+  color:var(--muted);
+}
+
+/* RESPONSABILITÉ */
+
+.responsible{
+  text-align:center;
+  color:#66756f;
+  font-size:10px;
+  line-height:1.5;
+  padding:20px 14px 4px;
+}
+
+/* NAVIGATION */
+
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
+  background:rgba(7,16,12,.98);
+  border-top:1px solid var(--border);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:9px 4px 10px;
+  z-index:20;
+}
+
+.nav-item{
+  text-align:center;
+  color:#778780;
+  font-size:10px;
+  cursor:pointer;
+}
+
+.nav-icon{
+  font-size:18px;
+  margin-bottom:4px;
+}
+
+.nav-item.active{
+  color:var(--green);
+  font-weight:700;
+}
+
+@media(min-width:800px){
+  .app,
+  .bottom-nav{
+    max-width:620px;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
-  <header class="header">
+<header class="header">
 
-    <div class="brand">
-      <img src="logo-ouponiq.png" alt="Logo CouponIQ">
+  <div class="brand">
 
-      <div>
-        <div class="brand-name">
-          Coupon<span>IQ</span>
-        </div>
+    <img src="logo-ouponiq.png" alt="Logo CouponIQ">
 
-        <div class="brand-sub">
-          L'analyse derrière chaque choix.
-        </div>
+    <div>
+      <div class="brand-name">
+        Coupon<span>IQ</span>
+      </div>
+
+      <div class="brand-sub">
+        L'analyse derrière chaque choix.
       </div>
     </div>
 
-    <div class="notification">
-      ♢
+  </div>
+
+  <div class="notification">◇</div>
+
+</header>
+
+<main>
+
+<!-- ACCUEIL -->
+
+<section id="home" class="page active">
+
+  <div class="intro">
+
+    <div class="badge">
+      ANALYSES SPORTIVES
     </div>
 
-  </header>
+    <h1>
+      Vos analyses de matchs, chaque jour.
+    </h1>
 
+    <p>
+      Découvrez des sélections sportives étudiées et accompagnées
+      d'explications pour mieux comprendre chaque choix.
+    </p>
 
-  <main>
+  </div>
 
-    <section class="intro">
+  <div class="premium">
 
-      <div class="badge">
-        ANALYSES SPORTIVES
+    <div class="premium-top">
+
+      <div class="premium-title">
+        CouponIQ Premium
       </div>
 
-      <h1>
-        Vos analyses de matchs, chaque jour.
-      </h1>
-
-      <p>
-        Découvrez des sélections sportives étudiées et accompagnées
-        d'explications pour mieux comprendre chaque choix.
-      </p>
-
-    </section>
-
-
-    <section class="premium">
-
-      <div class="premium-top">
-
-        <div class="premium-title">
-          CouponIQ Premium
-        </div>
-
-        <div class="premium-price">
-          1 000 F
-          <small>/ 30 jours</small>
-        </div>
-
+      <div class="premium-price">
+        1 000 F
+        <small>/ 30 jours</small>
       </div>
-
-      <p>
-        Accédez aux analyses sportives du jour, aux explications détaillées
-        et à l'historique des 30 derniers jours.
-      </p>
-
-      <button class="subscribe">
-        Activer mon abonnement
-      </button>
-
-    </section>
-
-
-    <div class="section-title">
-
-      <h2>Analyses du jour</h2>
-
-      <span>
-        Disponibles dès 09h30
-      </span>
 
     </div>
 
+    <p>
+      Accédez à toutes les analyses sportives du jour et à
+      l'historique des 30 derniers jours.
+    </p>
 
-    <section class="analysis-card confidence">
+    <button class="subscribe">
+      Débloquer toutes les analyses
+    </button>
 
-      <div class="analysis-head">
+  </div>
 
-        <div class="analysis-type">
-          CONFIANCE DU JOUR
-        </div>
 
-        <div class="lock">
-          🔒
-        </div>
+  <div class="section-title">
 
+    <h2>Analyses du jour</h2>
+
+    <span>
+      Disponibles dès 09h30
+    </span>
+
+  </div>
+
+
+  <div class="analysis-card confidence" onclick="openPage('analyses')">
+
+    <div class="analysis-head">
+
+      <div class="analysis-type">
+        CONFIANCE DU JOUR
       </div>
 
-      <h3>
+      <div class="lock">🔒</div>
+
+    </div>
+
+    <h3>Confiance du jour</h3>
+
+    <div class="odd-row">
+      <div class="odd">5.00</div>
+      <div class="odd-label">Cote cible</div>
+    </div>
+
+    <p>
+      Une sélection sportive étudiée avec une approche plus prudente.
+    </p>
+
+  </div>
+
+
+  <div class="analysis-card combined" onclick="openPage('analyses')">
+
+    <div class="analysis-head">
+
+      <div class="analysis-type">
+        COMBINÉ DU JOUR
+      </div>
+
+      <div class="lock">🔒</div>
+
+    </div>
+
+    <h3>Combiné du jour</h3>
+
+    <div class="odd-row">
+      <div class="odd">10.00</div>
+      <div class="odd-label">Cote cible</div>
+    </div>
+
+    <p>
+      Plusieurs événements sélectionnés et analysés pour composer
+      le combiné du jour.
+    </p>
+
+  </div>
+
+
+  <div class="analysis-card challenge" onclick="openPage('analyses')">
+
+    <div class="analysis-head">
+
+      <div class="analysis-type">
+        CHALLENGE 50
+      </div>
+
+      <div class="lock">🔒</div>
+
+    </div>
+
+    <h3>Challenge 50</h3>
+
+    <div class="odd-row">
+      <div class="odd">50.00</div>
+      <div class="odd-label">Cote cible</div>
+    </div>
+
+    <p>
+      Une sélection à cote élevée destinée aux utilisateurs recherchant
+      un challenge.
+    </p>
+
+  </div>
+
+
+  <div class="responsible">
+    CouponIQ fournit des analyses sportives à titre informatif.
+    Aucun résultat n'est garanti.
+  </div>
+
+</section>
+
+
+<!-- ANALYSES -->
+
+<section id="analyses" class="page">
+
+  <div class="page-header">
+
+    <h1>Analyses du jour</h1>
+
+    <p>
+      Retrouvez ici les analyses sportives préparées pour la journée.
+      Les contenus Premium sont disponibles après activation de l'abonnement.
+    </p>
+
+  </div>
+
+
+  <div class="today-info">
+
+    <strong>Aujourd'hui</strong>
+
+    <span>Disponibles dès 09h30</span>
+
+  </div>
+
+
+  <div class="analysis-card confidence">
+
+    <div class="analysis-head">
+
+      <div class="analysis-type">
+        CONFIANCE DU JOUR
+      </div>
+
+      <div class="lock">🔒</div>
+
+    </div>
+
+    <h3>Confiance du jour</h3>
+
+    <div class="odd-row">
+      <div class="odd">5.00</div>
+      <div class="odd-label">Cote cible</div>
+    </div>
+
+    <p>
+      Analyse complète, matchs sélectionnés et explications détaillées.
+    </p>
+
+  </div>
+
+
+  <div class="analysis-card combined">
+
+    <div class="analysis-head">
+
+      <div class="analysis-type">
+        COMBINÉ DU JOUR
+      </div>
+
+      <div class="lock">🔒</div>
+
+    </div>
+
+    <h3>Combiné du jour</h3>
+
+    <div class="odd-row">
+      <div class="odd">10.00</div>
+      <div class="odd-label">Cote cible</div>
+    </div>
+
+    <p>
+      Retrouvez les matchs sélectionnés et le raisonnement derrière
+      chaque choix.
+    </p>
+
+  </div>
+
+
+  <div class="analysis-card challenge">
+
+    <div class="analysis-head">
+
+      <div class="analysis-type">
+        CHALLENGE 50
+      </div>
+
+      <div class="lock">🔒</div>
+
+    </div>
+
+    <h3>Challenge 50</h3>
+
+    <div class="odd-row">
+      <div class="odd">50.00</div>
+      <div class="odd-label">Cote cible</div>
+    </div>
+
+    <p>
+      Accédez aux différentes sélections composant le Challenge 50.
+    </p>
+
+  </div>
+
+
+  <div class="unlock-box">
+
+    <h3>Analyses verrouillées</h3>
+
+    <p>
+      Activez CouponIQ Premium pour accéder aux analyses complètes.
+    </p>
+
+    <button class="subscribe">
+      Débloquer toutes les analyses
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- HISTORIQUE -->
+
+<section id="history" class="page">
+
+  <div class="page-header">
+
+    <h1>Historique</h1>
+
+    <p>
+      Consultez les analyses sportives des 30 derniers jours
+      et leurs résultats lorsqu'ils ont été renseignés.
+    </p>
+
+  </div>
+
+
+  <div class="history-box">
+
+    <div class="history-date">
+
+      <strong>Hier</strong>
+
+      <div>Journée précédente</div>
+
+    </div>
+
+
+    <div class="history-item">
+
+      <div class="history-name">
         Confiance du jour
-      </h3>
-
-      <div class="odd-row">
-
-        <div class="odd">
-          5.00
-        </div>
-
-        <div class="odd-label">
-          Cote cible
-        </div>
-
       </div>
 
-      <p>
-        Une sélection sportive étudiée avec une approche plus prudente.
-      </p>
-
-    </section>
-
-
-    <section class="analysis-card combined">
-
-      <div class="analysis-head">
-
-        <div class="analysis-type">
-          COMBINÉ DU JOUR
-        </div>
-
-        <div class="lock">
-          🔒
-        </div>
-
+      <div class="pending">
+        Résultat à renseigner
       </div>
 
-      <h3>
-        Combiné du jour
-      </h3>
-
-      <div class="odd-row">
-
-        <div class="odd">
-          10.00
-        </div>
-
-        <div class="odd-label">
-          Cote cible
-        </div>
-
-      </div>
-
-      <p>
-        Plusieurs événements sélectionnés et analysés pour composer
-        le combiné du jour.
-      </p>
-
-    </section>
-
-
-    <section class="analysis-card challenge">
-
-      <div class="analysis-head">
-
-        <div class="analysis-type">
-          CHALLENGE 50
-        </div>
-
-        <div class="lock">
-          🔒
-        </div>
-
-      </div>
-
-      <h3>
-        Challenge 50
-      </h3>
-
-      <div class="odd-row">
-
-        <div class="odd">
-          50.00
-        </div>
-
-        <div class="odd-label">
-          Cote cible
-        </div>
-
-      </div>
-
-      <p>
-        Une sélection à cote élevée destinée aux utilisateurs recherchant
-        un challenge.
-      </p>
-
-    </section>
-
-
-    <section class="history">
-
-      <div class="history-header">
-
-        <h2>
-          Historique
-        </h2>
-
-        <a href="#">
-          Voir les 30 jours
-        </a>
-
-      </div>
-
-      <p class="history-description">
-        Retrouvez les analyses des journées précédentes et leurs résultats
-        une fois les matchs terminés.
-      </p>
-
-
-      <div class="yesterday">
-
-        <div class="yesterday-title">
-
-          <strong>
-            Hier
-          </strong>
-
-          <span>
-            Analyses de la journée
-          </span>
-
-        </div>
-
-
-        <div class="history-item">
-
-          <div class="history-name">
-            Confiance du jour
-          </div>
-
-          <div class="pending">
-            Résultat à renseigner
-          </div>
-
-        </div>
-
-
-        <div class="history-item">
-
-          <div class="history-name">
-            Combiné du jour
-          </div>
-
-          <div class="pending">
-            Résultat à renseigner
-          </div>
-
-        </div>
-
-
-        <div class="history-item">
-
-          <div class="history-name">
-            Challenge 50
-          </div>
-
-          <div class="pending">
-            Résultat à renseigner
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <p class="history-note">
-        Les résultats seront renseignés après les matchs.
-        Aucun résultat n'est attribué automatiquement.
-      </p>
-
-    </section>
-
-
-    <div class="responsible">
-      CouponIQ fournit des analyses sportives à titre informatif.
-      Aucun résultat n'est garanti.
     </div>
 
-  </main>
+
+    <div class="history-item">
+
+      <div class="history-name">
+        Combiné du jour
+      </div>
+
+      <div class="pending">
+        Résultat à renseigner
+      </div>
+
+    </div>
+
+
+    <div class="history-item">
+
+      <div class="history-name">
+        Challenge 50
+      </div>
+
+      <div class="pending">
+        Résultat à renseigner
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="history-box">
+
+    <div class="history-date">
+
+      <strong>Journées précédentes</strong>
+
+      <div>Historique disponible jusqu'à 30 jours</div>
+
+    </div>
+
+  </div>
+
+
+  <div class="responsible">
+    Les résultats sont renseignés après les matchs.
+    Aucun résultat n'est attribué automatiquement.
+  </div>
+
+</section>
+
+
+<!-- PROFIL -->
+
+<section id="profile" class="page">
+
+  <div class="page-header">
+
+    <h1>Mon profil</h1>
+
+    <p>
+      Gérez votre compte CouponIQ et votre abonnement.
+    </p>
+
+  </div>
+
+
+  <div class="profile-card">
+
+    <div class="avatar">
+      ◉
+    </div>
+
+    <h2>Mon compte CouponIQ</h2>
+
+    <p>
+      Connectez-vous pour accéder à votre espace personnel.
+    </p>
+
+  </div>
+
+
+  <div class="profile-option">
+
+    <span>Mon abonnement</span>
+
+    <span>›</span>
+
+  </div>
+
+
+  <div class="profile-option">
+
+    <span>Inviter des amis</span>
+
+    <span>›</span>
+
+  </div>
+
+
+  <div class="profile-option">
+
+    <span>Notifications</span>
+
+    <span>›</span>
+
+  </div>
+
+
+  <div class="profile-option">
+
+    <span>Aide et assistance</span>
+
+    <span>›</span>
+
+  </div>
+
+</section>
+
+</main>
 
 </div>
 
 
 <nav class="bottom-nav">
 
-  <div class="nav-item active">
+  <div class="nav-item active" data-page="home"
+       onclick="openPage('home')">
+
     <div class="nav-icon">⌂</div>
+
     Accueil
+
   </div>
 
-  <div class="nav-item">
+
+  <div class="nav-item" data-page="analyses"
+       onclick="openPage('analyses')">
+
     <div class="nav-icon">▥</div>
+
     Analyses
+
   </div>
 
-  <div class="nav-item">
+
+  <div class="nav-item" data-page="history"
+       onclick="openPage('history')">
+
     <div class="nav-icon">◷</div>
+
     Historique
+
   </div>
 
-  <div class="nav-item">
+
+  <div class="nav-item" data-page="profile"
+       onclick="openPage('profile')">
+
     <div class="nav-icon">○</div>
+
     Profil
+
   </div>
 
 </nav>
+
+
+<script>
+
+function openPage(pageId){
+
+  document.querySelectorAll('.page').forEach(function(page){
+    page.classList.remove('active');
+  });
+
+  document.getElementById(pageId).classList.add('active');
+
+
+  document.querySelectorAll('.nav-item').forEach(function(item){
+    item.classList.remove('active');
+  });
+
+
+  const nav =
+    document.querySelector('.nav-item[data-page="' + pageId + '"]');
+
+  if(nav){
+    nav.classList.add('active');
+  }
+
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
+}
+
+</script>
 
 </body>
 </html>
