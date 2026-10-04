@@ -31,7 +31,7 @@ body{
   min-height:100vh;
 }
 
-button,input,select{font-family:inherit}
+button,input{font-family:inherit}
 
 .app{
   width:100%;
@@ -40,8 +40,6 @@ button,input,select{font-family:inherit}
   min-height:100vh;
   padding-bottom:90px;
 }
-
-/* HEADER */
 
 .header{
   display:flex;
@@ -91,8 +89,6 @@ main{padding:0 15px}
 .page{display:none}
 .page.active{display:block}
 
-/* HERO */
-
 .hero{
   margin-top:8px;
   padding:21px 17px;
@@ -126,8 +122,6 @@ main{padding:0 15px}
   line-height:1.5;
   font-size:13px;
 }
-
-/* PREMIUM */
 
 .premium{
   margin-top:13px;
@@ -181,8 +175,6 @@ main{padding:0 15px}
   cursor:pointer;
 }
 
-/* TITRES */
-
 .section-head{
   display:flex;
   justify-content:space-between;
@@ -196,8 +188,6 @@ main{padding:0 15px}
   color:var(--muted);
   font-size:10px;
 }
-
-/* PROGRAMME */
 
 .program{
   display:grid;
@@ -230,7 +220,7 @@ main{padding:0 15px}
   font-size:9px;
 }
 
-/* CARTES ANALYSES */
+/* ANALYSES */
 
 .analysis-card{
   position:relative;
@@ -301,7 +291,17 @@ main{padding:0 15px}
   margin-top:7px;
 }
 
-/* PAGE HEADER */
+.lock{
+  width:31px;
+  height:31px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,237,115,.08);
+  border:1px solid rgba(0,237,115,.20);
+  font-size:14px;
+}
 
 .page-header{
   margin:10px 0 18px;
@@ -329,7 +329,7 @@ main{padding:0 15px}
   cursor:pointer;
 }
 
-/* DETAIL ANALYSE */
+/* DETAIL */
 
 .detail-hero{
   background:
@@ -368,8 +368,6 @@ main{padding:0 15px}
   font-size:10px;
   color:#c1cec8;
 }
-
-/* MATCH */
 
 .match-card{
   background:var(--card);
@@ -449,8 +447,6 @@ main{padding:0 15px}
   margin-top:6px;
 }
 
-/* TOTAL */
-
 .total-box{
   display:flex;
   justify-content:space-between;
@@ -471,8 +467,6 @@ main{padding:0 15px}
   color:var(--green);
   font-size:25px;
 }
-
-/* CODES */
 
 .codes{
   background:var(--card);
@@ -583,9 +577,7 @@ main{padding:0 15px}
   margin-bottom:12px;
 }
 
-.partner-card h3{
-  font-size:17px;
-}
+.partner-card h3{font-size:17px}
 
 .partner-card p{
   color:var(--muted);
@@ -639,7 +631,7 @@ main{padding:0 15px}
   cursor:pointer;
 }
 
-/* AUTHENTIFICATION */
+/* AUTH */
 
 .auth-card{
   background:var(--card);
@@ -662,10 +654,7 @@ main{padding:0 15px}
   margin-bottom:8px;
 }
 
-.auth-logo h2{
-  font-size:22px;
-}
-
+.auth-logo h2{font-size:22px}
 .auth-logo h2 span{color:var(--green)}
 
 .auth-logo p{
@@ -674,9 +663,7 @@ main{padding:0 15px}
   margin-top:4px;
 }
 
-.form-group{
-  margin-bottom:13px;
-}
+.form-group{margin-bottom:13px}
 
 .form-group label{
   display:block;
@@ -767,24 +754,23 @@ main{padding:0 15px}
 
 .google-button{
   width:100%;
-  border:1px solid var(--border);
+  border:1px solid #d6d6d6;
   background:#fff;
-  color:#171717;
+  color:#181818;
   font-size:12px;
-  font-weight:800;
+  font-weight:900;
   padding:13px;
   border-radius:11px;
   cursor:pointer;
-  margin-top:10px;
 }
 
 .auth-divider{
   display:flex;
   align-items:center;
   gap:10px;
-  margin:15px 0;
   color:var(--muted);
-  font-size:10px;
+  font-size:9px;
+  margin:15px 0;
 }
 
 .auth-divider::before,
@@ -832,6 +818,35 @@ main{padding:0 15px}
   font-size:9px;
   line-height:1.5;
   padding:18px 12px;
+}
+
+/* DEMANDE CONNEXION */
+
+.auth-required{
+  background:
+  linear-gradient(135deg,rgba(0,237,115,.10),transparent),
+  var(--card);
+  border:1px solid rgba(0,237,115,.25);
+  border-radius:21px;
+  padding:23px 17px;
+  text-align:center;
+  margin-top:12px;
+}
+
+.auth-required .big-lock{
+  font-size:33px;
+  margin-bottom:11px;
+}
+
+.auth-required h2{
+  font-size:21px;
+}
+
+.auth-required p{
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.5;
+  margin:8px 0 17px;
 }
 
 /* NAV */
@@ -882,7 +897,6 @@ main{padding:0 15px}
 
 <div class="brand">
 <img src="logo-ouponiq.png" alt="CouponIQ">
-
 <div>
 <div class="brand-name">Coupon<span>IQ</span></div>
 <div class="brand-sub">L'analyse derrière chaque choix.</div>
@@ -903,9 +917,7 @@ Partenaires
 
 <div class="hero">
 <div class="badge">ANALYSES SPORTIVES</div>
-
 <h1>Vos analyses de matchs, chaque jour.</h1>
-
 <p>
 Des sélections sportives étudiées et accompagnées
 d'explications pour mieux comprendre chaque choix.
@@ -916,7 +928,6 @@ d'explications pour mieux comprendre chaque choix.
 
 <div class="premium-top">
 <div class="premium-title">CouponIQ Premium</div>
-
 <div class="premium-price">
 1 000 F
 <small>/ 30 jours</small>
@@ -925,7 +936,7 @@ d'explications pour mieux comprendre chaque choix.
 
 <p>Accédez aux analyses sportives complètes préparées chaque jour.</p>
 
-<button class="primary-button" onclick="premiumAction()">
+<button class="primary-button" onclick="unlockPremium()">
 Débloquer toutes les analyses
 </button>
 
@@ -937,7 +948,6 @@ Débloquer toutes les analyses
 </div>
 
 <div class="program">
-
 <div class="program-item">
 <div class="program-number">5</div>
 <strong>Confiance</strong>
@@ -955,7 +965,6 @@ Débloquer toutes les analyses
 <strong>Challenge</strong>
 <small>Cote cible</small>
 </div>
-
 </div>
 
 <div class="section-head">
@@ -963,81 +972,57 @@ Débloquer toutes les analyses
 <span>Dès 09h30</span>
 </div>
 
-<div class="analysis-card confidence"
-onclick="openDetail('confidence')">
-
+<div class="analysis-card confidence" onclick="requestAnalysis('confidence')">
 <div class="analysis-head">
 <div class="analysis-type">CONFIANCE DU JOUR</div>
-<div>›</div>
+<div class="lock">🔒</div>
 </div>
-
 <h3>Confiance du jour</h3>
-
 <div class="odd-row">
 <div class="odd">5.00</div>
 <div class="odd-label">Cote cible</div>
 </div>
-
-<p>Appuyez pour ouvrir l'analyse complète.</p>
-
+<p id="homeConfidenceText">Connectez-vous pour consulter cette analyse.</p>
 </div>
 
-<div class="analysis-card combined"
-onclick="openDetail('combined')">
-
+<div class="analysis-card combined" onclick="requestAnalysis('combined')">
 <div class="analysis-head">
 <div class="analysis-type">COMBINÉ DU JOUR</div>
-<div>›</div>
+<div class="lock">🔒</div>
 </div>
-
 <h3>Combiné du jour</h3>
-
 <div class="odd-row">
 <div class="odd">10.00</div>
 <div class="odd-label">Cote cible</div>
 </div>
-
-<p>Appuyez pour ouvrir l'analyse complète.</p>
-
+<p id="homeCombinedText">Connectez-vous pour consulter cette analyse.</p>
 </div>
 
-<div class="analysis-card challenge"
-onclick="openDetail('challenge')">
-
+<div class="analysis-card challenge" onclick="requestAnalysis('challenge')">
 <div class="analysis-head">
 <div class="analysis-type">CHALLENGE 50</div>
-<div>›</div>
+<div class="lock">🔒</div>
 </div>
-
 <h3>Challenge 50</h3>
-
 <div class="odd-row">
 <div class="odd">50.00</div>
 <div class="odd-label">Cote cible</div>
 </div>
-
-<p>Appuyez pour ouvrir l'analyse complète.</p>
-
+<p id="homeChallengeText">Connectez-vous pour consulter cette analyse.</p>
 </div>
 
 <div class="section-head">
-
 <h2>Historique récent</h2>
-
-<span onclick="openPage('history')"
-style="color:var(--green);cursor:pointer">
+<span onclick="openPage('history')" style="color:var(--green);cursor:pointer">
 Voir les 30 jours
 </span>
-
 </div>
 
 <div class="history-preview">
 
 <div class="history-top">
 <strong>Hier</strong>
-<span style="font-size:9px;color:var(--muted)">
-Journée précédente
-</span>
+<span style="font-size:9px;color:var(--muted)">Journée précédente</span>
 </div>
 
 <div class="history-row">
@@ -1073,46 +1058,76 @@ Aucun résultat n'est garanti.
 <p>Sélectionnez l'analyse que vous souhaitez consulter.</p>
 </div>
 
-<div class="analysis-card confidence"
-onclick="openDetail('confidence')">
-
+<div class="analysis-card confidence" onclick="requestAnalysis('confidence')">
+<div class="analysis-head">
 <div class="analysis-type">CONFIANCE DU JOUR</div>
+<div class="lock">🔒</div>
+</div>
 <h3>Confiance du jour</h3>
-
 <div class="odd-row">
 <div class="odd">5.00</div>
 <div class="odd-label">Cote cible</div>
 </div>
-
-<p>Voir l'analyse complète ›</p>
+<p>Appuyez pour consulter ›</p>
 </div>
 
-<div class="analysis-card combined"
-onclick="openDetail('combined')">
-
+<div class="analysis-card combined" onclick="requestAnalysis('combined')">
+<div class="analysis-head">
 <div class="analysis-type">COMBINÉ DU JOUR</div>
+<div class="lock">🔒</div>
+</div>
 <h3>Combiné du jour</h3>
-
 <div class="odd-row">
 <div class="odd">10.00</div>
 <div class="odd-label">Cote cible</div>
 </div>
-
-<p>Voir l'analyse complète ›</p>
+<p>Appuyez pour consulter ›</p>
 </div>
 
-<div class="analysis-card challenge"
-onclick="openDetail('challenge')">
-
+<div class="analysis-card challenge" onclick="requestAnalysis('challenge')">
+<div class="analysis-head">
 <div class="analysis-type">CHALLENGE 50</div>
+<div class="lock">🔒</div>
+</div>
 <h3>Challenge 50</h3>
-
 <div class="odd-row">
 <div class="odd">50.00</div>
 <div class="odd-label">Cote cible</div>
 </div>
+<p>Appuyez pour consulter ›</p>
+</div>
 
-<p>Voir l'analyse complète ›</p>
+</section>
+
+<!-- DEMANDE CONNEXION -->
+
+<section id="authRequired" class="page">
+
+<div class="back" onclick="openPage('home')">
+← Retour
+</div>
+
+<div class="auth-required">
+
+<div class="big-lock">🔒</div>
+
+<h2>Connectez-vous pour continuer</h2>
+
+<p>
+Créez gratuitement votre compte CouponIQ ou connectez-vous
+pour accéder à cette fonctionnalité.
+</p>
+
+<button class="primary-button" onclick="openPage('login')">
+Se connecter
+</button>
+
+<button class="secondary-button"
+style="margin-top:9px"
+onclick="openPage('register')">
+Créer un compte
+</button>
+
 </div>
 
 </section>
@@ -1126,32 +1141,16 @@ onclick="openDetail('challenge')">
 </div>
 
 <div class="detail-hero">
-
-<div class="detail-label" id="detailLabel">
-ANALYSE DU JOUR
-</div>
-
-<h1 id="detailTitle">
-Confiance du jour
-</h1>
+<div class="detail-label" id="detailLabel">ANALYSE DU JOUR</div>
+<h1 id="detailTitle">Confiance du jour</h1>
 
 <div class="detail-meta">
-
 <div class="meta-pill">
-Cote cible :
-<strong id="targetOdd">5.00</strong>
+Cote cible : <strong id="targetOdd">5.00</strong>
 </div>
-
-<div class="meta-pill">
-Aujourd'hui
+<div class="meta-pill">Aujourd'hui</div>
+<div class="meta-pill">Publication 09h30</div>
 </div>
-
-<div class="meta-pill">
-Publication 09h30
-</div>
-
-</div>
-
 </div>
 
 <div id="matches"></div>
@@ -1164,45 +1163,28 @@ Publication 09h30
 <div class="codes">
 
 <h2>Codes du coupon</h2>
-
 <div class="codes-sub">
 Copiez directement le code correspondant à votre plateforme.
 </div>
 
 <div class="code-item">
-
 <div class="code-top">
-
 <div>
 <div class="bookmaker">1xBet</div>
 <div class="code-value" id="code1xbet">ABC123</div>
 </div>
-
-<button class="copy"
-onclick="copyCode('code1xbet',this)">
-Copier
-</button>
-
+<button class="copy" onclick="copyCode('code1xbet',this)">Copier</button>
 </div>
-
 </div>
 
 <div class="code-item">
-
 <div class="code-top">
-
 <div>
 <div class="bookmaker">BetWinner</div>
 <div class="code-value" id="codeBetwinner">XYZ456</div>
 </div>
-
-<button class="copy"
-onclick="copyCode('codeBetwinner',this)">
-Copier
-</button>
-
+<button class="copy" onclick="copyCode('codeBetwinner',this)">Copier</button>
 </div>
-
 </div>
 
 </div>
@@ -1220,7 +1202,6 @@ seront renseignés par l'administrateur CouponIQ.
 
 <div class="page-header">
 <h1>Historique</h1>
-
 <p>
 Consultez les analyses des 30 derniers jours
 et les résultats renseignés après les matchs.
@@ -1228,12 +1209,9 @@ et les résultats renseignés après les matchs.
 </div>
 
 <div class="history-day">
-
 <div class="history-top">
 <strong>Hier</strong>
-<span style="font-size:9px;color:var(--muted)">
-Journée précédente
-</span>
+<span style="font-size:9px;color:var(--muted)">Journée précédente</span>
 </div>
 
 <div class="history-row">
@@ -1261,7 +1239,6 @@ Journée précédente
 
 <div class="page-header">
 <h1>Nos partenaires</h1>
-
 <p>
 Retrouvez les partenaires de dépôt et retrait
 et contactez-les directement.
@@ -1269,33 +1246,21 @@ et contactez-les directement.
 </div>
 
 <div class="partner-card">
-
 <h3>Nom du partenaire</h3>
-
 <p>
 Ouagadougou • Quartier / Zone<br>
 Services : Dépôt & Retrait
 </p>
-
-<button class="whatsapp">
-Contacter sur WhatsApp
-</button>
-
+<button class="whatsapp">Contacter sur WhatsApp</button>
 </div>
 
 <div class="partner-card">
-
 <h3>Nom du partenaire</h3>
-
 <p>
 Ouagadougou • Quartier / Zone<br>
 Services : Dépôt & Retrait
 </p>
-
-<button class="whatsapp">
-Contacter sur WhatsApp
-</button>
-
+<button class="whatsapp">Contacter sur WhatsApp</button>
 </div>
 
 </section>
@@ -1312,9 +1277,7 @@ Contacter sur WhatsApp
 <div id="guestProfile">
 
 <div class="profile-card">
-
 <div class="avatar">◎</div>
-
 <h2>Mon compte CouponIQ</h2>
 
 <p style="color:var(--muted);font-size:11px;margin-top:5px">
@@ -1323,8 +1286,7 @@ Connectez-vous pour accéder à votre espace personnel.
 
 <div class="account-actions">
 
-<button class="secondary-button"
-onclick="openPage('login')">
+<button class="secondary-button" onclick="openPage('login')">
 Se connecter
 </button>
 
@@ -1335,52 +1297,36 @@ Créer un compte
 </button>
 
 </div>
-
 </div>
-
 </div>
 
 <div id="connectedProfile" style="display:none">
 
 <div class="profile-card">
-
 <div class="avatar" id="profileInitial">C</div>
-
 <h2 id="profileName">Utilisateur CouponIQ</h2>
-
-<div class="account-email" id="profileEmail">
-utilisateur@email.com
-</div>
-
-<div class="status-badge">
-COMPTE GRATUIT
-</div>
-
+<div class="account-email" id="profileEmail"></div>
+<div class="status-badge">COMPTE GRATUIT</div>
 </div>
 
 <div class="profile-option">
-<span>Mon abonnement</span>
-<span>›</span>
+<span>Mon abonnement</span><span>›</span>
 </div>
 
 <div class="profile-option">
-<span>Parrainage & affiliation</span>
-<span>›</span>
+<span>Parrainage & affiliation</span><span>›</span>
 </div>
 
 <div class="profile-option">
-<span>Notifications</span>
-<span>›</span>
+<span>Notifications</span><span>›</span>
 </div>
 
 <div class="profile-option">
-<span>Aide & assistance</span>
-<span>›</span>
+<span>Aide & assistance</span><span>›</span>
 </div>
 
 <div class="profile-option">
-<span>Paramètres</span>
-<span>›</span>
+<span>Paramètres</span><span>›</span>
 </div>
 
 <button class="logout" onclick="logoutUser()">
@@ -1402,18 +1348,14 @@ Se déconnecter
 <div class="auth-card">
 
 <div class="auth-logo">
-
 <img src="logo-ouponiq.png" alt="CouponIQ">
-
 <h2>Coupon<span>IQ</span></h2>
-
 <p>Connectez-vous à votre compte.</p>
-
 </div>
 
 <div id="loginMessage" class="form-message"></div>
 
-<button class="google-button" onclick="loginWithGoogle()">
+<button class="google-button" onclick="signInWithGoogle()">
 Continuer avec Google
 </button>
 
@@ -1421,18 +1363,16 @@ Continuer avec Google
 
 <div class="form-group">
 <label>Adresse email</label>
-
 <input
 id="loginEmail"
 class="form-input"
 type="email"
 autocomplete="email"
-placeholder="exemple@email.com">
+placeholder="Votre adresse email">
 </div>
 
 <div class="form-group">
 <label>Mot de passe</label>
-
 <input
 id="loginPassword"
 class="form-input"
@@ -1441,7 +1381,7 @@ autocomplete="current-password"
 placeholder="Votre mot de passe">
 </div>
 
-<div class="forgot" onclick="resetPassword()">
+<div class="forgot" onclick="forgotPassword()">
 Mot de passe oublié ?
 </div>
 
@@ -1451,9 +1391,7 @@ Se connecter
 
 <div class="auth-switch">
 Pas encore de compte ?
-<span onclick="openPage('register')">
-Créer un compte
-</span>
+<span onclick="openPage('register')">Créer un compte</span>
 </div>
 
 </div>
@@ -1471,18 +1409,14 @@ Créer un compte
 <div class="auth-card">
 
 <div class="auth-logo">
-
 <img src="logo-ouponiq.png" alt="CouponIQ">
-
 <h2>Créer mon <span>compte</span></h2>
-
 <p>Créez gratuitement votre compte CouponIQ.</p>
-
 </div>
 
 <div id="registerMessage" class="form-message"></div>
 
-<button class="google-button" onclick="loginWithGoogle()">
+<button class="google-button" onclick="signInWithGoogle()">
 Continuer avec Google
 </button>
 
@@ -1490,7 +1424,6 @@ Continuer avec Google
 
 <div class="form-group">
 <label>Nom et prénom</label>
-
 <input
 id="registerName"
 class="form-input"
@@ -1501,18 +1434,16 @@ placeholder="Votre nom et prénom">
 
 <div class="form-group">
 <label>Adresse email</label>
-
 <input
 id="registerEmail"
 class="form-input"
 type="email"
 autocomplete="email"
-placeholder="exemple@email.com">
+placeholder="Votre adresse email">
 </div>
 
 <div class="form-group">
 <label>Mot de passe</label>
-
 <input
 id="registerPassword"
 class="form-input"
@@ -1523,7 +1454,6 @@ placeholder="Choisissez un mot de passe">
 
 <div class="form-group">
 <label>Confirmer le mot de passe</label>
-
 <input
 id="registerConfirm"
 class="form-input"
@@ -1538,9 +1468,7 @@ Créer mon compte
 
 <div class="auth-switch">
 Vous avez déjà un compte ?
-<span onclick="openPage('login')">
-Se connecter
-</span>
+<span onclick="openPage('login')">Se connecter</span>
 </div>
 
 </div>
@@ -1548,7 +1476,6 @@ Se connecter
 </section>
 
 </main>
-
 </div>
 
 <nav class="bottom-nav">
@@ -1583,33 +1510,52 @@ Profil
 
 </nav>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
 
-/* SUPABASE */
+/* ==============================
+   NAVIGATION
+================================ */
 
-const SUPABASE_URL =
-"https://zkgdhjjvgfpwpwoevieb.supabase.co";
+function openPage(pageId){
 
-const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_UCwOPMZn1sJaj3vbDu3Zzw_fZBu2V-6";
+  const target=document.getElementById(pageId);
+  if(!target) return;
 
-const supabaseClient =
-window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_PUBLISHABLE_KEY
-);
+  document.querySelectorAll(".page").forEach(function(page){
+    page.classList.remove("active");
+  });
 
-const SITE_URL =
-"https://couponiq.github.io/couponiq/";
+  target.classList.add("active");
 
-let currentUser=null;
+  document.querySelectorAll(".nav-item").forEach(function(item){
+    item.classList.remove("active");
+  });
+
+  let navPage=pageId;
+
+  if(
+    pageId==="login" ||
+    pageId==="register" ||
+    pageId==="authRequired"
+  ){
+    navPage="profile";
+  }
+
+  const nav=document.querySelector(
+    '.nav-item[data-page="'+navPage+'"]'
+  );
+
+  if(nav) nav.classList.add("active");
+
+  window.scrollTo(0,0);
+}
 
 
-/* EXEMPLES VISUELS POUR LE PROTOTYPE */
+/* ==============================
+   ANALYSES
+================================ */
 
-const analyses = {
+const analyses={
 
 confidence:{
  title:"Confiance du jour",
@@ -1618,7 +1564,6 @@ confidence:{
  total:"5.08",
  code1:"CF5XBET",
  code2:"CF5BETW",
-
  matches:[
   {
    league:"Premier League",
@@ -1654,7 +1599,6 @@ combined:{
  total:"10.24",
  code1:"C10XBET",
  code2:"C10BETW",
-
  matches:[
   {
    league:"Premier League",
@@ -1690,7 +1634,6 @@ challenge:{
  total:"51.30",
  code1:"CH50XBET",
  code2:"CH50BETW",
-
  matches:[
   {
    league:"Champions League",
@@ -1714,527 +1657,730 @@ challenge:{
 };
 
 
-/* NAVIGATION */
+/* ==============================
+   ÉTAT UTILISATEUR
+================================ */
 
-function openPage(pageId){
+let currentUser=null;
+let pendingAnalysis=null;
+let supabaseClient=null;
 
- document.querySelectorAll(".page").forEach(page=>{
-  page.classList.remove("active");
- });
 
- const page=document.getElementById(pageId);
+/* ==============================
+   ACTION SUR UNE ANALYSE
+================================ */
 
- if(!page) return;
+function requestAnalysis(type){
 
- page.classList.add("active");
+  if(!currentUser){
 
- document.querySelectorAll(".nav-item").forEach(item=>{
-  item.classList.remove("active");
- });
+    pendingAnalysis=type;
+    openPage("authRequired");
+    return;
+  }
 
- let navPage=pageId;
-
- if(pageId==="login" || pageId==="register"){
-  navPage="profile";
- }
-
- const nav =
- document.querySelector('.nav-item[data-page="'+navPage+'"]');
-
- if(nav){
-  nav.classList.add("active");
- }
-
- window.scrollTo(0,0);
+  openDetail(type);
 }
 
 
-/* OUVERTURE DIRECTE ANALYSE */
+/* ==============================
+   PREMIUM
+================================ */
+
+function unlockPremium(){
+
+  if(!currentUser){
+    openPage("authRequired");
+    return;
+  }
+
+  /* Le paiement sera ajouté ensuite */
+  openPage("profile");
+}
+
+
+/* ==============================
+   OUVERTURE ANALYSE
+================================ */
 
 function openDetail(type){
 
- const data=analyses[type];
+  const data=analyses[type];
 
- document.getElementById("detailTitle").textContent=data.title;
- document.getElementById("detailLabel").textContent=data.label;
- document.getElementById("targetOdd").textContent=data.target;
- document.getElementById("totalOdd").textContent=data.total;
- document.getElementById("code1xbet").textContent=data.code1;
- document.getElementById("codeBetwinner").textContent=data.code2;
+  if(!data) return;
 
- let html="";
+  document.getElementById("detailTitle").textContent=data.title;
+  document.getElementById("detailLabel").textContent=data.label;
+  document.getElementById("targetOdd").textContent=data.target;
+  document.getElementById("totalOdd").textContent=data.total;
+  document.getElementById("code1xbet").textContent=data.code1;
+  document.getElementById("codeBetwinner").textContent=data.code2;
 
- data.matches.forEach((m,index)=>{
+  let html="";
 
- html+=`
+  data.matches.forEach(function(m,index){
 
- <div class="match-card">
+    html+=`
+    <div class="match-card">
 
-   <div class="match-number">
-     SÉLECTION ${index+1}
-   </div>
+      <div class="match-number">
+      SÉLECTION ${index+1}
+      </div>
 
-   <div class="league">
-     ${m.league}
-   </div>
+      <div class="league">
+      ${m.league}
+      </div>
 
-   <div class="match-title">
-     ${m.match}
-   </div>
+      <div class="match-title">
+      ${m.match}
+      </div>
 
-   <div class="match-time">
-     Coup d'envoi • ${m.time}
-   </div>
+      <div class="match-time">
+      Coup d'envoi • ${m.time}
+      </div>
 
-   <div class="prediction-box">
+      <div class="prediction-box">
 
-     <div>
-       <div class="prediction-label">
-         PRONOSTIC
-       </div>
+        <div>
+          <div class="prediction-label">
+          PRONOSTIC
+          </div>
 
-       <div class="prediction">
-         ${m.prediction}
-       </div>
-     </div>
+          <div class="prediction">
+          ${m.prediction}
+          </div>
+        </div>
 
-     <div class="match-odd">
-       ${m.odd}
-     </div>
+        <div class="match-odd">
+        ${m.odd}
+        </div>
 
-   </div>
+      </div>
 
-   <div class="why">
+      <div class="why">
+        <strong>Pourquoi ce choix ?</strong>
+        <p>${m.why}</p>
+      </div>
 
-     <strong>
-       Pourquoi ce choix ?
-     </strong>
+    </div>
+    `;
+  });
 
-     <p>
-       ${m.why}
-     </p>
+  document.getElementById("matches").innerHTML=html;
 
-   </div>
-
- </div>
-
- `;
-
- });
-
- document.getElementById("matches").innerHTML=html;
-
- openPage("detail");
+  openPage("detail");
 }
 
 
-/* COPIER CODE */
+/* ==============================
+   COPIER CODE
+================================ */
 
 function copyCode(id,button){
 
- const code=document.getElementById(id).textContent;
+  const element=document.getElementById(id);
+  if(!element) return;
 
- navigator.clipboard.writeText(code).then(()=>{
+  const code=element.textContent;
 
-  const old=button.textContent;
+  if(
+    navigator.clipboard &&
+    navigator.clipboard.writeText
+  ){
 
-  button.textContent="Copié ✓";
+    navigator.clipboard.writeText(code)
+    .then(function(){
 
-  setTimeout(()=>{
-   button.textContent=old;
-  },1500);
+      const old=button.textContent;
+      button.textContent="Copié ✓";
 
- });
+      setTimeout(function(){
+        button.textContent=old;
+      },1500);
+
+    });
+
+  }
 
 }
 
 
-/* MESSAGES */
+/* ==============================
+   MESSAGES
+================================ */
 
 function showMessage(id,text,type){
 
- const message=document.getElementById(id);
+  const box=document.getElementById(id);
+  if(!box) return;
 
- if(!message) return;
-
- message.className="form-message "+type;
- message.textContent=text;
+  box.textContent=text;
+  box.className="form-message "+type;
 }
 
 function clearMessage(id){
 
- const message=document.getElementById(id);
+  const box=document.getElementById(id);
+  if(!box) return;
 
- if(!message) return;
-
- message.className="form-message";
- message.textContent="";
+  box.textContent="";
+  box.className="form-message";
 }
 
 
-/* TRADUCTION SIMPLE DES ERREURS */
-
-function authErrorMessage(error){
-
- const text=(error?.message || "").toLowerCase();
-
- if(text.includes("invalid login credentials")){
-  return "Email ou mot de passe incorrect.";
- }
-
- if(text.includes("user already registered")){
-  return "Un compte existe déjà avec cette adresse email.";
- }
-
- if(text.includes("password should be")){
-  return "Le mot de passe doit contenir au moins 6 caractères.";
- }
-
- if(text.includes("email not confirmed")){
-  return "Veuillez confirmer votre adresse email avant de vous connecter.";
- }
-
- if(text.includes("invalid email")){
-  return "Veuillez saisir une adresse email valide.";
- }
-
- if(text.includes("rate limit")){
-  return "Trop de tentatives. Veuillez patienter quelques instants.";
- }
-
- return error?.message || "Une erreur est survenue. Veuillez réessayer.";
-}
-
-
-/* INSCRIPTION SUPABASE */
-
-async function registerUser(){
-
- clearMessage("registerMessage");
-
- const name=
- document.getElementById("registerName").value.trim();
-
- const email=
- document.getElementById("registerEmail").value.trim().toLowerCase();
-
- const password=
- document.getElementById("registerPassword").value;
-
- const confirm=
- document.getElementById("registerConfirm").value;
-
- if(!name || !email || !password || !confirm){
-
-  showMessage(
-   "registerMessage",
-   "Veuillez remplir tous les champs.",
-   "error"
-  );
-
-  return;
- }
-
- if(password.length<6){
-
-  showMessage(
-   "registerMessage",
-   "Le mot de passe doit contenir au moins 6 caractères.",
-   "error"
-  );
-
-  return;
- }
-
- if(password!==confirm){
-
-  showMessage(
-   "registerMessage",
-   "Les deux mots de passe ne correspondent pas.",
-   "error"
-  );
-
-  return;
- }
-
- const {data,error}=
- await supabaseClient.auth.signUp({
-
-  email:email,
-
-  password:password,
-
-  options:{
-   data:{
-    full_name:name,
-    role:"GRATUIT"
-   },
-   emailRedirectTo:SITE_URL
-  }
-
- });
-
- if(error){
-
-  showMessage(
-   "registerMessage",
-   authErrorMessage(error),
-   "error"
-  );
-
-  return;
- }
-
- if(data.session){
-
-  currentUser=data.user;
-
-  updateProfile();
-
-  openPage("profile");
-
- }else{
-
-  showMessage(
-   "registerMessage",
-   "Compte créé. Vérifiez votre email pour confirmer votre inscription.",
-   "success"
-  );
-
- }
-
-}
-
-
-/* CONNEXION EMAIL */
-
-async function loginUser(){
-
- clearMessage("loginMessage");
-
- const email=
- document.getElementById("loginEmail").value.trim().toLowerCase();
-
- const password=
- document.getElementById("loginPassword").value;
-
- if(!email || !password){
-
-  showMessage(
-   "loginMessage",
-   "Veuillez saisir votre email et votre mot de passe.",
-   "error"
-  );
-
-  return;
- }
-
- const {data,error}=
- await supabaseClient.auth.signInWithPassword({
-  email:email,
-  password:password
- });
-
- if(error){
-
-  showMessage(
-   "loginMessage",
-   authErrorMessage(error),
-   "error"
-  );
-
-  return;
- }
-
- currentUser=data.user;
-
- updateProfile();
-
- openPage("profile");
-}
-
-
-/* CONNEXION GOOGLE */
-
-async function loginWithGoogle(){
-
- const {error}=
- await supabaseClient.auth.signInWithOAuth({
-
-  provider:"google",
-
-  options:{
-   redirectTo:SITE_URL
-  }
-
- });
-
- if(error){
-
-  const activeLogin=
-  document.getElementById("login").classList.contains("active");
-
-  showMessage(
-   activeLogin ? "loginMessage" : "registerMessage",
-   authErrorMessage(error),
-   "error"
-  );
-
- }
-
-}
-
-
-/* MOT DE PASSE OUBLIÉ */
-
-async function resetPassword(){
-
- clearMessage("loginMessage");
-
- const email=
- document.getElementById("loginEmail").value.trim().toLowerCase();
-
- if(!email){
-
-  showMessage(
-   "loginMessage",
-   "Saisissez d'abord votre adresse email.",
-   "error"
-  );
-
-  return;
- }
-
- const {error}=
- await supabaseClient.auth.resetPasswordForEmail(
-  email,
-  {
-   redirectTo:SITE_URL
-  }
- );
-
- if(error){
-
-  showMessage(
-   "loginMessage",
-   authErrorMessage(error),
-   "error"
-  );
-
-  return;
- }
-
- showMessage(
-  "loginMessage",
-  "Un lien de récupération a été envoyé à votre adresse email.",
-  "success"
- );
-}
-
-
-/* PROFIL */
+/* ==============================
+   PROFIL
+================================ */
 
 function updateProfile(){
 
- const guest=
- document.getElementById("guestProfile");
+  const guest=document.getElementById("guestProfile");
+  const connected=document.getElementById("connectedProfile");
 
- const connected=
- document.getElementById("connectedProfile");
+  if(!guest || !connected) return;
 
- if(currentUser){
+  if(currentUser){
 
-  guest.style.display="none";
-  connected.style.display="block";
+    guest.style.display="none";
+    connected.style.display="block";
 
-  const metadata=currentUser.user_metadata || {};
+    const metadata=currentUser.user_metadata || {};
 
-  const name=
-  metadata.full_name ||
-  metadata.name ||
-  currentUser.email?.split("@")[0] ||
-  "Utilisateur CouponIQ";
+    const name=
+      metadata.full_name ||
+      metadata.name ||
+      (currentUser.email
+        ? currentUser.email.split("@")[0]
+        : "Utilisateur CouponIQ");
 
-  document.getElementById("profileName").textContent=name;
+    const email=currentUser.email || "";
 
-  document.getElementById("profileEmail").textContent=
-  currentUser.email || "";
+    document.getElementById("profileName").textContent=name;
+    document.getElementById("profileEmail").textContent=email;
 
-  const firstLetter=
-  name.trim().charAt(0).toUpperCase();
+    const initial=
+      name.trim().charAt(0).toUpperCase() || "C";
 
-  document.getElementById("profileInitial").textContent=
-  firstLetter || "C";
+    document.getElementById("profileInitial").textContent=initial;
 
- }else{
+  }else{
 
-  guest.style.display="block";
-  connected.style.display="none";
+    guest.style.display="block";
+    connected.style.display="none";
 
- }
+  }
+}
+
+
+/* ==============================
+   ERREURS AUTH
+================================ */
+
+function readableAuthError(error){
+
+  if(!error || !error.message){
+    return "Une erreur est survenue. Réessayez.";
+  }
+
+  const msg=error.message.toLowerCase();
+
+  if(msg.includes("invalid login credentials")){
+    return "Email ou mot de passe incorrect.";
+  }
+
+  if(msg.includes("email not confirmed")){
+    return "Confirmez d'abord votre adresse email.";
+  }
+
+  if(msg.includes("already registered")){
+    return "Un compte existe déjà avec cette adresse email.";
+  }
+
+  if(msg.includes("password")){
+    return "Vérifiez votre mot de passe.";
+  }
+
+  if(msg.includes("email")){
+    return "Vérifiez votre adresse email.";
+  }
+
+  return error.message;
+}
+
+
+/* ==============================
+   CHARGEMENT SUPABASE
+================================ */
+
+function loadSupabase(){
+
+  return new Promise(function(resolve,reject){
+
+    if(
+      window.supabase &&
+      typeof window.supabase.createClient==="function"
+    ){
+      resolve();
+      return;
+    }
+
+    const script=document.createElement("script");
+
+    script.src=
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+    script.onload=function(){
+      resolve();
+    };
+
+    script.onerror=function(){
+      reject(new Error("Supabase n'a pas pu être chargé."));
+    };
+
+    document.head.appendChild(script);
+
+  });
+}
+
+
+/* ==============================
+   INITIALISATION SUPABASE
+================================ */
+
+async function initSupabase(){
+
+  try{
+
+    await loadSupabase();
+
+    const SUPABASE_URL=
+      "https://zkgdhjjvgfpwpwoevieb.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY=
+      "sb_publishable_UCwOPMZn1sJaj3vbDu3Zzw_fZBu2V-6";
+
+    supabaseClient=
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+    const result=
+      await supabaseClient.auth.getSession();
+
+    if(result.data && result.data.session){
+      currentUser=result.data.session.user;
+    }
+
+    updateProfile();
+
+    supabaseClient.auth.onAuthStateChange(
+      function(event,session){
+
+        currentUser=
+          session && session.user
+          ? session.user
+          : null;
+
+        updateProfile();
+
+      }
+    );
+
+  }catch(error){
+
+    console.error("Erreur Supabase :",error);
+
+    /*
+    Important :
+    même si Supabase ne charge pas,
+    la navigation CouponIQ continue de fonctionner.
+    */
+
+  }
 
 }
 
 
-/* DÉCONNEXION */
+/* ==============================
+   GOOGLE
+================================ */
+
+async function signInWithGoogle(){
+
+  clearMessage("loginMessage");
+  clearMessage("registerMessage");
+
+  if(!supabaseClient){
+
+    const activeRegister=
+      document.getElementById("register")
+      .classList.contains("active");
+
+    showMessage(
+      activeRegister
+        ? "registerMessage"
+        : "loginMessage",
+      "Connexion momentanément indisponible. Rechargez la page puis réessayez.",
+      "error"
+    );
+
+    return;
+  }
+
+  try{
+
+    const result=
+      await supabaseClient.auth.signInWithOAuth({
+
+        provider:"google",
+
+        options:{
+          redirectTo:
+          "https://couponiq.github.io/couponiq/"
+        }
+
+      });
+
+    if(result.error){
+      throw result.error;
+    }
+
+  }catch(error){
+
+    const activeRegister=
+      document.getElementById("register")
+      .classList.contains("active");
+
+    showMessage(
+      activeRegister
+        ? "registerMessage"
+        : "loginMessage",
+      readableAuthError(error),
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ==============================
+   INSCRIPTION EMAIL
+================================ */
+
+async function registerUser(){
+
+  clearMessage("registerMessage");
+
+  const name=
+    document.getElementById("registerName")
+    .value.trim();
+
+  const email=
+    document.getElementById("registerEmail")
+    .value.trim().toLowerCase();
+
+  const password=
+    document.getElementById("registerPassword")
+    .value;
+
+  const confirm=
+    document.getElementById("registerConfirm")
+    .value;
+
+  if(!name || !email || !password || !confirm){
+
+    showMessage(
+      "registerMessage",
+      "Veuillez remplir tous les champs.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(password.length<6){
+
+    showMessage(
+      "registerMessage",
+      "Le mot de passe doit contenir au moins 6 caractères.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(password!==confirm){
+
+    showMessage(
+      "registerMessage",
+      "Les deux mots de passe ne correspondent pas.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(!supabaseClient){
+
+    showMessage(
+      "registerMessage",
+      "Connexion momentanément indisponible. Rechargez la page puis réessayez.",
+      "error"
+    );
+
+    return;
+  }
+
+  try{
+
+    const result=
+      await supabaseClient.auth.signUp({
+
+        email:email,
+        password:password,
+
+        options:{
+          data:{
+            full_name:name
+          },
+
+          emailRedirectTo:
+          "https://couponiq.github.io/couponiq/"
+        }
+
+      });
+
+    if(result.error){
+      throw result.error;
+    }
+
+    if(result.data.session){
+
+      currentUser=result.data.user;
+      updateProfile();
+
+      if(pendingAnalysis){
+
+        const analysis=pendingAnalysis;
+        pendingAnalysis=null;
+        openDetail(analysis);
+
+      }else{
+
+        openPage("profile");
+
+      }
+
+    }else{
+
+      showMessage(
+        "registerMessage",
+        "Compte créé. Consultez votre email pour confirmer votre inscription.",
+        "success"
+      );
+
+    }
+
+  }catch(error){
+
+    showMessage(
+      "registerMessage",
+      readableAuthError(error),
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ==============================
+   CONNEXION EMAIL
+================================ */
+
+async function loginUser(){
+
+  clearMessage("loginMessage");
+
+  const email=
+    document.getElementById("loginEmail")
+    .value.trim().toLowerCase();
+
+  const password=
+    document.getElementById("loginPassword")
+    .value;
+
+  if(!email || !password){
+
+    showMessage(
+      "loginMessage",
+      "Veuillez saisir votre email et votre mot de passe.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(!supabaseClient){
+
+    showMessage(
+      "loginMessage",
+      "Connexion momentanément indisponible. Rechargez la page puis réessayez.",
+      "error"
+    );
+
+    return;
+  }
+
+  try{
+
+    const result=
+      await supabaseClient.auth.signInWithPassword({
+        email:email,
+        password:password
+      });
+
+    if(result.error){
+      throw result.error;
+    }
+
+    currentUser=result.data.user;
+
+    updateProfile();
+
+    if(pendingAnalysis){
+
+      const analysis=pendingAnalysis;
+      pendingAnalysis=null;
+
+      openDetail(analysis);
+
+    }else{
+
+      openPage("profile");
+
+    }
+
+  }catch(error){
+
+    showMessage(
+      "loginMessage",
+      readableAuthError(error),
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ==============================
+   MOT DE PASSE OUBLIÉ
+================================ */
+
+async function forgotPassword(){
+
+  clearMessage("loginMessage");
+
+  const email=
+    document.getElementById("loginEmail")
+    .value.trim().toLowerCase();
+
+  if(!email){
+
+    showMessage(
+      "loginMessage",
+      "Entrez d'abord votre adresse email.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(!supabaseClient){
+
+    showMessage(
+      "loginMessage",
+      "Connexion momentanément indisponible.",
+      "error"
+    );
+
+    return;
+  }
+
+  try{
+
+    const result=
+      await supabaseClient.auth.resetPasswordForEmail(
+        email,
+        {
+          redirectTo:
+          "https://couponiq.github.io/couponiq/"
+        }
+      );
+
+    if(result.error){
+      throw result.error;
+    }
+
+    showMessage(
+      "loginMessage",
+      "Un lien de récupération a été envoyé à votre adresse email.",
+      "success"
+    );
+
+  }catch(error){
+
+    showMessage(
+      "loginMessage",
+      readableAuthError(error),
+      "error"
+    );
+
+  }
+
+}
+
+
+/* ==============================
+   DÉCONNEXION
+================================ */
 
 async function logoutUser(){
 
- await supabaseClient.auth.signOut();
+  if(supabaseClient){
 
- currentUser=null;
+    try{
+      await supabaseClient.auth.signOut();
+    }catch(error){
+      console.error(error);
+    }
 
- updateProfile();
-
- openPage("profile");
-}
-
-
-/* ACTION PREMIUM */
-
-function premiumAction(){
-
- if(!currentUser){
-  openPage("register");
-  return;
- }
-
- openPage("profile");
-}
-
-
-/* RESTAURATION DE SESSION */
-
-async function initializeAuth(){
-
- const {data}=await supabaseClient.auth.getSession();
-
- currentUser=data.session?.user || null;
-
- updateProfile();
-}
-
-
-/* SURVEILLANCE DE CONNEXION */
-
-supabaseClient.auth.onAuthStateChange(
- (event,session)=>{
-
-  currentUser=session?.user || null;
-
-  updateProfile();
-
-  if(event==="SIGNED_IN"){
-   openPage("profile");
   }
 
- }
-);
+  currentUser=null;
+  pendingAnalysis=null;
+
+  updateProfile();
+  openPage("profile");
+}
 
 
-/* DÉMARRAGE */
+/* ==============================
+   DÉMARRAGE
+================================ */
 
-initializeAuth();
+/*
+La navigation fonctionne immédiatement.
+Supabase se charge séparément.
+Ainsi, une panne Supabase ne bloque plus
+Accueil, Analyses, Historique ou Partenaires.
+*/
+
+updateProfile();
+initSupabase();
 
 </script>
 
