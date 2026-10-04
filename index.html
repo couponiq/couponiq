@@ -1,148 +1,548 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CouponIQ</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07111f">
+<title>CouponIQ</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fa;
-      color: #111827;
-    }
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#eef2f6;
+  color:#101828;
+}
 
-    .app {
-      max-width: 480px;
-      margin: auto;
-      min-height: 100vh;
-      background: white;
-    }
+.app{
+  width:100%;
+  max-width:520px;
+  min-height:100vh;
+  margin:auto;
+  background:#f8fafc;
+  padding-bottom:90px;
+}
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 28px 20px;
-      text-align: center;
-    }
+/* HEADER */
 
-    header h1 {
-      font-size: 30px;
-    }
+.header{
+  background:#07111f;
+  color:white;
+  padding:28px 20px 34px;
+  border-radius:0 0 28px 28px;
+}
 
-    header p {
-      margin-top: 7px;
-      color: #d1d5db;
-    }
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:28px;
+}
 
-    main {
-      padding: 22px;
-    }
+.logo{
+  font-size:26px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
 
-    .welcome {
-      margin-bottom: 25px;
-    }
+.logo span{
+  color:#35d07f;
+}
 
-    .welcome h2 {
-      font-size: 23px;
-      margin-bottom: 8px;
-    }
+.profile{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#18283b;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
 
-    .welcome p {
-      color: #6b7280;
-      line-height: 1.5;
-    }
+.header small{
+  color:#94a3b8;
+  font-size:13px;
+}
 
-    .card {
-      border: 1px solid #e5e7eb;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 15px;
-    }
+.header h1{
+  font-size:27px;
+  margin-top:7px;
+  line-height:1.2;
+}
 
-    .card h3 {
-      margin-bottom: 8px;
-    }
+.header p{
+  color:#cbd5e1;
+  margin-top:10px;
+  line-height:1.5;
+  font-size:14px;
+}
 
-    .card p {
-      color: #6b7280;
-      line-height: 1.5;
-    }
+/* CONTENT */
 
-    .button {
-      display: block;
-      width: 100%;
-      margin-top: 22px;
-      padding: 15px;
-      border: none;
-      border-radius: 10px;
-      background: #111827;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.content{
+  padding:20px;
+}
 
-    footer {
-      text-align: center;
-      color: #9ca3af;
-      font-size: 13px;
-      padding: 25px;
-    }
-  </style>
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:8px 0 15px;
+}
+
+.section-title h2{
+  font-size:19px;
+}
+
+.section-title span{
+  font-size:12px;
+  color:#667085;
+}
+
+/* SUBSCRIPTION */
+
+.subscription{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:24px;
+  box-shadow:0 5px 20px rgba(15,23,42,.06);
+}
+
+.subscription-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.subscription h3{
+  font-size:16px;
+}
+
+.price{
+  color:#0a9f5a;
+  font-weight:800;
+  font-size:18px;
+}
+
+.subscription p{
+  color:#667085;
+  font-size:13px;
+  margin-top:8px;
+  line-height:1.45;
+}
+
+.subscribe-btn{
+  width:100%;
+  border:0;
+  background:#0a9f5a;
+  color:white;
+  font-weight:700;
+  font-size:15px;
+  padding:14px;
+  border-radius:11px;
+  margin-top:15px;
+  cursor:pointer;
+}
+
+/* COUPONS */
+
+.coupon{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:14px;
+  box-shadow:0 4px 16px rgba(15,23,42,.05);
+  border:1px solid #edf0f4;
+}
+
+.coupon-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+
+.tag{
+  display:inline-block;
+  background:#e8fff3;
+  color:#07864c;
+  font-size:11px;
+  font-weight:800;
+  padding:6px 9px;
+  border-radius:20px;
+  margin-bottom:10px;
+}
+
+.coupon h3{
+  font-size:18px;
+}
+
+.coupon p{
+  color:#667085;
+  font-size:13px;
+  line-height:1.45;
+  margin-top:7px;
+}
+
+.odds{
+  background:#07111f;
+  color:white;
+  border-radius:12px;
+  padding:10px 12px;
+  text-align:center;
+  min-width:68px;
+}
+
+.odds small{
+  display:block;
+  color:#94a3b8;
+  font-size:9px;
+  margin-bottom:3px;
+}
+
+.odds strong{
+  font-size:18px;
+}
+
+.locked{
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid #eef2f6;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.locked span{
+  color:#667085;
+  font-size:12px;
+}
+
+.view-btn{
+  border:0;
+  background:#eef2f6;
+  color:#101828;
+  padding:9px 12px;
+  border-radius:9px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* HISTORY */
+
+.history{
+  background:#07111f;
+  border-radius:18px;
+  padding:18px;
+  color:white;
+  margin-top:24px;
+}
+
+.history h3{
+  font-size:18px;
+}
+
+.history p{
+  color:#aeb9c8;
+  font-size:13px;
+  margin-top:7px;
+  line-height:1.5;
+}
+
+.history-stats{
+  display:flex;
+  gap:10px;
+  margin-top:16px;
+}
+
+.stat{
+  flex:1;
+  background:#101e2f;
+  padding:13px 8px;
+  border-radius:12px;
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  font-size:18px;
+}
+
+.stat small{
+  color:#9eabbc;
+  font-size:10px;
+}
+
+/* WARNING */
+
+.warning{
+  color:#667085;
+  font-size:11px;
+  text-align:center;
+  line-height:1.5;
+  padding:22px 8px 5px;
+}
+
+/* NAVIGATION */
+
+.nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
+  background:white;
+  border-top:1px solid #e7ebef;
+  display:flex;
+  justify-content:space-around;
+  padding:11px 5px 10px;
+  z-index:10;
+}
+
+.nav-item{
+  text-align:center;
+  color:#98a2b3;
+  font-size:10px;
+  min-width:65px;
+}
+
+.nav-icon{
+  font-size:19px;
+  margin-bottom:4px;
+}
+
+.nav-item.active{
+  color:#079455;
+  font-weight:bold;
+}
+
+@media(min-width:700px){
+  body{
+    padding:25px 0;
+  }
+
+  .app{
+    min-height:calc(100vh - 50px);
+    border-radius:28px;
+    overflow:hidden;
+    box-shadow:0 15px 50px rgba(15,23,42,.12);
+  }
+
+  .nav{
+    bottom:25px;
+    border-radius:0 0 28px 28px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="app">
+<div class="app">
 
-    <header>
-      <h1>CouponIQ</h1>
-      <p>Analyse • Discipline • Intelligence</p>
-    </header>
+  <header class="header">
 
-    <main>
+    <div class="topbar">
+      <div class="logo">Coupon<span>IQ</span></div>
+      <div class="profile">CI</div>
+    </div>
 
-      <section class="welcome">
-        <h2>Bienvenue sur CouponIQ</h2>
-        <p>
-          Retrouvez des analyses sportives préparées avec méthode
-          pour vous aider à prendre des décisions plus éclairées.
-        </p>
-      </section>
+    <small>ANALYSES DU JOUR</small>
 
-      <div class="card">
-        <h3>Confiance du jour</h3>
-        <p>Découvrez la sélection analysée du jour.</p>
+    <h1>Des décisions plus éclairées.</h1>
+
+    <p>
+      Des sélections sportives préparées avec méthode,
+      analyse et discipline.
+    </p>
+
+  </header>
+
+
+  <main class="content">
+
+    <div class="subscription">
+
+      <div class="subscription-top">
+        <h3>Accès Premium</h3>
+        <div class="price">1 000 F / mois</div>
       </div>
 
-      <div class="card">
-        <h3>Combiné 10</h3>
-        <p>Une sélection de plusieurs événements soigneusement étudiés.</p>
-      </div>
+      <p>
+        Débloquez toutes les analyses du jour,
+        l'historique et les contenus réservés aux membres.
+      </p>
 
-      <div class="card">
-        <h3>Challenge 50</h3>
-        <p>Une sélection destinée aux utilisateurs recherchant une cote plus élevée.</p>
-      </div>
-
-      <button class="button">
-        Voir les analyses
+      <button class="subscribe-btn">
+        Activer mon abonnement
       </button>
 
-    </main>
+    </div>
 
-    <footer>
-      CouponIQ — Les analyses ne garantissent aucun gain.
-    </footer>
 
+    <div class="section-title">
+      <h2>Aujourd'hui</h2>
+      <span>Mise à jour 09:30</span>
+    </div>
+
+
+    <article class="coupon">
+
+      <div class="coupon-head">
+
+        <div>
+          <span class="tag">CONFIANCE DU JOUR</span>
+          <h3>Sélection principale</h3>
+          <p>
+            Une sélection étudiée pour privilégier
+            la cohérence et la maîtrise du risque.
+          </p>
+        </div>
+
+        <div class="odds">
+          <small>COTE</small>
+          <strong>—</strong>
+        </div>
+
+      </div>
+
+      <div class="locked">
+        <span>🔒 Analyse réservée aux membres</span>
+        <button class="view-btn">Voir</button>
+      </div>
+
+    </article>
+
+
+    <article class="coupon">
+
+      <div class="coupon-head">
+
+        <div>
+          <span class="tag">COMBINÉ 10</span>
+          <h3>Combiné du jour</h3>
+          <p>
+            Plusieurs événements sélectionnés
+            et analysés avant publication.
+          </p>
+        </div>
+
+        <div class="odds">
+          <small>OBJECTIF</small>
+          <strong>10</strong>
+        </div>
+
+      </div>
+
+      <div class="locked">
+        <span>🔒 Analyse réservée aux membres</span>
+        <button class="view-btn">Voir</button>
+      </div>
+
+    </article>
+
+
+    <article class="coupon">
+
+      <div class="coupon-head">
+
+        <div>
+          <span class="tag">CHALLENGE 50</span>
+          <h3>Challenge du jour</h3>
+          <p>
+            Une sélection à cote plus élevée
+            destinée aux membres qui souhaitent suivre le challenge.
+          </p>
+        </div>
+
+        <div class="odds">
+          <small>OBJECTIF</small>
+          <strong>50</strong>
+        </div>
+
+      </div>
+
+      <div class="locked">
+        <span>🔒 Analyse réservée aux membres</span>
+        <button class="view-btn">Voir</button>
+      </div>
+
+    </article>
+
+
+    <section class="history">
+
+      <h3>Résultats récents</h3>
+
+      <p>
+        Consultez les résultats des analyses publiées
+        et les coupons validés récemment.
+      </p>
+
+      <div class="history-stats">
+
+        <div class="stat">
+          <strong>—</strong>
+          <small>VALIDÉS</small>
+        </div>
+
+        <div class="stat">
+          <strong>—</strong>
+          <small>PERDUS</small>
+        </div>
+
+        <div class="stat">
+          <strong>7</strong>
+          <small>JOURS</small>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <p class="warning">
+      Les analyses proposées par CouponIQ sont informatives.
+      Aucun résultat ni gain n'est garanti.
+      Les paris comportent un risque de perte financière.
+    </p>
+
+  </main>
+
+</div>
+
+
+<nav class="nav">
+
+  <div class="nav-item active">
+    <div class="nav-icon">⌂</div>
+    Accueil
   </div>
+
+  <div class="nav-item">
+    <div class="nav-icon">▣</div>
+    Analyses
+  </div>
+
+  <div class="nav-item">
+    <div class="nav-icon">✓</div>
+    Résultats
+  </div>
+
+  <div class="nav-item">
+    <div class="nav-icon">○</div>
+    Profil
+  </div>
+
+</nav>
 
 </body>
 </html>
