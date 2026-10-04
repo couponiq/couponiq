@@ -31,7 +31,7 @@ body{
   min-height:100vh;
 }
 
-button{font-family:inherit}
+button,input,select{font-family:inherit}
 
 .app{
   width:100%;
@@ -636,6 +636,189 @@ main{padding:0 15px}
   display:flex;
   justify-content:space-between;
   font-size:12px;
+  cursor:pointer;
+}
+
+/* AUTHENTIFICATION */
+
+.auth-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:21px;
+  padding:19px 16px;
+  margin-top:8px;
+}
+
+.auth-logo{
+  text-align:center;
+  margin-bottom:19px;
+}
+
+.auth-logo img{
+  width:68px;
+  height:68px;
+  object-fit:contain;
+  border-radius:15px;
+  margin-bottom:8px;
+}
+
+.auth-logo h2{
+  font-size:22px;
+}
+
+.auth-logo h2 span{color:var(--green)}
+
+.auth-logo p{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+.form-group{
+  margin-bottom:13px;
+}
+
+.form-group label{
+  display:block;
+  font-size:11px;
+  font-weight:800;
+  color:#dce5e1;
+  margin:0 0 7px 2px;
+}
+
+.form-input,
+.form-select{
+  width:100%;
+  background:var(--card2);
+  color:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px 12px;
+  font-size:13px;
+  outline:none;
+}
+
+.form-input:focus,
+.form-select:focus{
+  border-color:rgba(0,237,115,.55);
+}
+
+.form-select option{
+  background:#101e19;
+  color:#fff;
+}
+
+.phone-box{
+  display:grid;
+  grid-template-columns:74px 1fr;
+  gap:8px;
+}
+
+.phone-prefix{
+  background:#14231d;
+  border:1px solid var(--border);
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--green);
+  font-weight:900;
+  font-size:12px;
+}
+
+.auth-switch{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:17px;
+}
+
+.auth-switch span{
+  color:var(--green);
+  font-weight:900;
+  cursor:pointer;
+}
+
+.forgot{
+  text-align:right;
+  color:var(--green);
+  font-size:10px;
+  font-weight:800;
+  margin:-3px 2px 14px;
+  cursor:pointer;
+}
+
+.form-message{
+  display:none;
+  padding:11px;
+  border-radius:11px;
+  margin-bottom:13px;
+  font-size:11px;
+  line-height:1.4;
+}
+
+.form-message.error{
+  display:block;
+  background:rgba(255,91,105,.08);
+  border:1px solid rgba(255,91,105,.25);
+  color:#ff8d97;
+}
+
+.form-message.success{
+  display:block;
+  background:rgba(0,237,115,.08);
+  border:1px solid rgba(0,237,115,.25);
+  color:var(--green);
+}
+
+.account-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:14px;
+}
+
+.secondary-button{
+  width:100%;
+  border:1px solid var(--border);
+  background:var(--card2);
+  color:#fff;
+  font-size:12px;
+  font-weight:800;
+  padding:13px;
+  border-radius:11px;
+  cursor:pointer;
+}
+
+.status-badge{
+  display:inline-block;
+  color:var(--green);
+  background:rgba(0,237,115,.09);
+  border:1px solid rgba(0,237,115,.22);
+  border-radius:50px;
+  padding:6px 10px;
+  font-size:9px;
+  font-weight:900;
+  margin-top:10px;
+}
+
+.account-phone{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:6px;
+}
+
+.logout{
+  width:100%;
+  margin-top:14px;
+  padding:13px;
+  border-radius:12px;
+  border:1px solid rgba(255,91,105,.25);
+  background:rgba(255,91,105,.06);
+  color:#ff7b87;
+  font-size:11px;
+  font-weight:900;
+  cursor:pointer;
 }
 
 .responsible{
@@ -1121,6 +1304,10 @@ Contacter sur WhatsApp
 <p>Gérez votre compte et vos services CouponIQ.</p>
 </div>
 
+<!-- NON CONNECTÉ -->
+
+<div id="guestProfile">
+
 <div class="profile-card">
 
 <div class="avatar">◎</div>
@@ -1128,8 +1315,45 @@ Contacter sur WhatsApp
 <h2>Mon compte CouponIQ</h2>
 
 <p style="color:var(--muted);font-size:11px;margin-top:5px">
-Espace personnel
+Connectez-vous pour accéder à votre espace personnel.
 </p>
+
+<div class="account-actions">
+
+<button class="secondary-button"
+onclick="openPage('login')">
+Se connecter
+</button>
+
+<button class="primary-button"
+onclick="openPage('register')"
+style="padding:13px;font-size:12px">
+Créer un compte
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CONNECTÉ -->
+
+<div id="connectedProfile" style="display:none">
+
+<div class="profile-card">
+
+<div class="avatar" id="profileInitial">C</div>
+
+<h2 id="profileName">Utilisateur CouponIQ</h2>
+
+<div class="account-phone" id="profilePhone">
++226 00 00 00 00
+</div>
+
+<div class="status-badge">
+COMPTE GRATUIT
+</div>
 
 </div>
 
@@ -1156,6 +1380,314 @@ Espace personnel
 <div class="profile-option">
 <span>Paramètres</span>
 <span>›</span>
+</div>
+
+<button class="logout" onclick="logoutUser()">
+Se déconnecter
+</button>
+
+</div>
+
+</section>
+
+<!-- CONNEXION -->
+
+<section id="login" class="page">
+
+<div class="back" onclick="openPage('profile')">
+← Retour au profil
+</div>
+
+<div class="auth-card">
+
+<div class="auth-logo">
+
+<img src="logo-ouponiq.png" alt="CouponIQ">
+
+<h2>Coupon<span>IQ</span></h2>
+
+<p>Connectez-vous à votre compte.</p>
+
+</div>
+
+<div id="loginMessage" class="form-message"></div>
+
+<div class="form-group">
+
+<label>Pays</label>
+
+<select id="loginCountry"
+class="form-select"
+onchange="updatePrefix('loginCountry','loginPrefix')">
+
+<option value="+226">Burkina Faso (+226)</option>
+<option value="+225">Côte d'Ivoire (+225)</option>
+<option value="+223">Mali (+223)</option>
+<option value="+221">Sénégal (+221)</option>
+<option value="+228">Togo (+228)</option>
+<option value="+229">Bénin (+229)</option>
+<option value="+227">Niger (+227)</option>
+<option value="+233">Ghana (+233)</option>
+<option value="+234">Nigeria (+234)</option>
+<option value="+237">Cameroun (+237)</option>
+<option value="+224">Guinée (+224)</option>
+<option value="+232">Sierra Leone (+232)</option>
+<option value="+231">Liberia (+231)</option>
+<option value="+220">Gambie (+220)</option>
+<option value="+245">Guinée-Bissau (+245)</option>
+<option value="+238">Cap-Vert (+238)</option>
+<option value="+222">Mauritanie (+222)</option>
+<option value="+212">Maroc (+212)</option>
+<option value="+213">Algérie (+213)</option>
+<option value="+216">Tunisie (+216)</option>
+<option value="+218">Libye (+218)</option>
+<option value="+20">Égypte (+20)</option>
+<option value="+249">Soudan (+249)</option>
+<option value="+211">Soudan du Sud (+211)</option>
+<option value="+251">Éthiopie (+251)</option>
+<option value="+291">Érythrée (+291)</option>
+<option value="+253">Djibouti (+253)</option>
+<option value="+252">Somalie (+252)</option>
+<option value="+254">Kenya (+254)</option>
+<option value="+256">Ouganda (+256)</option>
+<option value="+250">Rwanda (+250)</option>
+<option value="+257">Burundi (+257)</option>
+<option value="+255">Tanzanie (+255)</option>
+<option value="+243">RD Congo (+243)</option>
+<option value="+242">Congo (+242)</option>
+<option value="+241">Gabon (+241)</option>
+<option value="+240">Guinée équatoriale (+240)</option>
+<option value="+236">République centrafricaine (+236)</option>
+<option value="+235">Tchad (+235)</option>
+<option value="+244">Angola (+244)</option>
+<option value="+260">Zambie (+260)</option>
+<option value="+265">Malawi (+265)</option>
+<option value="+258">Mozambique (+258)</option>
+<option value="+263">Zimbabwe (+263)</option>
+<option value="+267">Botswana (+267)</option>
+<option value="+264">Namibie (+264)</option>
+<option value="+27">Afrique du Sud (+27)</option>
+<option value="+268">Eswatini (+268)</option>
+<option value="+266">Lesotho (+266)</option>
+<option value="+261">Madagascar (+261)</option>
+<option value="+230">Maurice (+230)</option>
+<option value="+248">Seychelles (+248)</option>
+<option value="+269">Comores (+269)</option>
+<option value="+239">São Tomé-et-Príncipe (+239)</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Numéro de téléphone</label>
+
+<div class="phone-box">
+
+<div class="phone-prefix" id="loginPrefix">
++226
+</div>
+
+<input
+id="loginPhone"
+class="form-input"
+type="tel"
+inputmode="numeric"
+placeholder="Votre numéro">
+
+</div>
+
+</div>
+
+<div class="form-group">
+
+<label>Mot de passe</label>
+
+<input
+id="loginPassword"
+class="form-input"
+type="password"
+placeholder="Votre mot de passe">
+
+</div>
+
+<div class="forgot">
+Mot de passe oublié ?
+</div>
+
+<button class="primary-button" onclick="loginUser()">
+Se connecter
+</button>
+
+<div class="auth-switch">
+Pas encore de compte ?
+<span onclick="openPage('register')">
+Créer un compte
+</span>
+</div>
+
+</div>
+
+</section>
+
+<!-- INSCRIPTION -->
+
+<section id="register" class="page">
+
+<div class="back" onclick="openPage('profile')">
+← Retour au profil
+</div>
+
+<div class="auth-card">
+
+<div class="auth-logo">
+
+<img src="logo-ouponiq.png" alt="CouponIQ">
+
+<h2>Créer mon <span>compte</span></h2>
+
+<p>Rejoignez CouponIQ depuis votre pays.</p>
+
+</div>
+
+<div id="registerMessage" class="form-message"></div>
+
+<div class="form-group">
+
+<label>Nom et prénom</label>
+
+<input
+id="registerName"
+class="form-input"
+type="text"
+placeholder="Votre nom et prénom">
+
+</div>
+
+<div class="form-group">
+
+<label>Pays</label>
+
+<select id="registerCountry"
+class="form-select"
+onchange="updatePrefix('registerCountry','registerPrefix')">
+
+<option value="+226">Burkina Faso (+226)</option>
+<option value="+225">Côte d'Ivoire (+225)</option>
+<option value="+223">Mali (+223)</option>
+<option value="+221">Sénégal (+221)</option>
+<option value="+228">Togo (+228)</option>
+<option value="+229">Bénin (+229)</option>
+<option value="+227">Niger (+227)</option>
+<option value="+233">Ghana (+233)</option>
+<option value="+234">Nigeria (+234)</option>
+<option value="+237">Cameroun (+237)</option>
+<option value="+224">Guinée (+224)</option>
+<option value="+232">Sierra Leone (+232)</option>
+<option value="+231">Liberia (+231)</option>
+<option value="+220">Gambie (+220)</option>
+<option value="+245">Guinée-Bissau (+245)</option>
+<option value="+238">Cap-Vert (+238)</option>
+<option value="+222">Mauritanie (+222)</option>
+<option value="+212">Maroc (+212)</option>
+<option value="+213">Algérie (+213)</option>
+<option value="+216">Tunisie (+216)</option>
+<option value="+218">Libye (+218)</option>
+<option value="+20">Égypte (+20)</option>
+<option value="+249">Soudan (+249)</option>
+<option value="+211">Soudan du Sud (+211)</option>
+<option value="+251">Éthiopie (+251)</option>
+<option value="+291">Érythrée (+291)</option>
+<option value="+253">Djibouti (+253)</option>
+<option value="+252">Somalie (+252)</option>
+<option value="+254">Kenya (+254)</option>
+<option value="+256">Ouganda (+256)</option>
+<option value="+250">Rwanda (+250)</option>
+<option value="+257">Burundi (+257)</option>
+<option value="+255">Tanzanie (+255)</option>
+<option value="+243">RD Congo (+243)</option>
+<option value="+242">Congo (+242)</option>
+<option value="+241">Gabon (+241)</option>
+<option value="+240">Guinée équatoriale (+240)</option>
+<option value="+236">République centrafricaine (+236)</option>
+<option value="+235">Tchad (+235)</option>
+<option value="+244">Angola (+244)</option>
+<option value="+260">Zambie (+260)</option>
+<option value="+265">Malawi (+265)</option>
+<option value="+258">Mozambique (+258)</option>
+<option value="+263">Zimbabwe (+263)</option>
+<option value="+267">Botswana (+267)</option>
+<option value="+264">Namibie (+264)</option>
+<option value="+27">Afrique du Sud (+27)</option>
+<option value="+268">Eswatini (+268)</option>
+<option value="+266">Lesotho (+266)</option>
+<option value="+261">Madagascar (+261)</option>
+<option value="+230">Maurice (+230)</option>
+<option value="+248">Seychelles (+248)</option>
+<option value="+269">Comores (+269)</option>
+<option value="+239">São Tomé-et-Príncipe (+239)</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Numéro de téléphone</label>
+
+<div class="phone-box">
+
+<div class="phone-prefix" id="registerPrefix">
++226
+</div>
+
+<input
+id="registerPhone"
+class="form-input"
+type="tel"
+inputmode="numeric"
+placeholder="Votre numéro">
+
+</div>
+
+</div>
+
+<div class="form-group">
+
+<label>Mot de passe</label>
+
+<input
+id="registerPassword"
+class="form-input"
+type="password"
+placeholder="Choisissez un mot de passe">
+
+</div>
+
+<div class="form-group">
+
+<label>Confirmer le mot de passe</label>
+
+<input
+id="registerConfirm"
+class="form-input"
+type="password"
+placeholder="Confirmez votre mot de passe">
+
+</div>
+
+<button class="primary-button" onclick="registerUser()">
+Créer mon compte
+</button>
+
+<div class="auth-switch">
+Vous avez déjà un compte ?
+<span onclick="openPage('login')">
+Se connecter
+</span>
+</div>
+
 </div>
 
 </section>
@@ -1319,8 +1851,14 @@ function openPage(pageId){
   item.classList.remove("active");
  });
 
+ let navPage=pageId;
+
+ if(pageId==="login" || pageId==="register"){
+  navPage="profile";
+ }
+
  const nav =
- document.querySelector('.nav-item[data-page="'+pageId+'"]');
+ document.querySelector('.nav-item[data-page="'+navPage+'"]');
 
  if(nav){
   nav.classList.add("active");
@@ -1426,6 +1964,171 @@ function copyCode(id,button){
   },1500);
 
  });
+
+}
+
+
+/* INDICATIF PAYS */
+
+function updatePrefix(selectId,prefixId){
+
+ const select=document.getElementById(selectId);
+ const prefix=document.getElementById(prefixId);
+
+ prefix.textContent=select.value;
+}
+
+
+/* PETITE SIMULATION DE COMPTE
+   SUPABASE REMPLACERA CECI PLUS TARD */
+
+let demoUser=null;
+
+
+/* INSCRIPTION */
+
+function registerUser(){
+
+ const name=document.getElementById("registerName").value.trim();
+ const country=document.getElementById("registerCountry");
+ const prefix=country.value;
+ const countryName=country.options[country.selectedIndex].text.split(" (")[0];
+
+ let phone=document.getElementById("registerPhone").value.trim();
+ const password=document.getElementById("registerPassword").value;
+ const confirm=document.getElementById("registerConfirm").value;
+
+ const message=document.getElementById("registerMessage");
+
+ message.className="form-message";
+ message.textContent="";
+
+ phone=phone.replace(/\s+/g,"");
+
+ if(!name || !phone || !password || !confirm){
+
+  message.className="form-message error";
+  message.textContent="Veuillez remplir tous les champs.";
+  return;
+ }
+
+ if(password.length<6){
+
+  message.className="form-message error";
+  message.textContent="Le mot de passe doit contenir au moins 6 caractères.";
+  return;
+ }
+
+ if(password!==confirm){
+
+  message.className="form-message error";
+  message.textContent="Les deux mots de passe ne correspondent pas.";
+  return;
+ }
+
+ demoUser={
+  name:name,
+  country:countryName,
+  prefix:prefix,
+  phone:phone,
+  fullPhone:prefix+" "+phone,
+  role:"GRATUIT"
+ };
+
+ updateProfile();
+
+ message.className="form-message success";
+ message.textContent="Compte créé avec succès.";
+
+ setTimeout(()=>{
+  openPage("profile");
+ },600);
+
+}
+
+
+/* CONNEXION DE DÉMONSTRATION */
+
+function loginUser(){
+
+ const prefix=document.getElementById("loginCountry").value;
+ let phone=document.getElementById("loginPhone").value.trim();
+ const password=document.getElementById("loginPassword").value;
+
+ const message=document.getElementById("loginMessage");
+
+ message.className="form-message";
+ message.textContent="";
+
+ phone=phone.replace(/\s+/g,"");
+
+ if(!phone || !password){
+
+  message.className="form-message error";
+  message.textContent="Veuillez saisir votre numéro et votre mot de passe.";
+  return;
+ }
+
+ /*
+ Pour le prototype uniquement.
+ Quand Supabase sera connecté, cette partie vérifiera
+ réellement le numéro et le mot de passe.
+ */
+
+ demoUser={
+  name:"Utilisateur CouponIQ",
+  prefix:prefix,
+  phone:phone,
+  fullPhone:prefix+" "+phone,
+  role:"GRATUIT"
+ };
+
+ updateProfile();
+ openPage("profile");
+
+}
+
+
+/* MISE À JOUR DU PROFIL */
+
+function updateProfile(){
+
+ const guest=document.getElementById("guestProfile");
+ const connected=document.getElementById("connectedProfile");
+
+ if(demoUser){
+
+  guest.style.display="none";
+  connected.style.display="block";
+
+  document.getElementById("profileName").textContent=demoUser.name;
+  document.getElementById("profilePhone").textContent=demoUser.fullPhone;
+
+  const firstLetter=
+  demoUser.name.trim().charAt(0).toUpperCase();
+
+  document.getElementById("profileInitial").textContent=
+  firstLetter || "C";
+
+ }else{
+
+  guest.style.display="block";
+  connected.style.display="none";
+
+ }
+
+}
+
+
+/* DÉCONNEXION */
+
+function logoutUser(){
+
+ demoUser=null;
+
+ updateProfile();
+
+ openPage("profile");
 
 }
 
