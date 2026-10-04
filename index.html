@@ -8,41 +8,30 @@
 <title>CouponIQ - Analyses sportives</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 :root{
   --green:#00ed73;
-  --green2:#00c962;
   --bg:#06100c;
   --card:#0d1915;
   --card2:#101e19;
   --border:#1c3028;
-  --text:#ffffff;
+  --text:#fff;
   --muted:#94a49d;
   --orange:#ffad42;
   --red:#ff5b69;
 }
 
-html{
-  scroll-behavior:smooth;
-}
-
 body{
   font-family:Arial,Helvetica,sans-serif;
   background:
-    radial-gradient(circle at top right,rgba(0,237,115,.08),transparent 30%),
-    var(--bg);
+  radial-gradient(circle at top right,rgba(0,237,115,.08),transparent 30%),
+  var(--bg);
   color:var(--text);
   min-height:100vh;
 }
 
-button{
-  font-family:inherit;
-}
+button{font-family:inherit}
 
 .app{
   width:100%;
@@ -77,17 +66,13 @@ button{
 .brand-name{
   font-size:23px;
   font-weight:900;
-  letter-spacing:-1px;
 }
 
-.brand-name span{
-  color:var(--green);
-}
+.brand-name span{color:var(--green)}
 
 .brand-sub{
   color:var(--muted);
   font-size:10px;
-  margin-top:2px;
 }
 
 .partner-top{
@@ -101,17 +86,10 @@ button{
   cursor:pointer;
 }
 
-main{
-  padding:0 15px;
-}
+main{padding:0 15px}
 
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
+.page{display:none}
+.page.active{display:block}
 
 /* HERO */
 
@@ -119,8 +97,8 @@ main{
   margin-top:8px;
   padding:21px 17px;
   background:
-    linear-gradient(135deg,rgba(0,237,115,.10),transparent 55%),
-    var(--card);
+  linear-gradient(135deg,rgba(0,237,115,.10),transparent 55%),
+  var(--card);
   border:1px solid var(--border);
   border-radius:21px;
 }
@@ -134,14 +112,12 @@ main{
   border-radius:50px;
   font-size:10px;
   font-weight:900;
-  letter-spacing:.7px;
   margin-bottom:12px;
 }
 
 .hero h1{
   font-size:27px;
   line-height:1.12;
-  letter-spacing:-.6px;
 }
 
 .hero p{
@@ -159,14 +135,13 @@ main{
   border-radius:19px;
   border:1px solid rgba(0,237,115,.27);
   background:
-    linear-gradient(135deg,rgba(0,237,115,.11),rgba(0,237,115,.02)),
-    var(--card);
+  linear-gradient(135deg,rgba(0,237,115,.11),rgba(0,237,115,.02)),
+  var(--card);
 }
 
 .premium-top{
   display:flex;
   justify-content:space-between;
-  align-items:flex-start;
   gap:10px;
 }
 
@@ -197,7 +172,7 @@ main{
 .primary-button{
   width:100%;
   border:none;
-  background:linear-gradient(90deg,var(--green),#00d96a);
+  background:var(--green);
   color:#021009;
   font-size:14px;
   font-weight:900;
@@ -206,7 +181,7 @@ main{
   cursor:pointer;
 }
 
-/* SECTION */
+/* TITRES */
 
 .section-head{
   display:flex;
@@ -215,9 +190,7 @@ main{
   margin:23px 2px 11px;
 }
 
-.section-head h2{
-  font-size:20px;
-}
+.section-head h2{font-size:20px}
 
 .section-head span{
   color:var(--muted);
@@ -230,7 +203,6 @@ main{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:8px;
-  margin-bottom:13px;
 }
 
 .program-item{
@@ -251,17 +223,14 @@ main{
   display:block;
   font-size:10px;
   margin-top:5px;
-  line-height:1.25;
 }
 
 .program-item small{
-  display:block;
   color:var(--muted);
   font-size:9px;
-  margin-top:4px;
 }
 
-/* ANALYSES */
+/* CARTES ANALYSES */
 
 .analysis-card{
   position:relative;
@@ -283,9 +252,9 @@ main{
   width:4px;
 }
 
-.confidence::before{background:var(--green);}
-.combined::before{background:var(--orange);}
-.challenge::before{background:var(--red);}
+.confidence::before{background:var(--green)}
+.combined::before{background:var(--orange)}
+.challenge::before{background:var(--red)}
 
 .analysis-head{
   display:flex;
@@ -299,13 +268,9 @@ main{
   letter-spacing:.7px;
 }
 
-.confidence .analysis-type{color:var(--green);}
-.combined .analysis-type{color:var(--orange);}
-.challenge .analysis-type{color:var(--red);}
-
-.lock{
-  font-size:15px;
-}
+.confidence .analysis-type{color:var(--green)}
+.combined .analysis-type{color:var(--orange)}
+.challenge .analysis-type{color:var(--red)}
 
 .analysis-card h3{
   font-size:18px;
@@ -336,62 +301,6 @@ main{
   margin-top:7px;
 }
 
-/* HISTORIQUE ACCUEIL */
-
-.history-preview{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:15px;
-  margin-bottom:12px;
-}
-
-.history-preview-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
-}
-
-.history-preview-top strong{
-  font-size:14px;
-}
-
-.history-link{
-  color:var(--green);
-  font-size:10px;
-  font-weight:800;
-  cursor:pointer;
-}
-
-.history-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:8px;
-  padding:10px 0;
-  border-bottom:1px solid var(--border);
-}
-
-.history-row:last-child{
-  border-bottom:none;
-}
-
-.history-name{
-  font-size:12px;
-  font-weight:700;
-}
-
-.pending{
-  color:#b7c2bd;
-  background:#17231e;
-  border:1px solid #24372f;
-  border-radius:50px;
-  padding:5px 7px;
-  font-size:9px;
-  white-space:nowrap;
-}
-
 /* PAGE HEADER */
 
 .page-header{
@@ -409,103 +318,262 @@ main{
   line-height:1.5;
 }
 
-/* ANALYSES PAGE */
-
-.today-box{
-  display:flex;
-  justify-content:space-between;
+.back{
+  display:inline-flex;
   align-items:center;
-  padding:12px 13px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:13px;
-  margin-bottom:13px;
-}
-
-.today-box strong{
-  font-size:12px;
-}
-
-.today-box span{
+  gap:6px;
   color:var(--green);
-  font-size:10px;
+  font-size:12px;
   font-weight:800;
+  margin:8px 0 18px;
+  cursor:pointer;
 }
 
-.locked-info{
-  margin-top:15px;
-  padding:17px;
-  text-align:center;
-  background:rgba(0,237,115,.05);
-  border:1px solid rgba(0,237,115,.22);
-  border-radius:17px;
-}
+/* DETAIL ANALYSE */
 
-.locked-info h3{
-  font-size:16px;
-}
-
-.locked-info p{
-  color:var(--muted);
-  font-size:11px;
-  line-height:1.5;
-  margin:7px 0 13px;
-}
-
-/* HISTORIQUE */
-
-.history-day{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:17px;
-  padding:15px;
-  margin-bottom:11px;
-}
-
-.history-date{
-  margin-bottom:8px;
-}
-
-.history-date strong{
-  font-size:15px;
-}
-
-.history-date small{
-  display:block;
-  color:var(--muted);
-  margin-top:3px;
-  font-size:10px;
-}
-
-/* PARTENAIRES */
-
-.partner-intro{
+.detail-hero{
   background:
-    linear-gradient(135deg,rgba(0,237,115,.11),transparent),
-    var(--card);
-  border:1px solid rgba(0,237,115,.20);
-  border-radius:19px;
+  linear-gradient(135deg,rgba(0,237,115,.12),transparent),
+  var(--card);
+  border:1px solid rgba(0,237,115,.25);
+  border-radius:20px;
   padding:18px;
   margin-bottom:15px;
 }
 
-.partner-intro span{
+.detail-label{
   color:var(--green);
   font-size:10px;
   font-weight:900;
-  letter-spacing:.7px;
+  letter-spacing:.8px;
 }
 
-.partner-intro h2{
-  font-size:22px;
-  margin:7px 0;
+.detail-hero h1{
+  font-size:25px;
+  margin-top:7px;
 }
 
-.partner-intro p{
+.detail-meta{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:13px;
+}
+
+.meta-pill{
+  background:#14231d;
+  border:1px solid var(--border);
+  border-radius:30px;
+  padding:7px 9px;
+  font-size:10px;
+  color:#c1cec8;
+}
+
+/* MATCH */
+
+.match-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:11px;
+}
+
+.match-number{
+  color:var(--green);
+  font-size:9px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.league{
   color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
+  font-size:10px;
 }
+
+.match-title{
+  font-size:17px;
+  font-weight:900;
+  margin:6px 0;
+}
+
+.match-time{
+  color:var(--muted);
+  font-size:10px;
+  margin-bottom:13px;
+}
+
+.prediction-box{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:12px;
+}
+
+.prediction-label{
+  color:var(--muted);
+  font-size:9px;
+  margin-bottom:4px;
+}
+
+.prediction{
+  font-size:12px;
+  font-weight:800;
+}
+
+.match-odd{
+  color:var(--green);
+  font-size:18px;
+  font-weight:900;
+}
+
+.why{
+  margin-top:13px;
+  padding-top:12px;
+  border-top:1px solid var(--border);
+}
+
+.why strong{
+  font-size:11px;
+  color:#dce5e1;
+}
+
+.why p{
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.5;
+  margin-top:6px;
+}
+
+/* TOTAL */
+
+.total-box{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,237,115,.07);
+  border:1px solid rgba(0,237,115,.25);
+  border-radius:16px;
+  padding:15px;
+  margin:16px 0;
+}
+
+.total-box span{
+  font-size:12px;
+  color:#c4d0cb;
+}
+
+.total-box strong{
+  color:var(--green);
+  font-size:25px;
+}
+
+/* CODES */
+
+.codes{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px;
+}
+
+.codes h2{
+  font-size:18px;
+  margin-bottom:5px;
+}
+
+.codes-sub{
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.4;
+  margin-bottom:14px;
+}
+
+.code-item{
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:12px;
+  margin-top:9px;
+}
+
+.code-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+}
+
+.bookmaker{
+  font-size:11px;
+  font-weight:900;
+}
+
+.code-value{
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:1px;
+  margin-top:6px;
+}
+
+.copy{
+  border:none;
+  background:var(--green);
+  color:#021009;
+  padding:9px 12px;
+  border-radius:9px;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+/* HISTORIQUE */
+
+.history-preview,
+.history-day{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:15px;
+  margin-bottom:11px;
+}
+
+.history-top{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+
+.history-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  padding:10px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.history-row:last-child{border-bottom:none}
+
+.history-name{
+  font-size:12px;
+  font-weight:700;
+}
+
+.pending{
+  color:#b7c2bd;
+  background:#17231e;
+  border:1px solid #24372f;
+  border-radius:50px;
+  padding:5px 7px;
+  font-size:9px;
+}
+
+/* PARTENAIRES */
 
 .partner-card{
   background:var(--card);
@@ -515,72 +583,15 @@ main{
   margin-bottom:12px;
 }
 
-.featured{
-  border-color:rgba(0,237,115,.35);
+.partner-card h3{
+  font-size:17px;
 }
 
-.partner-label{
-  display:inline-block;
-  color:var(--green);
-  background:rgba(0,237,115,.08);
-  border-radius:30px;
-  padding:5px 8px;
-  font-size:9px;
-  font-weight:900;
-  margin-bottom:10px;
-}
-
-.partner-header{
-  display:flex;
-  gap:11px;
-  align-items:center;
-}
-
-.partner-logo{
-  width:49px;
-  height:49px;
-  border-radius:13px;
-  background:#14251e;
-  border:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--green);
-  font-size:20px;
-  font-weight:900;
-}
-
-.partner-info h3{
-  font-size:16px;
-}
-
-.partner-info p{
-  color:var(--muted);
-  font-size:10px;
-  margin-top:4px;
-}
-
-.services{
-  display:flex;
-  gap:6px;
-  margin:13px 0;
-  flex-wrap:wrap;
-}
-
-.service{
-  background:#14231d;
-  border:1px solid var(--border);
-  color:#b9c6c0;
-  padding:6px 8px;
-  border-radius:30px;
-  font-size:9px;
-}
-
-.partner-description{
+.partner-card p{
   color:var(--muted);
   font-size:11px;
   line-height:1.5;
-  margin-bottom:13px;
+  margin:7px 0 13px;
 }
 
 .whatsapp{
@@ -591,8 +602,6 @@ main{
   padding:13px;
   border-radius:11px;
   font-weight:900;
-  font-size:12px;
-  cursor:pointer;
 }
 
 /* PROFIL */
@@ -613,19 +622,9 @@ main{
   background:rgba(0,237,115,.10);
   border:2px solid var(--green);
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   font-size:27px;
-}
-
-.profile-card h2{
-  font-size:19px;
-}
-
-.profile-card p{
-  color:var(--muted);
-  font-size:11px;
-  margin-top:5px;
 }
 
 .profile-option{
@@ -636,40 +635,15 @@ main{
   margin-top:9px;
   display:flex;
   justify-content:space-between;
-  align-items:center;
   font-size:12px;
 }
-
-.profile-left{
-  display:flex;
-  align-items:center;
-  gap:9px;
-}
-
-.profile-icon{
-  width:30px;
-  height:30px;
-  border-radius:9px;
-  background:rgba(0,237,115,.08);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--green);
-}
-
-.arrow{
-  color:var(--muted);
-  font-size:17px;
-}
-
-/* DISCLAIMER */
 
 .responsible{
   text-align:center;
   color:#66756f;
   font-size:9px;
   line-height:1.5;
-  padding:18px 12px 3px;
+  padding:18px 12px;
 }
 
 /* NAV */
@@ -707,9 +681,7 @@ main{
 }
 
 @media(min-width:800px){
-  .app,.bottom-nav{
-    max-width:620px;
-  }
+  .app,.bottom-nav{max-width:620px}
 }
 </style>
 </head>
@@ -720,648 +692,471 @@ main{
 
 <header class="header">
 
-  <div class="brand">
-    <img src="logo-ouponiq.png" alt="CouponIQ">
+<div class="brand">
+<img src="logo-ouponiq.png" alt="CouponIQ">
 
-    <div>
-      <div class="brand-name">
-        Coupon<span>IQ</span>
-      </div>
+<div>
+<div class="brand-name">Coupon<span>IQ</span></div>
+<div class="brand-sub">L'analyse derrière chaque choix.</div>
+</div>
+</div>
 
-      <div class="brand-sub">
-        L'analyse derrière chaque choix.
-      </div>
-    </div>
-  </div>
-
-  <button class="partner-top" onclick="openPage('partners')">
-    Partenaires
-  </button>
+<button class="partner-top" onclick="openPage('partners')">
+Partenaires
+</button>
 
 </header>
 
-
 <main>
 
-<!-- ================= ACCUEIL ================= -->
+<!-- ACCUEIL -->
 
 <section id="home" class="page active">
 
-  <div class="hero">
+<div class="hero">
+<div class="badge">ANALYSES SPORTIVES</div>
 
-    <div class="badge">
-      ANALYSES SPORTIVES
-    </div>
+<h1>Vos analyses de matchs, chaque jour.</h1>
 
-    <h1>
-      Vos analyses de matchs, chaque jour.
-    </h1>
+<p>
+Des sélections sportives étudiées et accompagnées
+d'explications pour mieux comprendre chaque choix.
+</p>
+</div>
 
-    <p>
-      Des sélections sportives étudiées et accompagnées
-      d'explications pour mieux comprendre chaque choix.
-    </p>
+<div class="premium">
 
-  </div>
+<div class="premium-top">
+<div class="premium-title">CouponIQ Premium</div>
 
+<div class="premium-price">
+1 000 F
+<small>/ 30 jours</small>
+</div>
+</div>
 
-  <div class="premium">
+<p>Accédez aux analyses sportives complètes préparées chaque jour.</p>
 
-    <div class="premium-top">
+<button class="primary-button">
+Débloquer toutes les analyses
+</button>
 
-      <div class="premium-title">
-        CouponIQ Premium
-      </div>
+</div>
 
-      <div class="premium-price">
-        1 000 F
-        <small>/ 30 jours</small>
-      </div>
+<div class="section-head">
+<h2>Programme du jour</h2>
+<span>Publication 09h30</span>
+</div>
 
-    </div>
+<div class="program">
 
-    <p>
-      Accédez aux analyses sportives complètes préparées chaque jour.
-    </p>
+<div class="program-item">
+<div class="program-number">5</div>
+<strong>Confiance</strong>
+<small>Cote cible</small>
+</div>
 
-    <button class="primary-button">
-      Débloquer toutes les analyses
-    </button>
+<div class="program-item">
+<div class="program-number">10</div>
+<strong>Combiné</strong>
+<small>Cote cible</small>
+</div>
 
-  </div>
+<div class="program-item">
+<div class="program-number">50</div>
+<strong>Challenge</strong>
+<small>Cote cible</small>
+</div>
 
+</div>
 
-  <div class="section-head">
-    <h2>Programme du jour</h2>
-    <span>Publication 09h30</span>
-  </div>
+<div class="section-head">
+<h2>Analyses du jour</h2>
+<span>Dès 09h30</span>
+</div>
 
+<div class="analysis-card confidence"
+onclick="openDetail('confidence')">
 
-  <div class="program">
+<div class="analysis-head">
+<div class="analysis-type">CONFIANCE DU JOUR</div>
+<div>›</div>
+</div>
 
-    <div class="program-item">
-      <div class="program-number">5</div>
-      <strong>Confiance</strong>
-      <small>Cote cible</small>
-    </div>
+<h3>Confiance du jour</h3>
 
-    <div class="program-item">
-      <div class="program-number">10</div>
-      <strong>Combiné</strong>
-      <small>Cote cible</small>
-    </div>
+<div class="odd-row">
+<div class="odd">5.00</div>
+<div class="odd-label">Cote cible</div>
+</div>
 
-    <div class="program-item">
-      <div class="program-number">50</div>
-      <strong>Challenge</strong>
-      <small>Cote cible</small>
-    </div>
+<p>Appuyez pour ouvrir l'analyse complète.</p>
 
-  </div>
+</div>
 
+<div class="analysis-card combined"
+onclick="openDetail('combined')">
 
-  <div class="section-head">
-    <h2>Analyses du jour</h2>
-    <span>Dès 09h30</span>
-  </div>
+<div class="analysis-head">
+<div class="analysis-type">COMBINÉ DU JOUR</div>
+<div>›</div>
+</div>
 
+<h3>Combiné du jour</h3>
 
-  <div class="analysis-card confidence"
-       onclick="openPage('analyses')">
+<div class="odd-row">
+<div class="odd">10.00</div>
+<div class="odd-label">Cote cible</div>
+</div>
 
-    <div class="analysis-head">
-      <div class="analysis-type">
-        CONFIANCE DU JOUR
-      </div>
-      <div class="lock">🔒</div>
-    </div>
+<p>Appuyez pour ouvrir l'analyse complète.</p>
 
-    <h3>Confiance du jour</h3>
+</div>
 
-    <div class="odd-row">
-      <div class="odd">5.00</div>
-      <div class="odd-label">Cote cible</div>
-    </div>
+<div class="analysis-card challenge"
+onclick="openDetail('challenge')">
 
-    <p>
-      Sélection sportive étudiée avec une approche plus prudente.
-    </p>
+<div class="analysis-head">
+<div class="analysis-type">CHALLENGE 50</div>
+<div>›</div>
+</div>
 
-  </div>
+<h3>Challenge 50</h3>
 
+<div class="odd-row">
+<div class="odd">50.00</div>
+<div class="odd-label">Cote cible</div>
+</div>
 
-  <div class="analysis-card combined"
-       onclick="openPage('analyses')">
+<p>Appuyez pour ouvrir l'analyse complète.</p>
 
-    <div class="analysis-head">
-      <div class="analysis-type">
-        COMBINÉ DU JOUR
-      </div>
-      <div class="lock">🔒</div>
-    </div>
+</div>
 
-    <h3>Combiné du jour</h3>
+<div class="section-head">
 
-    <div class="odd-row">
-      <div class="odd">10.00</div>
-      <div class="odd-label">Cote cible</div>
-    </div>
+<h2>Historique récent</h2>
 
-    <p>
-      Plusieurs événements sélectionnés pour composer le combiné.
-    </p>
+<span onclick="openPage('history')"
+style="color:var(--green);cursor:pointer">
+Voir les 30 jours
+</span>
 
-  </div>
+</div>
 
+<div class="history-preview">
 
-  <div class="analysis-card challenge"
-       onclick="openPage('analyses')">
+<div class="history-top">
+<strong>Hier</strong>
+<span style="font-size:9px;color:var(--muted)">
+Journée précédente
+</span>
+</div>
 
-    <div class="analysis-head">
-      <div class="analysis-type">
-        CHALLENGE 50
-      </div>
-      <div class="lock">🔒</div>
-    </div>
+<div class="history-row">
+<div class="history-name">Confiance du jour</div>
+<div class="pending">Résultat à renseigner</div>
+</div>
 
-    <h3>Challenge 50</h3>
+<div class="history-row">
+<div class="history-name">Combiné du jour</div>
+<div class="pending">Résultat à renseigner</div>
+</div>
 
-    <div class="odd-row">
-      <div class="odd">50.00</div>
-      <div class="odd-label">Cote cible</div>
-    </div>
+<div class="history-row">
+<div class="history-name">Challenge 50</div>
+<div class="pending">Résultat à renseigner</div>
+</div>
 
-    <p>
-      Une sélection à cote élevée destinée au Challenge 50.
-    </p>
+</div>
 
-  </div>
-
-
-  <div class="section-head">
-
-    <h2>Historique récent</h2>
-
-    <span class="history-link"
-          onclick="openPage('history')">
-      Voir les 30 jours
-    </span>
-
-  </div>
-
-
-  <div class="history-preview">
-
-    <div class="history-preview-top">
-      <strong>Hier</strong>
-      <span style="color:var(--muted);font-size:9px;">
-        Journée précédente
-      </span>
-    </div>
-
-
-    <div class="history-row">
-      <div class="history-name">
-        Confiance du jour
-      </div>
-
-      <div class="pending">
-        Résultat à renseigner
-      </div>
-    </div>
-
-
-    <div class="history-row">
-      <div class="history-name">
-        Combiné du jour
-      </div>
-
-      <div class="pending">
-        Résultat à renseigner
-      </div>
-    </div>
-
-
-    <div class="history-row">
-      <div class="history-name">
-        Challenge 50
-      </div>
-
-      <div class="pending">
-        Résultat à renseigner
-      </div>
-    </div>
-
-  </div>
-
-
-  <div class="responsible">
-    CouponIQ fournit des analyses sportives à titre informatif.
-    Aucun résultat n'est garanti.
-  </div>
+<div class="responsible">
+CouponIQ fournit des analyses sportives à titre informatif.
+Aucun résultat n'est garanti.
+</div>
 
 </section>
 
-
-<!-- ================= ANALYSES ================= -->
+<!-- ANALYSES -->
 
 <section id="analyses" class="page">
 
-  <div class="page-header">
+<div class="page-header">
+<h1>Analyses du jour</h1>
+<p>Sélectionnez l'analyse que vous souhaitez consulter.</p>
+</div>
 
-    <h1>Analyses du jour</h1>
+<div class="analysis-card confidence"
+onclick="openDetail('confidence')">
 
-    <p>
-      Découvrez les analyses sportives préparées
-      pour la journée.
-    </p>
+<div class="analysis-type">CONFIANCE DU JOUR</div>
+<h3>Confiance du jour</h3>
 
-  </div>
+<div class="odd-row">
+<div class="odd">5.00</div>
+<div class="odd-label">Cote cible</div>
+</div>
 
+<p>Voir l'analyse complète ›</p>
+</div>
 
-  <div class="today-box">
-    <strong>Aujourd'hui</strong>
-    <span>Disponibles dès 09h30</span>
-  </div>
+<div class="analysis-card combined"
+onclick="openDetail('combined')">
 
+<div class="analysis-type">COMBINÉ DU JOUR</div>
+<h3>Combiné du jour</h3>
 
-  <div class="analysis-card confidence">
+<div class="odd-row">
+<div class="odd">10.00</div>
+<div class="odd-label">Cote cible</div>
+</div>
 
-    <div class="analysis-head">
-      <div class="analysis-type">
-        CONFIANCE DU JOUR
-      </div>
-      <div class="lock">🔒</div>
-    </div>
+<p>Voir l'analyse complète ›</p>
+</div>
 
-    <h3>Confiance du jour</h3>
+<div class="analysis-card challenge"
+onclick="openDetail('challenge')">
 
-    <div class="odd-row">
-      <div class="odd">5.00</div>
-      <div class="odd-label">Cote cible</div>
-    </div>
+<div class="analysis-type">CHALLENGE 50</div>
+<h3>Challenge 50</h3>
 
-    <p>
-      Matchs sélectionnés et explications détaillées.
-    </p>
+<div class="odd-row">
+<div class="odd">50.00</div>
+<div class="odd-label">Cote cible</div>
+</div>
 
-  </div>
-
-
-  <div class="analysis-card combined">
-
-    <div class="analysis-head">
-      <div class="analysis-type">
-        COMBINÉ DU JOUR
-      </div>
-      <div class="lock">🔒</div>
-    </div>
-
-    <h3>Combiné du jour</h3>
-
-    <div class="odd-row">
-      <div class="odd">10.00</div>
-      <div class="odd-label">Cote cible</div>
-    </div>
-
-    <p>
-      Retrouvez chaque sélection et le raisonnement
-      derrière le choix.
-    </p>
-
-  </div>
-
-
-  <div class="analysis-card challenge">
-
-    <div class="analysis-head">
-      <div class="analysis-type">
-        CHALLENGE 50
-      </div>
-      <div class="lock">🔒</div>
-    </div>
-
-    <h3>Challenge 50</h3>
-
-    <div class="odd-row">
-      <div class="odd">50.00</div>
-      <div class="odd-label">Cote cible</div>
-    </div>
-
-    <p>
-      Retrouvez les sélections composant le Challenge 50.
-    </p>
-
-  </div>
-
-
-  <div class="locked-info">
-
-    <h3>Contenu Premium</h3>
-
-    <p>
-      Débloquez les analyses complètes pour voir les matchs,
-      les pronostics et les explications.
-    </p>
-
-    <button class="primary-button">
-      Débloquer toutes les analyses
-    </button>
-
-  </div>
+<p>Voir l'analyse complète ›</p>
+</div>
 
 </section>
 
+<!-- DETAIL -->
 
-<!-- ================= HISTORIQUE ================= -->
+<section id="detail" class="page">
+
+<div class="back" onclick="openPage('analyses')">
+← Retour aux analyses
+</div>
+
+<div class="detail-hero">
+
+<div class="detail-label" id="detailLabel">
+ANALYSE DU JOUR
+</div>
+
+<h1 id="detailTitle">
+Confiance du jour
+</h1>
+
+<div class="detail-meta">
+
+<div class="meta-pill">
+Cote cible :
+<strong id="targetOdd">5.00</strong>
+</div>
+
+<div class="meta-pill">
+Aujourd'hui
+</div>
+
+<div class="meta-pill">
+Publication 09h30
+</div>
+
+</div>
+
+</div>
+
+<div id="matches"></div>
+
+<div class="total-box">
+<span>Cote totale du coupon</span>
+<strong id="totalOdd">5.08</strong>
+</div>
+
+<div class="codes">
+
+<h2>Codes du coupon</h2>
+
+<div class="codes-sub">
+Copiez directement le code correspondant à votre plateforme.
+</div>
+
+<div class="code-item">
+
+<div class="code-top">
+
+<div>
+<div class="bookmaker">1xBet</div>
+<div class="code-value" id="code1xbet">ABC123</div>
+</div>
+
+<button class="copy"
+onclick="copyCode('code1xbet',this)">
+Copier
+</button>
+
+</div>
+
+</div>
+
+<div class="code-item">
+
+<div class="code-top">
+
+<div>
+<div class="bookmaker">BetWinner</div>
+<div class="code-value" id="codeBetwinner">XYZ456</div>
+</div>
+
+<button class="copy"
+onclick="copyCode('codeBetwinner',this)">
+Copier
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="responsible">
+Les matchs, pronostics, cotes, explications et codes
+seront renseignés par l'administrateur CouponIQ.
+</div>
+
+</section>
+
+<!-- HISTORIQUE -->
 
 <section id="history" class="page">
 
-  <div class="page-header">
+<div class="page-header">
+<h1>Historique</h1>
 
-    <h1>Historique</h1>
+<p>
+Consultez les analyses des 30 derniers jours
+et les résultats renseignés après les matchs.
+</p>
+</div>
 
-    <p>
-      Consultez gratuitement les analyses des
-      30 derniers jours et leurs résultats.
-    </p>
+<div class="history-day">
 
-  </div>
+<div class="history-top">
+<strong>Hier</strong>
+<span style="font-size:9px;color:var(--muted)">
+Journée précédente
+</span>
+</div>
 
+<div class="history-row">
+<div class="history-name">Confiance du jour</div>
+<div class="pending">Résultat à renseigner</div>
+</div>
 
-  <div class="history-day">
+<div class="history-row">
+<div class="history-name">Combiné du jour</div>
+<div class="pending">Résultat à renseigner</div>
+</div>
 
-    <div class="history-date">
-      <strong>Hier</strong>
-      <small>Journée précédente</small>
-    </div>
+<div class="history-row">
+<div class="history-name">Challenge 50</div>
+<div class="pending">Résultat à renseigner</div>
+</div>
 
-
-    <div class="history-row">
-      <div class="history-name">
-        Confiance du jour
-      </div>
-
-      <div class="pending">
-        Résultat à renseigner
-      </div>
-    </div>
-
-
-    <div class="history-row">
-      <div class="history-name">
-        Combiné du jour
-      </div>
-
-      <div class="pending">
-        Résultat à renseigner
-      </div>
-    </div>
-
-
-    <div class="history-row">
-      <div class="history-name">
-        Challenge 50
-      </div>
-
-      <div class="pending">
-        Résultat à renseigner
-      </div>
-    </div>
-
-  </div>
-
-
-  <div class="history-day">
-
-    <div class="history-date">
-      <strong>Journées précédentes</strong>
-      <small>Historique jusqu'à 30 jours</small>
-    </div>
-
-  </div>
-
-
-  <div class="responsible">
-    Les résultats sont renseignés après les matchs.
-    Aucun résultat n'est attribué automatiquement.
-  </div>
+</div>
 
 </section>
 
-
-<!-- ================= PARTENAIRES ================= -->
+<!-- PARTENAIRES -->
 
 <section id="partners" class="page">
 
-  <div class="page-header">
+<div class="page-header">
+<h1>Nos partenaires</h1>
 
-    <h1>Nos partenaires</h1>
+<p>
+Retrouvez les partenaires de dépôt et retrait
+et contactez-les directement.
+</p>
+</div>
 
-    <p>
-      Retrouvez des partenaires de dépôt et retrait
-      et contactez-les directement.
-    </p>
+<div class="partner-card">
 
-  </div>
+<h3>Nom du partenaire</h3>
 
+<p>
+Ouagadougou • Quartier / Zone<br>
+Services : Dépôt & Retrait
+</p>
 
-  <div class="partner-intro">
+<button class="whatsapp">
+Contacter sur WhatsApp
+</button>
 
-    <span>PARTENAIRES COUPONIQ</span>
+</div>
 
-    <h2>Dépôt & Retrait</h2>
+<div class="partner-card">
 
-    <p>
-      Trouvez facilement un partenaire, consultez ses
-      informations et contactez-le directement sur WhatsApp.
-    </p>
+<h3>Nom du partenaire</h3>
 
-  </div>
+<p>
+Ouagadougou • Quartier / Zone<br>
+Services : Dépôt & Retrait
+</p>
 
+<button class="whatsapp">
+Contacter sur WhatsApp
+</button>
 
-  <!-- EXEMPLE PARTENAIRE -->
-
-  <div class="partner-card featured">
-
-    <div class="partner-label">
-      PARTENAIRE À LA UNE
-    </div>
-
-
-    <div class="partner-header">
-
-      <div class="partner-logo">
-        P
-      </div>
-
-      <div class="partner-info">
-
-        <h3>Nom du partenaire</h3>
-
-        <p>
-          Ouagadougou • Quartier / Zone
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <div class="services">
-
-      <div class="service">Dépôt</div>
-      <div class="service">Retrait</div>
-      <div class="service">Disponible aujourd'hui</div>
-
-    </div>
-
-
-    <div class="partner-description">
-      Consultez les informations de ce partenaire
-      et contactez-le pour connaître les modalités
-      de dépôt ou de retrait.
-    </div>
-
-
-    <button class="whatsapp">
-      Contacter sur WhatsApp
-    </button>
-
-  </div>
-
-
-  <div class="partner-card">
-
-    <div class="partner-header">
-
-      <div class="partner-logo">
-        P
-      </div>
-
-      <div class="partner-info">
-
-        <h3>Nom du partenaire</h3>
-
-        <p>
-          Ouagadougou • Quartier / Zone
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <div class="services">
-
-      <div class="service">Dépôt</div>
-      <div class="service">Retrait</div>
-
-    </div>
-
-
-    <div class="partner-description">
-      Point partenaire disponible pour vos opérations.
-      Contactez directement le partenaire pour plus
-      d'informations.
-    </div>
-
-
-    <button class="whatsapp">
-      Contacter sur WhatsApp
-    </button>
-
-  </div>
+</div>
 
 </section>
 
-
-<!-- ================= PROFIL ================= -->
+<!-- PROFIL -->
 
 <section id="profile" class="page">
 
-  <div class="page-header">
+<div class="page-header">
+<h1>Mon profil</h1>
+<p>Gérez votre compte et vos services CouponIQ.</p>
+</div>
 
-    <h1>Mon profil</h1>
+<div class="profile-card">
 
-    <p>
-      Gérez votre compte et vos services CouponIQ.
-    </p>
+<div class="avatar">◎</div>
 
-  </div>
+<h2>Mon compte CouponIQ</h2>
 
+<p style="color:var(--muted);font-size:11px;margin-top:5px">
+Espace personnel
+</p>
 
-  <div class="profile-card">
+</div>
 
-    <div class="avatar">◎</div>
+<div class="profile-option">
+<span>Mon abonnement</span>
+<span>›</span>
+</div>
 
-    <h2>Mon compte CouponIQ</h2>
+<div class="profile-option">
+<span>Parrainage & affiliation</span>
+<span>›</span>
+</div>
 
-    <p>
-      Connectez-vous pour accéder à votre espace personnel.
-    </p>
+<div class="profile-option">
+<span>Notifications</span>
+<span>›</span>
+</div>
 
-  </div>
+<div class="profile-option">
+<span>Aide & assistance</span>
+<span>›</span>
+</div>
 
-
-  <div class="profile-option">
-
-    <div class="profile-left">
-      <div class="profile-icon">★</div>
-      <span>Mon abonnement</span>
-    </div>
-
-    <div class="arrow">›</div>
-
-  </div>
-
-
-  <div class="profile-option">
-
-    <div class="profile-left">
-      <div class="profile-icon">↗</div>
-      <span>Parrainage & affiliation</span>
-    </div>
-
-    <div class="arrow">›</div>
-
-  </div>
-
-
-  <div class="profile-option">
-
-    <div class="profile-left">
-      <div class="profile-icon">♢</div>
-      <span>Notifications</span>
-    </div>
-
-    <div class="arrow">›</div>
-
-  </div>
-
-
-  <div class="profile-option">
-
-    <div class="profile-left">
-      <div class="profile-icon">?</div>
-      <span>Aide & assistance</span>
-    </div>
-
-    <div class="arrow">›</div>
-
-  </div>
-
-
-  <div class="profile-option">
-
-    <div class="profile-left">
-      <div class="profile-icon">⚙</div>
-      <span>Paramètres</span>
-    </div>
-
-    <div class="arrow">›</div>
-
-  </div>
+<div class="profile-option">
+<span>Paramètres</span>
+<span>›</span>
+</div>
 
 </section>
 
@@ -1369,81 +1164,268 @@ main{
 
 </div>
 
-
-<!-- ================= NAVIGATION ================= -->
-
 <nav class="bottom-nav">
 
-  <div class="nav-item active"
-       data-page="home"
-       onclick="openPage('home')">
+<div class="nav-item active"
+data-page="home"
+onclick="openPage('home')">
+<div class="nav-icon">⌂</div>
+Accueil
+</div>
 
-    <div class="nav-icon">⌂</div>
-    Accueil
+<div class="nav-item"
+data-page="analyses"
+onclick="openPage('analyses')">
+<div class="nav-icon">▥</div>
+Analyses
+</div>
 
-  </div>
+<div class="nav-item"
+data-page="history"
+onclick="openPage('history')">
+<div class="nav-icon">◷</div>
+Historique
+</div>
 
-
-  <div class="nav-item"
-       data-page="analyses"
-       onclick="openPage('analyses')">
-
-    <div class="nav-icon">▥</div>
-    Analyses
-
-  </div>
-
-
-  <div class="nav-item"
-       data-page="history"
-       onclick="openPage('history')">
-
-    <div class="nav-icon">◷</div>
-    Historique
-
-  </div>
-
-
-  <div class="nav-item"
-       data-page="profile"
-       onclick="openPage('profile')">
-
-    <div class="nav-icon">○</div>
-    Profil
-
-  </div>
+<div class="nav-item"
+data-page="profile"
+onclick="openPage('profile')">
+<div class="nav-icon">○</div>
+Profil
+</div>
 
 </nav>
 
-
 <script>
+
+/* EXEMPLES VISUELS POUR LE PROTOTYPE */
+
+const analyses = {
+
+confidence:{
+ title:"Confiance du jour",
+ label:"CONFIANCE DU JOUR",
+ target:"5.00",
+ total:"5.08",
+ code1:"CF5XBET",
+ code2:"CF5BETW",
+
+ matches:[
+  {
+   league:"Premier League",
+   match:"Manchester City vs Arsenal",
+   time:"18h30",
+   prediction:"Plus de 1,5 buts",
+   odd:"1.45",
+   why:"Exemple d'explication. Ici apparaîtra ton analyse personnelle expliquant pourquoi tu as sélectionné ce pronostic."
+  },
+  {
+   league:"La Liga",
+   match:"Real Madrid vs Villarreal",
+   time:"20h00",
+   prediction:"Real Madrid ou nul",
+   odd:"1.32",
+   why:"Ici apparaîtra ton explication personnelle concernant cette sélection."
+  },
+  {
+   league:"Serie A",
+   match:"Inter Milan vs Torino",
+   time:"20h45",
+   prediction:"Plus de 1,5 buts",
+   odd:"1.40",
+   why:"Ton raisonnement et les éléments importants de ton analyse seront affichés ici."
+  }
+ ]
+},
+
+combined:{
+ title:"Combiné du jour",
+ label:"COMBINÉ DU JOUR",
+ target:"10.00",
+ total:"10.24",
+ code1:"C10XBET",
+ code2:"C10BETW",
+
+ matches:[
+  {
+   league:"Premier League",
+   match:"Liverpool vs Chelsea",
+   time:"17h30",
+   prediction:"Plus de 1,5 buts",
+   odd:"1.42",
+   why:"Exemple d'explication pour cette sélection."
+  },
+  {
+   league:"La Liga",
+   match:"Barcelona vs Sevilla",
+   time:"20h00",
+   prediction:"Barcelona ou nul",
+   odd:"1.28",
+   why:"Ton analyse personnelle sera affichée ici."
+  },
+  {
+   league:"Ligue 1",
+   match:"Paris SG vs Lyon",
+   time:"20h45",
+   prediction:"Plus de 2 buts",
+   odd:"1.55",
+   why:"Ton raisonnement concernant ce match sera affiché ici."
+  }
+ ]
+},
+
+challenge:{
+ title:"Challenge 50",
+ label:"CHALLENGE 50",
+ target:"50.00",
+ total:"51.30",
+ code1:"CH50XBET",
+ code2:"CH50BETW",
+
+ matches:[
+  {
+   league:"Champions League",
+   match:"Équipe A vs Équipe B",
+   time:"19h00",
+   prediction:"Pronostic exemple",
+   odd:"1.70",
+   why:"Ici apparaîtra ton explication pour le Challenge 50."
+  },
+  {
+   league:"Premier League",
+   match:"Équipe C vs Équipe D",
+   time:"21h00",
+   prediction:"Pronostic exemple",
+   odd:"1.65",
+   why:"Ton analyse personnelle sera affichée ici."
+  }
+ ]
+}
+
+};
+
+
+/* NAVIGATION */
 
 function openPage(pageId){
 
-  document.querySelectorAll(".page").forEach(function(page){
-    page.classList.remove("active");
-  });
+ document.querySelectorAll(".page").forEach(page=>{
+  page.classList.remove("active");
+ });
 
-  document.getElementById(pageId).classList.add("active");
+ document.getElementById(pageId).classList.add("active");
+
+ document.querySelectorAll(".nav-item").forEach(item=>{
+  item.classList.remove("active");
+ });
+
+ const nav =
+ document.querySelector('.nav-item[data-page="'+pageId+'"]');
+
+ if(nav){
+  nav.classList.add("active");
+ }
+
+ window.scrollTo(0,0);
+}
 
 
-  document.querySelectorAll(".nav-item").forEach(function(item){
-    item.classList.remove("active");
-  });
+/* OUVERTURE DIRECTE ANALYSE */
+
+function openDetail(type){
+
+ const data=analyses[type];
+
+ document.getElementById("detailTitle").textContent=data.title;
+ document.getElementById("detailLabel").textContent=data.label;
+ document.getElementById("targetOdd").textContent=data.target;
+ document.getElementById("totalOdd").textContent=data.total;
+ document.getElementById("code1xbet").textContent=data.code1;
+ document.getElementById("codeBetwinner").textContent=data.code2;
+
+ let html="";
+
+ data.matches.forEach((m,index)=>{
+
+ html+=`
+
+ <div class="match-card">
+
+   <div class="match-number">
+     SÉLECTION ${index+1}
+   </div>
+
+   <div class="league">
+     ${m.league}
+   </div>
+
+   <div class="match-title">
+     ${m.match}
+   </div>
+
+   <div class="match-time">
+     Coup d'envoi • ${m.time}
+   </div>
+
+   <div class="prediction-box">
+
+     <div>
+       <div class="prediction-label">
+         PRONOSTIC
+       </div>
+
+       <div class="prediction">
+         ${m.prediction}
+       </div>
+     </div>
+
+     <div class="match-odd">
+       ${m.odd}
+     </div>
+
+   </div>
+
+   <div class="why">
+
+     <strong>
+       Pourquoi ce choix ?
+     </strong>
+
+     <p>
+       ${m.why}
+     </p>
+
+   </div>
+
+ </div>
+
+ `;
+
+ });
+
+ document.getElementById("matches").innerHTML=html;
+
+ openPage("detail");
+}
 
 
-  const nav =
-    document.querySelector('.nav-item[data-page="' + pageId + '"]');
+/* COPIER CODE */
 
-  if(nav){
-    nav.classList.add("active");
-  }
+function copyCode(id,button){
 
+ const code=document.getElementById(id).textContent;
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+ navigator.clipboard.writeText(code).then(()=>{
+
+  const old=button.textContent;
+
+  button.textContent="Copié ✓";
+
+  setTimeout(()=>{
+   button.textContent=old;
+  },1500);
+
+ });
 
 }
 
