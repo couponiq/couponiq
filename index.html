@@ -525,6 +525,18 @@ main{padding:0 15px}
   cursor:pointer;
 }
 
+.loading-box,
+.empty-box{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px 16px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+}
+
 /* HISTORIQUE */
 
 .history-preview,
@@ -1152,7 +1164,7 @@ Aucun résultat n'est garanti.
 <div class="odd">5.00</div>
 <div class="odd-label">Cote cible</div>
 </div>
-<p>Appuyez pour consulter ›</p>
+<p class="analysis-access-text">Appuyez pour consulter ›</p>
 </div>
 
 <div class="analysis-card combined" onclick="requestAnalysis('combined')">
@@ -1165,7 +1177,7 @@ Aucun résultat n'est garanti.
 <div class="odd">10.00</div>
 <div class="odd-label">Cote cible</div>
 </div>
-<p>Appuyez pour consulter ›</p>
+<p class="analysis-access-text">Appuyez pour consulter ›</p>
 </div>
 
 <div class="analysis-card challenge" onclick="requestAnalysis('challenge')">
@@ -1178,7 +1190,7 @@ Aucun résultat n'est garanti.
 <div class="odd">50.00</div>
 <div class="odd-label">Cote cible</div>
 </div>
-<p>Appuyez pour consulter ›</p>
+<p class="analysis-access-text">Appuyez pour consulter ›</p>
 </div>
 
 </section>
@@ -1242,6 +1254,7 @@ border-radius:14px;
 padding:15px;
 margin:15px 0 17px;
 ">
+
 <div style="font-size:11px;color:var(--muted);margin-bottom:5px">
 CouponIQ Premium
 </div>
@@ -1252,6 +1265,7 @@ CouponIQ Premium
 / 30 jours
 </span>
 </div>
+
 </div>
 
 <button class="primary-button" onclick="premiumPaymentComingSoon()">
@@ -1270,6 +1284,12 @@ Débloquer toutes les analyses
 ← Retour aux analyses
 </div>
 
+<div id="detailLoading" class="loading-box">
+Chargement sécurisé de l'analyse...
+</div>
+
+<div id="detailContent" style="display:none">
+
 <div class="detail-hero">
 
 <div class="detail-label" id="detailLabel">
@@ -1277,17 +1297,20 @@ ANALYSE DU JOUR
 </div>
 
 <h1 id="detailTitle">
-Confiance du jour
+Analyse du jour
 </h1>
 
 <div class="detail-meta">
 
 <div class="meta-pill">
 Cote cible :
-<strong id="targetOdd">5.00</strong>
+<strong id="targetOdd">—</strong>
 </div>
 
-<div class="meta-pill">Aujourd'hui</div>
+<div class="meta-pill" id="analysisDateLabel">
+Aujourd'hui
+</div>
+
 <div class="meta-pill">Publication 09h30</div>
 
 </div>
@@ -1298,7 +1321,7 @@ Cote cible :
 
 <div class="total-box">
 <span>Cote totale du coupon</span>
-<strong id="totalOdd">5.08</strong>
+<strong id="totalOdd">—</strong>
 </div>
 
 <div class="codes">
@@ -1314,7 +1337,7 @@ Copiez directement le code correspondant à votre plateforme.
 
 <div>
 <div class="bookmaker">1xBet</div>
-<div class="code-value" id="code1xbet">ABC123</div>
+<div class="code-value" id="code1xbet">—</div>
 </div>
 
 <button class="copy" onclick="copyCode('code1xbet',this)">
@@ -1329,7 +1352,7 @@ Copier
 
 <div>
 <div class="bookmaker">BetWinner</div>
-<div class="code-value" id="codeBetwinner">XYZ456</div>
+<div class="code-value" id="codeBetwinner">—</div>
 </div>
 
 <button class="copy" onclick="copyCode('codeBetwinner',this)">
@@ -1342,8 +1365,14 @@ Copier
 </div>
 
 <div class="responsible">
-Les matchs, pronostics, cotes, explications et codes
-seront renseignés par l'administrateur CouponIQ.
+CouponIQ fournit des analyses sportives à titre informatif.
+Aucun résultat n'est garanti.
+</div>
+
+</div>
+
+<div id="detailEmpty" class="empty-box" style="display:none">
+Cette analyse n'a pas encore été publiée.
 </div>
 
 </section>
@@ -1757,6 +1786,10 @@ function openPage(pageId){
     navPage="profile";
   }
 
+  if(pageId==="detail"){
+    navPage="analyses";
+  }
+
   const nav=document.querySelector(
     '.nav-item[data-page="'+navPage+'"]'
   );
@@ -1768,113 +1801,7 @@ function openPage(pageId){
 
 
 /* ==============================
-   ANALYSES
-================================ */
-
-const analyses={
-
-confidence:{
- title:"Confiance du jour",
- label:"CONFIANCE DU JOUR",
- target:"5.00",
- total:"5.08",
- code1:"CF5XBET",
- code2:"CF5BETW",
- matches:[
-  {
-   league:"Premier League",
-   match:"Manchester City vs Arsenal",
-   time:"18h30",
-   prediction:"Plus de 1,5 buts",
-   odd:"1.45",
-   why:"Exemple d'explication. Ici apparaîtra ton analyse personnelle expliquant pourquoi tu as sélectionné ce pronostic."
-  },
-  {
-   league:"La Liga",
-   match:"Real Madrid vs Villarreal",
-   time:"20h00",
-   prediction:"Real Madrid ou nul",
-   odd:"1.32",
-   why:"Ici apparaîtra ton explication personnelle concernant cette sélection."
-  },
-  {
-   league:"Serie A",
-   match:"Inter Milan vs Torino",
-   time:"20h45",
-   prediction:"Plus de 1,5 buts",
-   odd:"1.40",
-   why:"Ton raisonnement et les éléments importants de ton analyse seront affichés ici."
-  }
- ]
-},
-
-combined:{
- title:"Combiné du jour",
- label:"COMBINÉ DU JOUR",
- target:"10.00",
- total:"10.24",
- code1:"C10XBET",
- code2:"C10BETW",
- matches:[
-  {
-   league:"Premier League",
-   match:"Liverpool vs Chelsea",
-   time:"17h30",
-   prediction:"Plus de 1,5 buts",
-   odd:"1.42",
-   why:"Exemple d'explication pour cette sélection."
-  },
-  {
-   league:"La Liga",
-   match:"Barcelona vs Sevilla",
-   time:"20h00",
-   prediction:"Barcelona ou nul",
-   odd:"1.28",
-   why:"Ton analyse personnelle sera affichée ici."
-  },
-  {
-   league:"Ligue 1",
-   match:"Paris SG vs Lyon",
-   time:"20h45",
-   prediction:"Plus de 2 buts",
-   odd:"1.55",
-   why:"Ton raisonnement concernant ce match sera affiché ici."
-  }
- ]
-},
-
-challenge:{
- title:"Challenge 50",
- label:"CHALLENGE 50",
- target:"50.00",
- total:"51.30",
- code1:"CH50XBET",
- code2:"CH50BETW",
- matches:[
-  {
-   league:"Champions League",
-   match:"Équipe A vs Équipe B",
-   time:"19h00",
-   prediction:"Pronostic exemple",
-   odd:"1.70",
-   why:"Ici apparaîtra ton explication pour le Challenge 50."
-  },
-  {
-   league:"Premier League",
-   match:"Équipe C vs Équipe D",
-   time:"21h00",
-   prediction:"Pronostic exemple",
-   odd:"1.65",
-   why:"Ton analyse personnelle sera affichée ici."
-  }
- ]
-}
-
-};
-
-
-/* ==============================
-   ÉTAT UTILISATEUR
+   ÉTAT
 ================================ */
 
 let currentUser=null;
@@ -1889,10 +1816,7 @@ let supabaseClient=null;
 
 function getCurrentRole(){
 
-  if(
-    currentProfile &&
-    currentProfile.role
-  ){
+  if(currentProfile && currentProfile.role){
     return String(currentProfile.role).toUpperCase();
   }
 
@@ -1912,7 +1836,62 @@ function hasPremiumAccess(){
 
 
 /* ==============================
-   CHARGER PROFIL SUPABASE
+   DATE LOCALE
+================================ */
+
+function getLocalDateString(){
+
+  const now=new Date();
+
+  const year=now.getFullYear();
+
+  const month=String(
+    now.getMonth()+1
+  ).padStart(2,"0");
+
+  const day=String(
+    now.getDate()
+  ).padStart(2,"0");
+
+  return year+"-"+month+"-"+day;
+}
+
+
+function formatKickoff(value){
+
+  if(!value){
+    return "Horaire à renseigner";
+  }
+
+  const date=new Date(value);
+
+  if(Number.isNaN(date.getTime())){
+    return "Horaire à renseigner";
+  }
+
+  return date.toLocaleTimeString(
+    "fr-FR",
+    {
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+}
+
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+/* ==============================
+   CHARGER PROFIL
 ================================ */
 
 async function loadCurrentProfile(){
@@ -1979,75 +1958,51 @@ function updateAccessInterface(){
   .querySelectorAll(".analysis-lock")
   .forEach(function(lock){
 
-    if(access){
-      lock.textContent="🔓";
-    }else{
-      lock.textContent="🔒";
+    lock.textContent=
+      access ? "🔓" : "🔒";
+
+  });
+
+  const homeTexts=[
+    document.getElementById("homeConfidenceText"),
+    document.getElementById("homeCombinedText"),
+    document.getElementById("homeChallengeText")
+  ];
+
+  let message="";
+
+  if(!currentUser){
+
+    message=
+      "Connectez-vous pour consulter cette analyse.";
+
+  }else if(access){
+
+    message=
+      "Appuyez pour consulter l'analyse complète ›";
+
+  }else{
+
+    message=
+      "Réservé aux membres Premium.";
+
+  }
+
+  homeTexts.forEach(function(element){
+
+    if(element){
+      element.textContent=message;
     }
 
   });
 
-  const confidence=
-    document.getElementById("homeConfidenceText");
+  document
+  .querySelectorAll(".analysis-access-text")
+  .forEach(function(element){
 
-  const combined=
-    document.getElementById("homeCombinedText");
+    element.textContent=message;
 
-  const challenge=
-    document.getElementById("homeChallengeText");
-
-  if(!currentUser){
-
-    if(confidence){
-      confidence.textContent=
-        "Connectez-vous pour consulter cette analyse.";
-    }
-
-    if(combined){
-      combined.textContent=
-        "Connectez-vous pour consulter cette analyse.";
-    }
-
-    if(challenge){
-      challenge.textContent=
-        "Connectez-vous pour consulter cette analyse.";
-    }
-
-  }else if(access){
-
-    if(confidence){
-      confidence.textContent=
-        "Appuyez pour consulter l'analyse complète ›";
-    }
-
-    if(combined){
-      combined.textContent=
-        "Appuyez pour consulter l'analyse complète ›";
-    }
-
-    if(challenge){
-      challenge.textContent=
-        "Appuyez pour consulter l'analyse complète ›";
-    }
-
-  }else{
-
-    if(confidence){
-      confidence.textContent=
-        "Réservé aux membres Premium.";
-    }
-
-    if(combined){
-      combined.textContent=
-        "Réservé aux membres Premium.";
-    }
-
-    if(challenge){
-      challenge.textContent=
-        "Réservé aux membres Premium.";
-    }
-
-  }
+  });
 
   const premiumButton=
     document.getElementById("premiumMainButton");
@@ -2055,14 +2010,20 @@ function updateAccessInterface(){
   if(premiumButton){
 
     if(role==="ADMIN"){
+
       premiumButton.textContent=
         "Accéder aux analyses";
+
     }else if(role==="PREMIUM"){
+
       premiumButton.textContent=
         "Accéder à mes analyses Premium";
+
     }else{
+
       premiumButton.textContent=
         "Débloquer toutes les analyses";
+
     }
 
   }
@@ -2071,7 +2032,7 @@ function updateAccessInterface(){
 
 
 /* ==============================
-   ACTION SUR UNE ANALYSE
+   DEMANDE ANALYSE
 ================================ */
 
 function requestAnalysis(type){
@@ -2081,6 +2042,7 @@ function requestAnalysis(type){
     pendingAnalysis=type;
     openPage("authRequired");
     return;
+
   }
 
   if(!hasPremiumAccess()){
@@ -2088,6 +2050,7 @@ function requestAnalysis(type){
     pendingAnalysis=type;
     openPage("premiumRequired");
     return;
+
   }
 
   pendingAnalysis=null;
@@ -2105,12 +2068,14 @@ function unlockPremium(){
 
     openPage("authRequired");
     return;
+
   }
 
   if(hasPremiumAccess()){
 
     openPage("analyses");
     return;
+
   }
 
   openPage("premiumRequired");
@@ -2123,25 +2088,27 @@ function premiumPaymentComingSoon(){
 
     openPage("analyses");
     return;
+
   }
 
   alert(
-    "Le système de paiement Premium sera connecté à la prochaine étape."
+    "Le système de paiement Premium sera connecté à une prochaine étape."
   );
 }
 
 
 /* ==============================
-   OUVERTURE ANALYSE
+   ANALYSES SUPABASE
 ================================ */
 
-function openDetail(type){
+async function openDetail(type){
 
   if(!currentUser){
 
     pendingAnalysis=type;
     openPage("authRequired");
     return;
+
   }
 
   if(!hasPremiumAccess()){
@@ -2149,93 +2116,271 @@ function openDetail(type){
     pendingAnalysis=type;
     openPage("premiumRequired");
     return;
+
   }
 
-  const data=analyses[type];
+  if(!supabaseClient){
 
-  if(!data) return;
+    alert(
+      "Connexion à CouponIQ momentanément indisponible."
+    );
+    return;
 
-  document.getElementById("detailTitle").textContent=
-    data.title;
+  }
 
-  document.getElementById("detailLabel").textContent=
-    data.label;
+  const loading=
+    document.getElementById("detailLoading");
 
-  document.getElementById("targetOdd").textContent=
-    data.target;
+  const content=
+    document.getElementById("detailContent");
 
-  document.getElementById("totalOdd").textContent=
-    data.total;
+  const empty=
+    document.getElementById("detailEmpty");
 
-  document.getElementById("code1xbet").textContent=
-    data.code1;
+  loading.style.display="block";
+  content.style.display="none";
+  empty.style.display="none";
 
-  document.getElementById("codeBetwinner").textContent=
-    data.code2;
+  openPage("detail");
+
+  try{
+
+    const today=
+      getLocalDateString();
+
+    const analysisResult=
+      await supabaseClient
+      .from("analyses")
+      .select(
+        "id,analysis_date,analysis_type,title,target_odd,total_odd,code_1xbet,code_betwinner,status,published_at"
+      )
+      .eq("analysis_date",today)
+      .eq("analysis_type",type)
+      .eq("status","PUBLISHED")
+      .maybeSingle();
+
+    if(analysisResult.error){
+      throw analysisResult.error;
+    }
+
+    const analysis=
+      analysisResult.data;
+
+    if(!analysis){
+
+      loading.style.display="none";
+      content.style.display="none";
+      empty.style.display="block";
+      return;
+
+    }
+
+    const selectionsResult=
+      await supabaseClient
+      .from("analysis_selections")
+      .select(
+        "id,position,league,match_name,kickoff_at,prediction,odd,explanation"
+      )
+      .eq("analysis_id",analysis.id)
+      .order("position",{ascending:true});
+
+    if(selectionsResult.error){
+      throw selectionsResult.error;
+    }
+
+    const selections=
+      selectionsResult.data || [];
+
+    renderAnalysis(
+      analysis,
+      selections
+    );
+
+    loading.style.display="none";
+    empty.style.display="none";
+    content.style.display="block";
+
+  }catch(error){
+
+    console.error(
+      "Erreur chargement analyse :",
+      error
+    );
+
+    loading.style.display="none";
+    content.style.display="none";
+    empty.style.display="block";
+
+    empty.textContent=
+      "Impossible de charger cette analyse pour le moment.";
+
+  }
+
+}
+
+
+/* ==============================
+   AFFICHAGE ANALYSE
+================================ */
+
+function renderAnalysis(
+  analysis,
+  selections
+){
+
+  const labels={
+    confidence:"CONFIANCE DU JOUR",
+    combined:"COMBINÉ DU JOUR",
+    challenge:"CHALLENGE 50"
+  };
+
+  document
+  .getElementById("detailTitle")
+  .textContent=
+    analysis.title || "Analyse du jour";
+
+  document
+  .getElementById("detailLabel")
+  .textContent=
+    labels[analysis.analysis_type] ||
+    "ANALYSE DU JOUR";
+
+  document
+  .getElementById("targetOdd")
+  .textContent=
+    analysis.target_odd ?? "—";
+
+  document
+  .getElementById("totalOdd")
+  .textContent=
+    analysis.total_odd ?? "—";
+
+  document
+  .getElementById("code1xbet")
+  .textContent=
+    analysis.code_1xbet || "Non renseigné";
+
+  document
+  .getElementById("codeBetwinner")
+  .textContent=
+    analysis.code_betwinner || "Non renseigné";
+
+  document
+  .getElementById("analysisDateLabel")
+  .textContent=
+    "Aujourd'hui";
+
+  const matches=
+    document.getElementById("matches");
+
+  if(!selections.length){
+
+    matches.innerHTML=
+      '<div class="empty-box">Aucune sélection n’a encore été ajoutée à cette analyse.</div>';
+
+    return;
+
+  }
 
   let html="";
 
-  data.matches.forEach(function(m,index){
+  selections.forEach(
+    function(selection,index){
 
-    html+=`
-    <div class="match-card">
+      const league=
+        escapeHtml(
+          selection.league ||
+          "Compétition"
+        );
 
-      <div class="match-number">
-      SÉLECTION ${index+1}
-      </div>
+      const match=
+        escapeHtml(
+          selection.match_name ||
+          "Match"
+        );
 
-      <div class="league">
-      ${m.league}
-      </div>
+      const prediction=
+        escapeHtml(
+          selection.prediction ||
+          "À renseigner"
+        );
 
-      <div class="match-title">
-      ${m.match}
-      </div>
+      const odd=
+        escapeHtml(
+          selection.odd ?? "—"
+        );
 
-      <div class="match-time">
-      Coup d'envoi • ${m.time}
-      </div>
+      const explanation=
+        escapeHtml(
+          selection.explanation ||
+          "Aucune explication renseignée."
+        );
 
-      <div class="prediction-box">
+      const kickoff=
+        escapeHtml(
+          formatKickoff(
+            selection.kickoff_at
+          )
+        );
 
-        <div>
+      html+=`
+      <div class="match-card">
 
-          <div class="prediction-label">
-          PRONOSTIC
+        <div class="match-number">
+        SÉLECTION ${index+1}
+        </div>
+
+        <div class="league">
+        ${league}
+        </div>
+
+        <div class="match-title">
+        ${match}
+        </div>
+
+        <div class="match-time">
+        Coup d'envoi • ${kickoff}
+        </div>
+
+        <div class="prediction-box">
+
+          <div>
+
+            <div class="prediction-label">
+            PRONOSTIC
+            </div>
+
+            <div class="prediction">
+            ${prediction}
+            </div>
+
           </div>
 
-          <div class="prediction">
-          ${m.prediction}
+          <div class="match-odd">
+          ${odd}
           </div>
 
         </div>
 
-        <div class="match-odd">
-        ${m.odd}
+        <div class="why">
+
+          <strong>
+          Pourquoi ce choix ?
+          </strong>
+
+          <p>
+          ${explanation}
+          </p>
+
         </div>
 
       </div>
+      `;
 
-      <div class="why">
+    }
+  );
 
-        <strong>
-        Pourquoi ce choix ?
-        </strong>
-
-        <p>
-        ${m.why}
-        </p>
-
-      </div>
-
-    </div>
-    `;
-
-  });
-
-  document.getElementById("matches").innerHTML=html;
-
-  openPage("detail");
+  matches.innerHTML=html;
 }
 
 
@@ -2251,7 +2396,15 @@ function copyCode(id,button){
   if(!element) return;
 
   const code=
-    element.textContent;
+    element.textContent.trim();
+
+  if(
+    !code ||
+    code==="—" ||
+    code==="Non renseigné"
+  ){
+    return;
+  }
 
   if(
     navigator.clipboard &&
@@ -2562,7 +2715,6 @@ async function initSupabase(){
       updateAccessInterface();
 
     }
-
 
     supabaseClient.auth.onAuthStateChange(
       function(event,session){
