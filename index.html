@@ -849,6 +849,76 @@ main{padding:0 15px}
   margin:8px 0 17px;
 }
 
+/* CONFIRMATION EMAIL */
+
+.email-confirm-card{
+  background:var(--card);
+  border:1px solid rgba(0,237,115,.25);
+  border-radius:21px;
+  padding:27px 18px;
+  margin-top:12px;
+  text-align:center;
+}
+
+.email-confirm-icon{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  margin:0 auto 17px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,237,115,.10);
+  border:2px solid var(--green);
+  color:var(--green);
+  font-size:32px;
+  font-weight:900;
+}
+
+.email-confirm-card h2{
+  font-size:24px;
+  margin-bottom:9px;
+}
+
+.email-confirm-card > p{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+}
+
+.confirm-email-address{
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:13px;
+  margin:16px 0;
+  font-size:13px;
+  font-weight:900;
+  word-break:break-word;
+}
+
+.confirm-instruction{
+  background:rgba(0,237,115,.07);
+  border:1px solid rgba(0,237,115,.22);
+  border-radius:14px;
+  padding:15px;
+  margin:16px 0;
+  text-align:left;
+}
+
+.confirm-instruction strong{
+  display:block;
+  color:var(--green);
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.confirm-instruction p{
+  color:#b7c2bd;
+  font-size:12px;
+  line-height:1.6;
+}
+
 /* NAV */
 
 .bottom-nav{
@@ -1475,6 +1545,51 @@ Vous avez déjà un compte ?
 
 </section>
 
+<!-- CONFIRMATION EMAIL -->
+
+<section id="emailConfirmation" class="page">
+
+<div class="back" onclick="openPage('home')">
+← Retour à l'accueil
+</div>
+
+<div class="email-confirm-card">
+
+<div class="email-confirm-icon">✓</div>
+
+<h2>Compte créé !</h2>
+
+<p>
+Votre inscription a bien été enregistrée.
+Un email de confirmation vient de vous être envoyé à :
+</p>
+
+<div class="confirm-email-address" id="confirmationEmail">
+</div>
+
+<div class="confirm-instruction">
+<strong>Vérifiez votre boîte mail</strong>
+<p>
+Ouvrez l'email envoyé par CouponIQ puis cliquez sur le lien de confirmation pour activer votre compte.
+</p>
+</div>
+
+<p>
+Après confirmation, vous serez redirigé vers CouponIQ.
+Vous pourrez ensuite utiliser votre compte.
+</p>
+
+<button
+class="primary-button"
+style="margin-top:18px"
+onclick="openPage('login')">
+J'ai confirmé mon email
+</button>
+
+</div>
+
+</section>
+
 </main>
 </div>
 
@@ -1536,7 +1651,8 @@ function openPage(pageId){
   if(
     pageId==="login" ||
     pageId==="register" ||
-    pageId==="authRequired"
+    pageId==="authRequired" ||
+    pageId==="emailConfirmation"
   ){
     navPage="profile";
   }
@@ -1991,12 +2107,6 @@ async function initSupabase(){
 
     console.error("Erreur Supabase :",error);
 
-    /*
-    Important :
-    même si Supabase ne charge pas,
-    la navigation CouponIQ continue de fonctionner.
-    */
-
   }
 
 }
@@ -2175,11 +2285,14 @@ async function registerUser(){
 
     }else{
 
-      showMessage(
-        "registerMessage",
-        "Compte créé. Consultez votre email pour confirmer votre inscription.",
-        "success"
-      );
+      document.getElementById("confirmationEmail").textContent=email;
+
+      document.getElementById("registerName").value="";
+      document.getElementById("registerEmail").value="";
+      document.getElementById("registerPassword").value="";
+      document.getElementById("registerConfirm").value="";
+
+      openPage("emailConfirmation");
 
     }
 
@@ -2371,13 +2484,6 @@ async function logoutUser(){
 /* ==============================
    DÉMARRAGE
 ================================ */
-
-/*
-La navigation fonctionne immédiatement.
-Supabase se charge séparément.
-Ainsi, une panne Supabase ne bloque plus
-Accueil, Analyses, Historique ou Partenaires.
-*/
 
 updateProfile();
 initSupabase();
