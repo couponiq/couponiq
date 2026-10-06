@@ -631,6 +631,49 @@ main{padding:0 15px}
   cursor:pointer;
 }
 
+.status-badge{
+  display:inline-block;
+  color:var(--green);
+  background:rgba(0,237,115,.09);
+  border:1px solid rgba(0,237,115,.22);
+  border-radius:50px;
+  padding:6px 10px;
+  font-size:9px;
+  font-weight:900;
+  margin-top:10px;
+}
+
+.status-badge.admin-status{
+  color:#fff;
+  background:rgba(0,237,115,.18);
+  border-color:var(--green);
+}
+
+.status-badge.premium-status{
+  color:var(--green);
+  background:rgba(0,237,115,.14);
+  border-color:rgba(0,237,115,.45);
+}
+
+.account-email{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:6px;
+}
+
+.logout{
+  width:100%;
+  margin-top:14px;
+  padding:13px;
+  border-radius:12px;
+  border:1px solid rgba(255,91,105,.25);
+  background:rgba(255,91,105,.06);
+  color:#ff7b87;
+  font-size:11px;
+  font-weight:900;
+  cursor:pointer;
+}
+
 /* AUTH */
 
 .auth-card{
@@ -781,37 +824,6 @@ main{padding:0 15px}
   flex:1;
 }
 
-.status-badge{
-  display:inline-block;
-  color:var(--green);
-  background:rgba(0,237,115,.09);
-  border:1px solid rgba(0,237,115,.22);
-  border-radius:50px;
-  padding:6px 10px;
-  font-size:9px;
-  font-weight:900;
-  margin-top:10px;
-}
-
-.account-email{
-  color:var(--muted);
-  font-size:11px;
-  margin-top:6px;
-}
-
-.logout{
-  width:100%;
-  margin-top:14px;
-  padding:13px;
-  border-radius:12px;
-  border:1px solid rgba(255,91,105,.25);
-  background:rgba(255,91,105,.06);
-  color:#ff7b87;
-  font-size:11px;
-  font-weight:900;
-  cursor:pointer;
-}
-
 .responsible{
   text-align:center;
   color:#66756f;
@@ -820,7 +832,7 @@ main{padding:0 15px}
   padding:18px 12px;
 }
 
-/* DEMANDE CONNEXION */
+/* VERROUILLAGE */
 
 .auth-required{
   background:
@@ -1006,7 +1018,7 @@ d'explications pour mieux comprendre chaque choix.
 
 <p>Accédez aux analyses sportives complètes préparées chaque jour.</p>
 
-<button class="primary-button" onclick="unlockPremium()">
+<button class="primary-button" id="premiumMainButton" onclick="unlockPremium()">
 Débloquer toutes les analyses
 </button>
 
@@ -1018,6 +1030,7 @@ Débloquer toutes les analyses
 </div>
 
 <div class="program">
+
 <div class="program-item">
 <div class="program-number">5</div>
 <strong>Confiance</strong>
@@ -1035,6 +1048,7 @@ Débloquer toutes les analyses
 <strong>Challenge</strong>
 <small>Cote cible</small>
 </div>
+
 </div>
 
 <div class="section-head">
@@ -1045,7 +1059,7 @@ Débloquer toutes les analyses
 <div class="analysis-card confidence" onclick="requestAnalysis('confidence')">
 <div class="analysis-head">
 <div class="analysis-type">CONFIANCE DU JOUR</div>
-<div class="lock">🔒</div>
+<div class="lock analysis-lock">🔒</div>
 </div>
 <h3>Confiance du jour</h3>
 <div class="odd-row">
@@ -1058,7 +1072,7 @@ Débloquer toutes les analyses
 <div class="analysis-card combined" onclick="requestAnalysis('combined')">
 <div class="analysis-head">
 <div class="analysis-type">COMBINÉ DU JOUR</div>
-<div class="lock">🔒</div>
+<div class="lock analysis-lock">🔒</div>
 </div>
 <h3>Combiné du jour</h3>
 <div class="odd-row">
@@ -1071,7 +1085,7 @@ Débloquer toutes les analyses
 <div class="analysis-card challenge" onclick="requestAnalysis('challenge')">
 <div class="analysis-head">
 <div class="analysis-type">CHALLENGE 50</div>
-<div class="lock">🔒</div>
+<div class="lock analysis-lock">🔒</div>
 </div>
 <h3>Challenge 50</h3>
 <div class="odd-row">
@@ -1131,7 +1145,7 @@ Aucun résultat n'est garanti.
 <div class="analysis-card confidence" onclick="requestAnalysis('confidence')">
 <div class="analysis-head">
 <div class="analysis-type">CONFIANCE DU JOUR</div>
-<div class="lock">🔒</div>
+<div class="lock analysis-lock">🔒</div>
 </div>
 <h3>Confiance du jour</h3>
 <div class="odd-row">
@@ -1144,7 +1158,7 @@ Aucun résultat n'est garanti.
 <div class="analysis-card combined" onclick="requestAnalysis('combined')">
 <div class="analysis-head">
 <div class="analysis-type">COMBINÉ DU JOUR</div>
-<div class="lock">🔒</div>
+<div class="lock analysis-lock">🔒</div>
 </div>
 <h3>Combiné du jour</h3>
 <div class="odd-row">
@@ -1157,7 +1171,7 @@ Aucun résultat n'est garanti.
 <div class="analysis-card challenge" onclick="requestAnalysis('challenge')">
 <div class="analysis-head">
 <div class="analysis-type">CHALLENGE 50</div>
-<div class="lock">🔒</div>
+<div class="lock analysis-lock">🔒</div>
 </div>
 <h3>Challenge 50</h3>
 <div class="odd-row">
@@ -1169,7 +1183,7 @@ Aucun résultat n'est garanti.
 
 </section>
 
-<!-- DEMANDE CONNEXION -->
+<!-- CONNEXION REQUISE -->
 
 <section id="authRequired" class="page">
 
@@ -1202,6 +1216,52 @@ Créer un compte
 
 </section>
 
+<!-- PREMIUM REQUIS -->
+
+<section id="premiumRequired" class="page">
+
+<div class="back" onclick="openPage('analyses')">
+← Retour aux analyses
+</div>
+
+<div class="auth-required">
+
+<div class="big-lock">🔒</div>
+
+<h2>Analyse réservée aux membres Premium</h2>
+
+<p>
+Votre compte est actuellement gratuit.
+Passez à CouponIQ Premium pour accéder aux analyses sportives complètes.
+</p>
+
+<div style="
+background:var(--card2);
+border:1px solid var(--border);
+border-radius:14px;
+padding:15px;
+margin:15px 0 17px;
+">
+<div style="font-size:11px;color:var(--muted);margin-bottom:5px">
+CouponIQ Premium
+</div>
+
+<div style="font-size:27px;font-weight:900;color:var(--green)">
+1 000 F
+<span style="font-size:10px;color:var(--muted);font-weight:500">
+/ 30 jours
+</span>
+</div>
+</div>
+
+<button class="primary-button" onclick="premiumPaymentComingSoon()">
+Débloquer toutes les analyses
+</button>
+
+</div>
+
+</section>
+
 <!-- DETAIL -->
 
 <section id="detail" class="page">
@@ -1211,16 +1271,27 @@ Créer un compte
 </div>
 
 <div class="detail-hero">
-<div class="detail-label" id="detailLabel">ANALYSE DU JOUR</div>
-<h1 id="detailTitle">Confiance du jour</h1>
+
+<div class="detail-label" id="detailLabel">
+ANALYSE DU JOUR
+</div>
+
+<h1 id="detailTitle">
+Confiance du jour
+</h1>
 
 <div class="detail-meta">
+
 <div class="meta-pill">
-Cote cible : <strong id="targetOdd">5.00</strong>
+Cote cible :
+<strong id="targetOdd">5.00</strong>
 </div>
+
 <div class="meta-pill">Aujourd'hui</div>
 <div class="meta-pill">Publication 09h30</div>
+
 </div>
+
 </div>
 
 <div id="matches"></div>
@@ -1233,27 +1304,38 @@ Cote cible : <strong id="targetOdd">5.00</strong>
 <div class="codes">
 
 <h2>Codes du coupon</h2>
+
 <div class="codes-sub">
 Copiez directement le code correspondant à votre plateforme.
 </div>
 
 <div class="code-item">
 <div class="code-top">
+
 <div>
 <div class="bookmaker">1xBet</div>
 <div class="code-value" id="code1xbet">ABC123</div>
 </div>
-<button class="copy" onclick="copyCode('code1xbet',this)">Copier</button>
+
+<button class="copy" onclick="copyCode('code1xbet',this)">
+Copier
+</button>
+
 </div>
 </div>
 
 <div class="code-item">
 <div class="code-top">
+
 <div>
 <div class="bookmaker">BetWinner</div>
 <div class="code-value" id="codeBetwinner">XYZ456</div>
 </div>
-<button class="copy" onclick="copyCode('codeBetwinner',this)">Copier</button>
+
+<button class="copy" onclick="copyCode('codeBetwinner',this)">
+Copier
+</button>
+
 </div>
 </div>
 
@@ -1279,9 +1361,12 @@ et les résultats renseignés après les matchs.
 </div>
 
 <div class="history-day">
+
 <div class="history-top">
 <strong>Hier</strong>
-<span style="font-size:9px;color:var(--muted)">Journée précédente</span>
+<span style="font-size:9px;color:var(--muted)">
+Journée précédente
+</span>
 </div>
 
 <div class="history-row">
@@ -1347,7 +1432,9 @@ Services : Dépôt & Retrait
 <div id="guestProfile">
 
 <div class="profile-card">
+
 <div class="avatar">◎</div>
+
 <h2>Mon compte CouponIQ</h2>
 
 <p style="color:var(--muted);font-size:11px;margin-top:5px">
@@ -1373,13 +1460,22 @@ Créer un compte
 <div id="connectedProfile" style="display:none">
 
 <div class="profile-card">
+
 <div class="avatar" id="profileInitial">C</div>
-<h2 id="profileName">Utilisateur CouponIQ</h2>
+
+<h2 id="profileName">
+Utilisateur CouponIQ
+</h2>
+
 <div class="account-email" id="profileEmail"></div>
-<div class="status-badge">COMPTE GRATUIT</div>
+
+<div class="status-badge" id="profileStatus">
+COMPTE GRATUIT
 </div>
 
-<div class="profile-option">
+</div>
+
+<div class="profile-option" onclick="unlockPremium()">
 <span>Mon abonnement</span><span>›</span>
 </div>
 
@@ -1568,10 +1664,13 @@ Un email de confirmation vient de vous être envoyé à :
 </div>
 
 <div class="confirm-instruction">
+
 <strong>Vérifiez votre boîte mail</strong>
+
 <p>
 Ouvrez l'email envoyé par CouponIQ puis cliquez sur le lien de confirmation pour activer votre compte.
 </p>
+
 </div>
 
 <p>
@@ -1652,6 +1751,7 @@ function openPage(pageId){
     pageId==="login" ||
     pageId==="register" ||
     pageId==="authRequired" ||
+    pageId==="premiumRequired" ||
     pageId==="emailConfirmation"
   ){
     navPage="profile";
@@ -1778,8 +1878,196 @@ challenge:{
 ================================ */
 
 let currentUser=null;
+let currentProfile=null;
 let pendingAnalysis=null;
 let supabaseClient=null;
+
+
+/* ==============================
+   RÔLES
+================================ */
+
+function getCurrentRole(){
+
+  if(
+    currentProfile &&
+    currentProfile.role
+  ){
+    return String(currentProfile.role).toUpperCase();
+  }
+
+  return "GRATUIT";
+}
+
+
+function hasPremiumAccess(){
+
+  const role=getCurrentRole();
+
+  return (
+    role==="PREMIUM" ||
+    role==="ADMIN"
+  );
+}
+
+
+/* ==============================
+   CHARGER PROFIL SUPABASE
+================================ */
+
+async function loadCurrentProfile(){
+
+  if(!supabaseClient || !currentUser){
+
+    currentProfile=null;
+    updateProfile();
+    updateAccessInterface();
+    return;
+
+  }
+
+  try{
+
+    const result=
+      await supabaseClient
+      .from("profiles")
+      .select("role")
+      .eq("id",currentUser.id)
+      .single();
+
+    if(result.error){
+
+      console.error(
+        "Erreur chargement profil :",
+        result.error
+      );
+
+      currentProfile=null;
+
+    }else{
+
+      currentProfile=result.data;
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Erreur profil Supabase :",
+      error
+    );
+
+    currentProfile=null;
+
+  }
+
+  updateProfile();
+  updateAccessInterface();
+}
+
+
+/* ==============================
+   INTERFACE SELON ACCÈS
+================================ */
+
+function updateAccessInterface(){
+
+  const access=hasPremiumAccess();
+  const role=getCurrentRole();
+
+  document
+  .querySelectorAll(".analysis-lock")
+  .forEach(function(lock){
+
+    if(access){
+      lock.textContent="🔓";
+    }else{
+      lock.textContent="🔒";
+    }
+
+  });
+
+  const confidence=
+    document.getElementById("homeConfidenceText");
+
+  const combined=
+    document.getElementById("homeCombinedText");
+
+  const challenge=
+    document.getElementById("homeChallengeText");
+
+  if(!currentUser){
+
+    if(confidence){
+      confidence.textContent=
+        "Connectez-vous pour consulter cette analyse.";
+    }
+
+    if(combined){
+      combined.textContent=
+        "Connectez-vous pour consulter cette analyse.";
+    }
+
+    if(challenge){
+      challenge.textContent=
+        "Connectez-vous pour consulter cette analyse.";
+    }
+
+  }else if(access){
+
+    if(confidence){
+      confidence.textContent=
+        "Appuyez pour consulter l'analyse complète ›";
+    }
+
+    if(combined){
+      combined.textContent=
+        "Appuyez pour consulter l'analyse complète ›";
+    }
+
+    if(challenge){
+      challenge.textContent=
+        "Appuyez pour consulter l'analyse complète ›";
+    }
+
+  }else{
+
+    if(confidence){
+      confidence.textContent=
+        "Réservé aux membres Premium.";
+    }
+
+    if(combined){
+      combined.textContent=
+        "Réservé aux membres Premium.";
+    }
+
+    if(challenge){
+      challenge.textContent=
+        "Réservé aux membres Premium.";
+    }
+
+  }
+
+  const premiumButton=
+    document.getElementById("premiumMainButton");
+
+  if(premiumButton){
+
+    if(role==="ADMIN"){
+      premiumButton.textContent=
+        "Accéder aux analyses";
+    }else if(role==="PREMIUM"){
+      premiumButton.textContent=
+        "Accéder à mes analyses Premium";
+    }else{
+      premiumButton.textContent=
+        "Débloquer toutes les analyses";
+    }
+
+  }
+
+}
 
 
 /* ==============================
@@ -1795,6 +2083,14 @@ function requestAnalysis(type){
     return;
   }
 
+  if(!hasPremiumAccess()){
+
+    pendingAnalysis=type;
+    openPage("premiumRequired");
+    return;
+  }
+
+  pendingAnalysis=null;
   openDetail(type);
 }
 
@@ -1806,12 +2102,32 @@ function requestAnalysis(type){
 function unlockPremium(){
 
   if(!currentUser){
+
     openPage("authRequired");
     return;
   }
 
-  /* Le paiement sera ajouté ensuite */
-  openPage("profile");
+  if(hasPremiumAccess()){
+
+    openPage("analyses");
+    return;
+  }
+
+  openPage("premiumRequired");
+}
+
+
+function premiumPaymentComingSoon(){
+
+  if(hasPremiumAccess()){
+
+    openPage("analyses");
+    return;
+  }
+
+  alert(
+    "Le système de paiement Premium sera connecté à la prochaine étape."
+  );
 }
 
 
@@ -1821,16 +2137,41 @@ function unlockPremium(){
 
 function openDetail(type){
 
+  if(!currentUser){
+
+    pendingAnalysis=type;
+    openPage("authRequired");
+    return;
+  }
+
+  if(!hasPremiumAccess()){
+
+    pendingAnalysis=type;
+    openPage("premiumRequired");
+    return;
+  }
+
   const data=analyses[type];
 
   if(!data) return;
 
-  document.getElementById("detailTitle").textContent=data.title;
-  document.getElementById("detailLabel").textContent=data.label;
-  document.getElementById("targetOdd").textContent=data.target;
-  document.getElementById("totalOdd").textContent=data.total;
-  document.getElementById("code1xbet").textContent=data.code1;
-  document.getElementById("codeBetwinner").textContent=data.code2;
+  document.getElementById("detailTitle").textContent=
+    data.title;
+
+  document.getElementById("detailLabel").textContent=
+    data.label;
+
+  document.getElementById("targetOdd").textContent=
+    data.target;
+
+  document.getElementById("totalOdd").textContent=
+    data.total;
+
+  document.getElementById("code1xbet").textContent=
+    data.code1;
+
+  document.getElementById("codeBetwinner").textContent=
+    data.code2;
 
   let html="";
 
@@ -1858,6 +2199,7 @@ function openDetail(type){
       <div class="prediction-box">
 
         <div>
+
           <div class="prediction-label">
           PRONOSTIC
           </div>
@@ -1865,6 +2207,7 @@ function openDetail(type){
           <div class="prediction">
           ${m.prediction}
           </div>
+
         </div>
 
         <div class="match-odd">
@@ -1874,12 +2217,20 @@ function openDetail(type){
       </div>
 
       <div class="why">
-        <strong>Pourquoi ce choix ?</strong>
-        <p>${m.why}</p>
+
+        <strong>
+        Pourquoi ce choix ?
+        </strong>
+
+        <p>
+        ${m.why}
+        </p>
+
       </div>
 
     </div>
     `;
+
   });
 
   document.getElementById("matches").innerHTML=html;
@@ -1894,24 +2245,33 @@ function openDetail(type){
 
 function copyCode(id,button){
 
-  const element=document.getElementById(id);
+  const element=
+    document.getElementById(id);
+
   if(!element) return;
 
-  const code=element.textContent;
+  const code=
+    element.textContent;
 
   if(
     navigator.clipboard &&
     navigator.clipboard.writeText
   ){
 
-    navigator.clipboard.writeText(code)
+    navigator.clipboard
+    .writeText(code)
     .then(function(){
 
-      const old=button.textContent;
-      button.textContent="Copié ✓";
+      const old=
+        button.textContent;
+
+      button.textContent=
+        "Copié ✓";
 
       setTimeout(function(){
+
         button.textContent=old;
+
       },1500);
 
     });
@@ -1927,20 +2287,27 @@ function copyCode(id,button){
 
 function showMessage(id,text,type){
 
-  const box=document.getElementById(id);
+  const box=
+    document.getElementById(id);
+
   if(!box) return;
 
   box.textContent=text;
-  box.className="form-message "+type;
+  box.className=
+    "form-message "+type;
 }
+
 
 function clearMessage(id){
 
-  const box=document.getElementById(id);
+  const box=
+    document.getElementById(id);
+
   if(!box) return;
 
   box.textContent="";
-  box.className="form-message";
+  box.className=
+    "form-message";
 }
 
 
@@ -1950,8 +2317,11 @@ function clearMessage(id){
 
 function updateProfile(){
 
-  const guest=document.getElementById("guestProfile");
-  const connected=document.getElementById("connectedProfile");
+  const guest=
+    document.getElementById("guestProfile");
+
+  const connected=
+    document.getElementById("connectedProfile");
 
   if(!guest || !connected) return;
 
@@ -1960,24 +2330,73 @@ function updateProfile(){
     guest.style.display="none";
     connected.style.display="block";
 
-    const metadata=currentUser.user_metadata || {};
+    const metadata=
+      currentUser.user_metadata || {};
 
     const name=
       metadata.full_name ||
       metadata.name ||
-      (currentUser.email
+      (
+        currentUser.email
         ? currentUser.email.split("@")[0]
-        : "Utilisateur CouponIQ");
+        : "Utilisateur CouponIQ"
+      );
 
-    const email=currentUser.email || "";
+    const email=
+      currentUser.email || "";
 
-    document.getElementById("profileName").textContent=name;
-    document.getElementById("profileEmail").textContent=email;
+    document
+    .getElementById("profileName")
+    .textContent=name;
+
+    document
+    .getElementById("profileEmail")
+    .textContent=email;
 
     const initial=
       name.trim().charAt(0).toUpperCase() || "C";
 
-    document.getElementById("profileInitial").textContent=initial;
+    document
+    .getElementById("profileInitial")
+    .textContent=initial;
+
+    const badge=
+      document.getElementById("profileStatus");
+
+    if(badge){
+
+      const role=
+        getCurrentRole();
+
+      badge.className=
+        "status-badge";
+
+      if(role==="ADMIN"){
+
+        badge.textContent=
+          "COMPTE ADMIN";
+
+        badge.classList.add(
+          "admin-status"
+        );
+
+      }else if(role==="PREMIUM"){
+
+        badge.textContent=
+          "COMPTE PREMIUM";
+
+        badge.classList.add(
+          "premium-status"
+        );
+
+      }else{
+
+        badge.textContent=
+          "COMPTE GRATUIT";
+
+      }
+
+    }
 
   }else{
 
@@ -1985,6 +2404,7 @@ function updateProfile(){
     connected.style.display="none";
 
   }
+
 }
 
 
@@ -1995,29 +2415,54 @@ function updateProfile(){
 function readableAuthError(error){
 
   if(!error || !error.message){
+
     return "Une erreur est survenue. Réessayez.";
+
   }
 
-  const msg=error.message.toLowerCase();
+  const msg=
+    error.message.toLowerCase();
 
-  if(msg.includes("invalid login credentials")){
+  if(
+    msg.includes(
+      "invalid login credentials"
+    )
+  ){
+
     return "Email ou mot de passe incorrect.";
+
   }
 
-  if(msg.includes("email not confirmed")){
+  if(
+    msg.includes(
+      "email not confirmed"
+    )
+  ){
+
     return "Confirmez d'abord votre adresse email.";
+
   }
 
-  if(msg.includes("already registered")){
+  if(
+    msg.includes(
+      "already registered"
+    )
+  ){
+
     return "Un compte existe déjà avec cette adresse email.";
+
   }
 
   if(msg.includes("password")){
+
     return "Vérifiez votre mot de passe.";
+
   }
 
   if(msg.includes("email")){
+
     return "Vérifiez votre adresse email.";
+
   }
 
   return error.message;
@@ -2030,32 +2475,46 @@ function readableAuthError(error){
 
 function loadSupabase(){
 
-  return new Promise(function(resolve,reject){
+  return new Promise(
+    function(resolve,reject){
 
-    if(
-      window.supabase &&
-      typeof window.supabase.createClient==="function"
-    ){
-      resolve();
-      return;
+      if(
+        window.supabase &&
+        typeof window.supabase.createClient==="function"
+      ){
+
+        resolve();
+        return;
+
+      }
+
+      const script=
+        document.createElement("script");
+
+      script.src=
+        "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+      script.onload=function(){
+        resolve();
+      };
+
+      script.onerror=function(){
+
+        reject(
+          new Error(
+            "Supabase n'a pas pu être chargé."
+          )
+        );
+
+      };
+
+      document.head.appendChild(
+        script
+      );
+
     }
+  );
 
-    const script=document.createElement("script");
-
-    script.src=
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-
-    script.onload=function(){
-      resolve();
-    };
-
-    script.onerror=function(){
-      reject(new Error("Supabase n'a pas pu être chargé."));
-    };
-
-    document.head.appendChild(script);
-
-  });
 }
 
 
@@ -2084,11 +2543,26 @@ async function initSupabase(){
     const result=
       await supabaseClient.auth.getSession();
 
-    if(result.data && result.data.session){
-      currentUser=result.data.session.user;
+    if(
+      result.data &&
+      result.data.session
+    ){
+
+      currentUser=
+        result.data.session.user;
+
+      await loadCurrentProfile();
+
+    }else{
+
+      currentUser=null;
+      currentProfile=null;
+
+      updateProfile();
+      updateAccessInterface();
+
     }
 
-    updateProfile();
 
     supabaseClient.auth.onAuthStateChange(
       function(event,session){
@@ -2098,14 +2572,30 @@ async function initSupabase(){
           ? session.user
           : null;
 
+        currentProfile=null;
+
         updateProfile();
+        updateAccessInterface();
+
+        if(currentUser){
+
+          setTimeout(function(){
+
+            loadCurrentProfile();
+
+          },0);
+
+        }
 
       }
     );
 
   }catch(error){
 
-    console.error("Erreur Supabase :",error);
+    console.error(
+      "Erreur Supabase :",
+      error
+    );
 
   }
 
@@ -2124,7 +2614,8 @@ async function signInWithGoogle(){
   if(!supabaseClient){
 
     const activeRegister=
-      document.getElementById("register")
+      document
+      .getElementById("register")
       .classList.contains("active");
 
     showMessage(
@@ -2136,6 +2627,7 @@ async function signInWithGoogle(){
     );
 
     return;
+
   }
 
   try{
@@ -2146,8 +2638,10 @@ async function signInWithGoogle(){
         provider:"google",
 
         options:{
+
           redirectTo:
-          "https://couponiq.github.io/couponiq/"
+            "https://couponiq.github.io/couponiq/"
+
         }
 
       });
@@ -2159,7 +2653,8 @@ async function signInWithGoogle(){
   }catch(error){
 
     const activeRegister=
-      document.getElementById("register")
+      document
+      .getElementById("register")
       .classList.contains("active");
 
     showMessage(
@@ -2181,25 +2676,37 @@ async function signInWithGoogle(){
 
 async function registerUser(){
 
-  clearMessage("registerMessage");
+  clearMessage(
+    "registerMessage"
+  );
 
   const name=
-    document.getElementById("registerName")
+    document
+    .getElementById("registerName")
     .value.trim();
 
   const email=
-    document.getElementById("registerEmail")
-    .value.trim().toLowerCase();
+    document
+    .getElementById("registerEmail")
+    .value.trim()
+    .toLowerCase();
 
   const password=
-    document.getElementById("registerPassword")
+    document
+    .getElementById("registerPassword")
     .value;
 
   const confirm=
-    document.getElementById("registerConfirm")
+    document
+    .getElementById("registerConfirm")
     .value;
 
-  if(!name || !email || !password || !confirm){
+  if(
+    !name ||
+    !email ||
+    !password ||
+    !confirm
+  ){
 
     showMessage(
       "registerMessage",
@@ -2208,6 +2715,7 @@ async function registerUser(){
     );
 
     return;
+
   }
 
   if(password.length<6){
@@ -2219,6 +2727,7 @@ async function registerUser(){
     );
 
     return;
+
   }
 
   if(password!==confirm){
@@ -2230,6 +2739,7 @@ async function registerUser(){
     );
 
     return;
+
   }
 
   if(!supabaseClient){
@@ -2241,6 +2751,7 @@ async function registerUser(){
     );
 
     return;
+
   }
 
   try{
@@ -2252,12 +2763,14 @@ async function registerUser(){
         password:password,
 
         options:{
+
           data:{
             full_name:name
           },
 
           emailRedirectTo:
-          "https://couponiq.github.io/couponiq/"
+            "https://couponiq.github.io/couponiq/"
+
         }
 
       });
@@ -2268,14 +2781,28 @@ async function registerUser(){
 
     if(result.data.session){
 
-      currentUser=result.data.user;
-      updateProfile();
+      currentUser=
+        result.data.user;
+
+      await loadCurrentProfile();
 
       if(pendingAnalysis){
 
-        const analysis=pendingAnalysis;
-        pendingAnalysis=null;
-        openDetail(analysis);
+        const analysis=
+          pendingAnalysis;
+
+        if(hasPremiumAccess()){
+
+          pendingAnalysis=null;
+          openDetail(analysis);
+
+        }else{
+
+          openPage(
+            "premiumRequired"
+          );
+
+        }
 
       }else{
 
@@ -2285,14 +2812,39 @@ async function registerUser(){
 
     }else{
 
-      document.getElementById("confirmationEmail").textContent=email;
+      document
+      .getElementById(
+        "confirmationEmail"
+      )
+      .textContent=email;
 
-      document.getElementById("registerName").value="";
-      document.getElementById("registerEmail").value="";
-      document.getElementById("registerPassword").value="";
-      document.getElementById("registerConfirm").value="";
+      document
+      .getElementById(
+        "registerName"
+      )
+      .value="";
 
-      openPage("emailConfirmation");
+      document
+      .getElementById(
+        "registerEmail"
+      )
+      .value="";
+
+      document
+      .getElementById(
+        "registerPassword"
+      )
+      .value="";
+
+      document
+      .getElementById(
+        "registerConfirm"
+      )
+      .value="";
+
+      openPage(
+        "emailConfirmation"
+      );
 
     }
 
@@ -2315,14 +2867,19 @@ async function registerUser(){
 
 async function loginUser(){
 
-  clearMessage("loginMessage");
+  clearMessage(
+    "loginMessage"
+  );
 
   const email=
-    document.getElementById("loginEmail")
-    .value.trim().toLowerCase();
+    document
+    .getElementById("loginEmail")
+    .value.trim()
+    .toLowerCase();
 
   const password=
-    document.getElementById("loginPassword")
+    document
+    .getElementById("loginPassword")
     .value;
 
   if(!email || !password){
@@ -2334,6 +2891,7 @@ async function loginUser(){
     );
 
     return;
+
   }
 
   if(!supabaseClient){
@@ -2345,30 +2903,45 @@ async function loginUser(){
     );
 
     return;
+
   }
 
   try{
 
     const result=
       await supabaseClient.auth.signInWithPassword({
+
         email:email,
         password:password
+
       });
 
     if(result.error){
       throw result.error;
     }
 
-    currentUser=result.data.user;
+    currentUser=
+      result.data.user;
 
-    updateProfile();
+    await loadCurrentProfile();
 
     if(pendingAnalysis){
 
-      const analysis=pendingAnalysis;
-      pendingAnalysis=null;
+      const analysis=
+        pendingAnalysis;
 
-      openDetail(analysis);
+      if(hasPremiumAccess()){
+
+        pendingAnalysis=null;
+        openDetail(analysis);
+
+      }else{
+
+        openPage(
+          "premiumRequired"
+        );
+
+      }
 
     }else{
 
@@ -2395,11 +2968,15 @@ async function loginUser(){
 
 async function forgotPassword(){
 
-  clearMessage("loginMessage");
+  clearMessage(
+    "loginMessage"
+  );
 
   const email=
-    document.getElementById("loginEmail")
-    .value.trim().toLowerCase();
+    document
+    .getElementById("loginEmail")
+    .value.trim()
+    .toLowerCase();
 
   if(!email){
 
@@ -2410,6 +2987,7 @@ async function forgotPassword(){
     );
 
     return;
+
   }
 
   if(!supabaseClient){
@@ -2421,6 +2999,7 @@ async function forgotPassword(){
     );
 
     return;
+
   }
 
   try{
@@ -2430,7 +3009,7 @@ async function forgotPassword(){
         email,
         {
           redirectTo:
-          "https://couponiq.github.io/couponiq/"
+            "https://couponiq.github.io/couponiq/"
         }
       );
 
@@ -2466,17 +3045,24 @@ async function logoutUser(){
   if(supabaseClient){
 
     try{
+
       await supabaseClient.auth.signOut();
+
     }catch(error){
+
       console.error(error);
+
     }
 
   }
 
   currentUser=null;
+  currentProfile=null;
   pendingAnalysis=null;
 
   updateProfile();
+  updateAccessInterface();
+
   openPage("profile");
 }
 
@@ -2486,6 +3072,7 @@ async function logoutUser(){
 ================================ */
 
 updateProfile();
+updateAccessInterface();
 initSupabase();
 
 </script>
