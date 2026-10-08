@@ -1,2335 +1,596 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administration - CouponIQ</title>
-
-  <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
-
-    :root{
-      --bg:#05080d;
-      --card:#0d131c;
-      --card2:#111a25;
-      --border:#1c2936;
-      --green:#00ed73;
-      --text:#ffffff;
-      --muted:#8e9bab;
-      --danger:#ff5353;
-      --warning:#ffb84d;
-    }
-
-    body{
-      background:var(--bg);
-      color:var(--text);
-      font-family:Arial,Helvetica,sans-serif;
-      min-height:100vh;
-    }
-
-    button,input,select,textarea{
-      font:inherit;
-    }
-
-    button{
-      cursor:pointer;
-    }
-
-    .hidden{
-      display:none !important;
-    }
-
-    .app{
-      width:100%;
-      max-width:760px;
-      margin:auto;
-      min-height:100vh;
-      padding-bottom:90px;
-    }
-
-    .header{
-      position:sticky;
-      top:0;
-      z-index:20;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:15px 16px;
-      background:rgba(5,8,13,.97);
-      border-bottom:1px solid var(--border);
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .brand img{
-      width:42px;
-      height:42px;
-      border-radius:10px;
-      object-fit:cover;
-    }
-
-    .brand h1{
-      font-size:18px;
-    }
-
-    .brand small{
-      display:block;
-      color:var(--green);
-      font-size:11px;
-      margin-top:3px;
-      letter-spacing:.7px;
-    }
-
-    .logout{
-      border:1px solid var(--border);
-      background:var(--card);
-      color:#fff;
-      padding:9px 12px;
-      border-radius:10px;
-      font-size:12px;
-    }
-
-    .content{
-      padding:18px 14px;
-    }
-
-    .page{
-      display:none;
-    }
-
-    .page.active{
-      display:block;
-    }
-
-    .title{
-      font-size:24px;
-      margin-bottom:5px;
-    }
-
-    .subtitle{
-      color:var(--muted);
-      line-height:1.5;
-      font-size:14px;
-      margin-bottom:20px;
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:11px;
-      margin-bottom:20px;
-    }
-
-    .stat{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:15px;
-      padding:17px 14px;
-    }
-
-    .stat-number{
-      color:var(--green);
-      font-size:27px;
-      font-weight:800;
-      margin-bottom:6px;
-    }
-
-    .stat-label{
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.4;
-    }
-
-    .section{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:16px;
-      margin-bottom:15px;
-    }
-
-    .section-title{
-      font-size:17px;
-      margin-bottom:14px;
-    }
-
-    .analysis-status{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:13px 0;
-      border-bottom:1px solid var(--border);
-      gap:10px;
-    }
-
-    .analysis-status:last-child{
-      border-bottom:0;
-    }
-
-    .analysis-status strong{
-      font-size:14px;
-    }
-
-    .badge{
-      display:inline-block;
-      padding:6px 9px;
-      border-radius:20px;
-      font-size:10px;
-      font-weight:800;
-      white-space:nowrap;
-    }
-
-    .published{
-      color:var(--green);
-      background:rgba(0,237,115,.12);
-    }
-
-    .draft{
-      color:var(--warning);
-      background:rgba(255,184,77,.12);
-    }
-
-    .missing{
-      color:var(--muted);
-      background:#18202a;
-    }
-
-    .quick-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-
-    .quick{
-      border:1px solid var(--border);
-      background:var(--card2);
-      color:white;
-      border-radius:13px;
-      padding:17px 10px;
-      font-weight:700;
-      text-align:center;
-      font-size:13px;
-    }
-
-    .quick:hover{
-      border-color:var(--green);
-    }
-
-    .field{
-      margin-bottom:14px;
-    }
-
-    label{
-      display:block;
-      font-size:12px;
-      font-weight:700;
-      color:#c8d0d9;
-      margin-bottom:7px;
-    }
-
-    input,select,textarea{
-      width:100%;
-      border:1px solid var(--border);
-      background:#080d13;
-      color:white;
-      border-radius:11px;
-      padding:12px;
-      outline:none;
-    }
-
-    input:focus,select:focus,textarea:focus{
-      border-color:var(--green);
-    }
-
-    textarea{
-      resize:vertical;
-      min-height:85px;
-    }
-
-    .grid2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-
-    .button{
-      border:0;
-      border-radius:11px;
-      padding:13px 15px;
-      font-weight:800;
-      width:100%;
-    }
-
-    .button-green{
-      background:var(--green);
-      color:#021108;
-    }
-
-    .button-dark{
-      background:#17212c;
-      color:white;
-      border:1px solid var(--border);
-    }
-
-    .button-danger{
-      background:rgba(255,83,83,.12);
-      color:#ff7070;
-      border:1px solid rgba(255,83,83,.25);
-    }
-
-    .actions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-top:15px;
-    }
-
-    .selection{
-      border:1px solid var(--border);
-      background:#080d13;
-      border-radius:14px;
-      padding:14px;
-      margin-top:12px;
-    }
-
-    .selection-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:13px;
-    }
-
-    .selection-head strong{
-      color:var(--green);
-      font-size:13px;
-    }
-
-    .remove{
-      border:0;
-      background:transparent;
-      color:#ff6868;
-      font-size:12px;
-    }
-
-    .message{
-      padding:12px;
-      border-radius:10px;
-      margin-top:12px;
-      font-size:13px;
-      display:none;
-    }
-
-    .message.success{
-      display:block;
-      color:var(--green);
-      background:rgba(0,237,115,.09);
-      border:1px solid rgba(0,237,115,.2);
-    }
-
-    .message.error{
-      display:block;
-      color:#ff7777;
-      background:rgba(255,83,83,.09);
-      border:1px solid rgba(255,83,83,.2);
-    }
-
-    .users-tools{
-      display:flex;
-      gap:8px;
-      margin-bottom:13px;
-    }
-
-    .users-tools input{
-      flex:1;
-    }
-
-    .user{
-      border-bottom:1px solid var(--border);
-      padding:14px 0;
-    }
-
-    .user:last-child{
-      border-bottom:0;
-    }
-
-    .user-top{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:center;
-    }
-
-    .user-name{
-      font-weight:700;
-      font-size:14px;
-    }
-
-    .user-meta{
-      color:var(--muted);
-      font-size:11px;
-      margin-top:6px;
-      line-height:1.5;
-    }
-
-    .result-card{
-      border:1px solid var(--border);
-      background:#080d13;
-      padding:14px;
-      border-radius:13px;
-      margin-bottom:10px;
-    }
-
-    .result-card h3{
-      font-size:14px;
-      margin-bottom:5px;
-    }
-
-    .result-card p{
-      color:var(--muted);
-      font-size:12px;
-      margin-bottom:12px;
-    }
-
-    .empty{
-      color:var(--muted);
-      text-align:center;
-      padding:25px 10px;
-      font-size:13px;
-    }
-
-    .loading-screen{
-      position:fixed;
-      inset:0;
-      z-index:100;
-      background:var(--bg);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-direction:column;
-      gap:13px;
-      padding:20px;
-      text-align:center;
-    }
-
-    .loading-screen img{
-      width:75px;
-      height:75px;
-      border-radius:17px;
-    }
-
-    .loading-screen p{
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .access-denied{
-      max-width:400px;
-      text-align:center;
-    }
-
-    .access-denied h2{
-      margin-bottom:10px;
-    }
-
-    .access-denied p{
-      color:var(--muted);
-      line-height:1.6;
-      margin-bottom:18px;
-    }
-
-    .bottom-nav{
-      position:fixed;
-      bottom:0;
-      left:50%;
-      transform:translateX(-50%);
-      width:100%;
-      max-width:760px;
-      background:#080d13;
-      border-top:1px solid var(--border);
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      z-index:30;
-    }
-
-    .nav{
-      padding:13px 5px;
-      border:0;
-      background:transparent;
-      color:#748191;
-      font-size:10px;
-      font-weight:700;
-    }
-
-    .nav.active{
-      color:var(--green);
-    }
-
-    .back{
-      color:var(--green);
-      font-size:13px;
-      margin-bottom:16px;
-      cursor:pointer;
-      display:inline-block;
-    }
-
-    @media(min-width:600px){
-      .stats{
-        grid-template-columns:repeat(3,1fr);
-      }
-
-      .content{
-        padding:24px 20px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administration - CouponIQ</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#05080d;--card:#0d131c;--card2:#111a25;--border:#1c2936;--green:#00ed73;--text:#fff;--muted:#8e9bab;--danger:#ff5353;--warning:#ffb84d}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.app{max-width:760px;margin:auto;padding-bottom:85px}
+.header{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:15px 16px;background:#05080df8;border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:42px;height:42px;border-radius:10px;object-fit:cover}
+.brand h1{font-size:18px;margin:0;color:#fff}
+.brand small{display:block;color:var(--green);font-size:11px;margin-top:3px;letter-spacing:.7px}
+.logout{border:1px solid var(--border);background:var(--card);color:#fff;padding:9px 12px;border-radius:10px;font-size:12px}
+.content{padding:18px 14px}
+.page{display:none}
+.page.active{display:block}
+.title{font-size:24px;color:#fff;margin:0 0 5px}
+.subtitle{color:var(--muted);line-height:1.5;font-size:14px;margin:0 0 20px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-bottom:20px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:17px 14px}
+.stat-number{color:var(--green);font-size:27px;font-weight:800;margin-bottom:6px}
+.stat-label{color:var(--muted);font-size:12px;line-height:1.4}
+.section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:15px}
+.section-title{font-size:17px;margin:0 0 14px}
+.analysis-status{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--border);gap:10px}
+.analysis-status:last-child{border-bottom:0}
+.analysis-status strong{font-size:14px}
+.badge{display:inline-block;padding:6px 9px;border-radius:20px;font-size:10px;font-weight:800;white-space:nowrap}
+.published{color:var(--green);background:#00ed731f}
+.draft{color:var(--warning);background:#ffb84d1f}
+.missing{color:var(--muted);background:#18202a}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quick{border:1px solid var(--border);background:var(--card2);color:white;border-radius:13px;padding:17px 10px;font-weight:700;text-align:center;font-size:13px}
+.field{margin-bottom:14px}
+label{display:block;font-size:12px;font-weight:700;color:#c8d0d9;margin-bottom:7px}
+input,select,textarea{width:100%;border:1px solid var(--border);background:#080d13;color:white;border-radius:11px;padding:12px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--green)}
+textarea{resize:vertical;min-height:85px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.button{border:0;border-radius:11px;padding:13px 15px;font-weight:800;width:100%}
+.button:disabled{opacity:.5;cursor:wait}
+.button-green{background:var(--green);color:#021108}
+.button-dark{background:#17212c;color:white;border:1px solid var(--border)}
+.button-danger{background:#ff53531f;color:#ff7070;border:1px solid #ff535340}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+.selection{border:1px solid var(--border);background:#080d13;border-radius:14px;padding:14px;margin-top:12px}
+.selection-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
+.selection-head strong{color:var(--green);font-size:13px}
+.remove{border:0;background:transparent;color:#ff6868;font-size:12px}
+.message{padding:12px;border-radius:10px;margin-top:12px;font-size:13px;display:none;line-height:1.5}
+.message.success{display:block;color:var(--green);background:#00ed7317;border:1px solid #00ed7333}
+.message.error{display:block;color:#ff7777;background:#ff535317;border:1px solid #ff535333}
+.users-tools{display:flex;gap:8px;margin-bottom:13px}
+.user{border-bottom:1px solid var(--border);padding:14px 0}
+.user:last-child{border-bottom:0}
+.user-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.user-name{font-weight:700;font-size:14px;overflow-wrap:anywhere}
+.user-meta{color:var(--muted);font-size:11px;margin-top:6px;line-height:1.5}
+.user-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.user-actions button{width:auto;padding:10px 12px;font-size:12px}
+.result-card{border:1px solid var(--border);background:#080d13;padding:14px;border-radius:13px;margin-bottom:10px}
+.result-card h3{font-size:14px;margin:0 0 5px}
+.result-card p{color:var(--muted);font-size:12px;margin:0 0 12px}
+.empty{color:var(--muted);text-align:center;padding:25px 10px;font-size:13px}
+.loading-screen{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:13px;padding:20px;text-align:center}
+.loading-screen img{width:75px;height:75px;border-radius:17px}
+.loading-screen p{color:var(--muted);font-size:13px}
+.access-denied{max-width:400px;text-align:center}
+.access-denied h2{margin-bottom:10px}
+.access-denied p{color:var(--muted);line-height:1.6;margin-bottom:18px}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:760px;background:#080d13;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);z-index:30}
+.nav{padding:13px 5px;border:0;background:transparent;color:#748191;font-size:10px;font-weight:700}
+.nav.active{color:var(--green)}
+@media(min-width:600px){.stats{grid-template-columns:repeat(3,1fr)}.content{padding:24px 20px}}
+</style>
 </head>
-
 <body>
-
 <div id="loadingScreen" class="loading-screen">
-  <img src="logo-ouponiq.png" alt="CouponIQ">
-  <strong>CouponIQ Administration</strong>
-  <p>Vérification de votre accès administrateur...</p>
+<img src="logo-ouponiq.png" alt="CouponIQ">
+<strong>CouponIQ Administration</strong>
+<p>Vérification de votre accès administrateur...</p>
 </div>
-
 <div id="deniedScreen" class="loading-screen hidden">
-  <div class="access-denied">
-    <h2>Accès refusé</h2>
-    <p>
-      Cette partie de CouponIQ est réservée aux administrateurs.
-    </p>
-    <button class="button button-green"
-      onclick="window.location.href='index.html'">
-      Retour à CouponIQ
-    </button>
-  </div>
+<div class="access-denied">
+<h2>Accès refusé</h2>
+<p>Cette partie de CouponIQ est réservée aux administrateurs. Connecte-toi d'abord sur l'application avec ton compte ADMIN.</p>
+<button class="button button-green" onclick="location.href='index.html'">Retour à CouponIQ</button>
 </div>
-
+</div>
 <div id="adminApp" class="app hidden">
-
-  <header class="header">
-    <div class="brand">
-      <img src="logo-ouponiq.png" alt="CouponIQ">
-      <div>
-        <h1>CouponIQ</h1>
-        <small>ADMINISTRATION</small>
-      </div>
-    </div>
-
-    <button class="logout" onclick="logoutAdmin()">
-      Déconnexion
-    </button>
-  </header>
-
-  <main class="content">
-
-    <!-- TABLEAU DE BORD -->
-    <section id="dashboard" class="page active">
-
-      <h2 class="title">Tableau de bord</h2>
-      <p class="subtitle">
-        Vue générale de CouponIQ.
-      </p>
-
-      <div class="stats">
-
-        <div class="stat">
-          <div id="statTotal" class="stat-number">—</div>
-          <div class="stat-label">Total inscrits</div>
-        </div>
-
-        <div class="stat">
-          <div id="statFree" class="stat-number">—</div>
-          <div class="stat-label">Comptes gratuits</div>
-        </div>
-
-        <div class="stat">
-          <div id="statPremium" class="stat-number">—</div>
-          <div class="stat-label">Premium actifs</div>
-        </div>
-
-        <div class="stat">
-          <div id="statAdmin" class="stat-number">—</div>
-          <div class="stat-label">Administrateurs</div>
-        </div>
-
-        <div class="stat">
-          <div id="statPremiumMonth" class="stat-number">—</div>
-          <div class="stat-label">Nouveaux Premium du mois</div>
-        </div>
-
-        <div class="stat">
-          <div id="statExpired" class="stat-number">—</div>
-          <div class="stat-label">Premium expirés</div>
-        </div>
-
-      </div>
-
-      <div class="section">
-        <h3 class="section-title">Analyses d'aujourd'hui</h3>
-
-        <div class="analysis-status">
-          <strong>Confiance du jour</strong>
-          <span id="todayConfidence" class="badge missing">À CRÉER</span>
-        </div>
-
-        <div class="analysis-status">
-          <strong>Combiné du jour</strong>
-          <span id="todayCombined" class="badge missing">À CRÉER</span>
-        </div>
-
-        <div class="analysis-status">
-          <strong>Challenge 50</strong>
-          <span id="todayChallenge" class="badge missing">À CRÉER</span>
-        </div>
-      </div>
-
-      <div class="section">
-        <h3 class="section-title">Actions rapides</h3>
-
-        <div class="quick-grid">
-          <button class="quick" onclick="openPage('analyses')">
-            Créer une analyse
-          </button>
-
-          <button class="quick" onclick="openPage('users')">
-            Gérer les utilisateurs
-          </button>
-
-          <button class="quick" onclick="openPage('results')">
-            Gérer les résultats
-          </button>
-
-          <button class="quick" onclick="openPage('partners')">
-            Gérer les partenaires
-          </button>
-        </div>
-      </div>
-
-    </section>
-
-
-    <!-- ANALYSES -->
-    <section id="analyses" class="page">
-
-      <h2 class="title">Gestion des analyses</h2>
-      <p class="subtitle">
-        Crée, modifie et publie les analyses CouponIQ.
-      </p>
-
-      <div class="section">
-
-        <div class="grid2">
-
-          <div class="field">
-            <label>Date de l'analyse</label>
-            <input type="date" id="analysisDate">
-          </div>
-
-          <div class="field">
-            <label>Type d'analyse</label>
-            <select id="analysisType">
-              <option value="confidence">Confiance du jour</option>
-              <option value="combined">Combiné du jour</option>
-              <option value="challenge">Challenge 50</option>
-            </select>
-          </div>
-
-        </div>
-
-        <div class="field">
-          <label>Titre</label>
-          <input type="text" id="analysisTitle"
-                 placeholder="Confiance du jour">
-        </div>
-
-        <div class="grid2">
-
-          <div class="field">
-            <label>Cote cible</label>
-            <input type="number" step="0.01"
-                   id="targetOdd" placeholder="5.00">
-          </div>
-
-          <div class="field">
-            <label>Cote totale</label>
-            <input type="number" step="0.01"
-                   id="totalOdd" placeholder="5.20">
-          </div>
-
-        </div>
-
-        <div class="grid2">
-
-          <div class="field">
-            <label>Code 1xBet</label>
-            <input type="text" id="code1xbet"
-                   placeholder="Code coupon">
-          </div>
-
-          <div class="field">
-            <label>Code BetWinner</label>
-            <input type="text" id="codeBetwinner"
-                   placeholder="Code coupon">
-          </div>
-
-        </div>
-
-        <div class="field">
-          <label>Résultat</label>
-
-          <select id="resultStatus">
-            <option value="PENDING">Résultat à renseigner</option>
-            <option value="WON">VALIDÉ</option>
-            <option value="LOST">PERDU</option>
-            <option value="CANCELLED">ANNULÉ</option>
-          </select>
-        </div>
-
-      </div>
-
-      <div class="section">
-
-        <h3 class="section-title">Sélections / Matchs</h3>
-
-        <div id="selectionsContainer"></div>
-
-        <button class="button button-dark"
-                onclick="addSelection()">
-          + Ajouter une sélection
-        </button>
-
-      </div>
-
-      <div class="actions">
-
-        <button class="button button-dark"
-                onclick="saveAnalysis('DRAFT')">
-          Enregistrer le brouillon
-        </button>
-
-        <button class="button button-green"
-                onclick="saveAnalysis('PUBLISHED')">
-          Publier l'analyse
-        </button>
-
-      </div>
-
-      <div id="analysisMessage" class="message"></div>
-
-    </section>
-
-
-    <!-- UTILISATEURS -->
-    <section id="users" class="page">
-
-      <h2 class="title">Utilisateurs</h2>
-      <p class="subtitle">
-        Liste des comptes inscrits sur CouponIQ.
-      </p>
-
-      <div class="section">
-
-        <div class="users-tools">
-          <input
-            type="text"
-            id="userSearch"
-            placeholder="Rechercher par nom..."
-            oninput="filterUsers()">
-        </div>
-
-        <div id="usersList">
-          <div class="empty">Chargement...</div>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- RESULTATS -->
-    <section id="results" class="page">
-
-      <h2 class="title">Résultats</h2>
-      <p class="subtitle">
-        Renseigne manuellement les résultats des analyses publiées.
-      </p>
-
-      <div id="resultsList">
-        <div class="empty">Chargement...</div>
-      </div>
-
-    </section>
-
-
-    <!-- PARTENAIRES -->
-    <section id="partners" class="page">
-
-      <h2 class="title">Partenaires</h2>
-      <p class="subtitle">
-        Gestion des partenaires CouponIQ.
-      </p>
-
-      <div class="section">
-        <div class="empty">
-          La gestion complète des partenaires sera connectée
-          à Supabase dans la prochaine étape.
-        </div>
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <nav class="bottom-nav">
-
-    <button class="nav active"
-            data-page="dashboard"
-            onclick="openPage('dashboard')">
-      Tableau
-    </button>
-
-    <button class="nav"
-            data-page="analyses"
-            onclick="openPage('analyses')">
-      Analyses
-    </button>
-
-    <button class="nav"
-            data-page="users"
-            onclick="openPage('users')">
-      Utilisateurs
-    </button>
-
-    <button class="nav"
-            data-page="results"
-            onclick="openPage('results')">
-      Résultats
-    </button>
-
-  </nav>
-
+<header class="header">
+<div class="brand">
+<img src="logo-ouponiq.png" alt="CouponIQ">
+<div><h1>CouponIQ</h1><small>ADMINISTRATION</small></div>
 </div>
-
-
+<button class="logout" onclick="logoutAdmin()">Déconnexion</button>
+</header>
+<main class="content">
+<section id="dashboard" class="page active">
+<h2 class="title">Tableau de bord</h2>
+<p class="subtitle">Vue générale de CouponIQ.</p>
+<div class="stats">
+<div class="stat"><div id="statTotal" class="stat-number">—</div><div class="stat-label">Total inscrits</div></div>
+<div class="stat"><div id="statFree" class="stat-number">—</div><div class="stat-label">Comptes gratuits</div></div>
+<div class="stat"><div id="statPremium" class="stat-number">—</div><div class="stat-label">Premium actifs</div></div>
+<div class="stat"><div id="statAdmin" class="stat-number">—</div><div class="stat-label">Administrateurs</div></div>
+<div class="stat"><div id="statPremiumMonth" class="stat-number">—</div><div class="stat-label">Nouveaux Premium du mois</div></div>
+<div class="stat"><div id="statExpired" class="stat-number">—</div><div class="stat-label">Premium expirés</div></div>
+</div>
+<div id="dashboardMessage" class="message"></div>
+<div class="section">
+<h3 class="section-title">Analyses d'aujourd'hui</h3>
+<div class="analysis-status"><strong>Confiance du jour</strong><span id="todayConfidence" class="badge missing">À CRÉER</span></div>
+<div class="analysis-status"><strong>Combiné du jour</strong><span id="todayCombined" class="badge missing">À CRÉER</span></div>
+<div class="analysis-status"><strong>Challenge 50</strong><span id="todayChallenge" class="badge missing">À CRÉER</span></div>
+</div>
+<div class="section">
+<h3 class="section-title">Actions rapides</h3>
+<div class="quick-grid">
+<button class="quick" onclick="openPage('analyses')">Créer une analyse</button>
+<button class="quick" onclick="openPage('users')">Gérer les utilisateurs</button>
+<button class="quick" onclick="openPage('results')">Gérer les résultats</button>
+<button class="quick" onclick="openPage('partners')">Gérer les partenaires</button>
+</div>
+</div>
+</section>
+<section id="analyses" class="page">
+<h2 class="title">Gestion des analyses</h2>
+<p class="subtitle">Crée, modifie et publie les analyses CouponIQ.</p>
+<div class="section">
+<div class="grid2">
+<div class="field"><label for="analysisDate">Date de l'analyse</label><input type="date" id="analysisDate"></div>
+<div class="field"><label for="analysisType">Type d'analyse</label>
+<select id="analysisType">
+<option value="confidence">Confiance du jour</option>
+<option value="combined">Combiné du jour</option>
+<option value="challenge">Challenge 50</option>
+</select>
+</div>
+</div>
+<div class="field"><label for="analysisTitle">Titre</label><input id="analysisTitle" placeholder="Confiance du jour"></div>
+<div class="grid2">
+<div class="field"><label for="targetOdd">Cote cible</label><input type="number" min="0" step="0.01" id="targetOdd"></div>
+<div class="field"><label for="totalOdd">Cote totale</label><input type="number" min="0" step="0.01" id="totalOdd"></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="code1xbet">Code 1xBet</label><input id="code1xbet"></div>
+<div class="field"><label for="codeBetwinner">Code BetWinner</label><input id="codeBetwinner"></div>
+</div>
+<div class="field"><label for="resultStatus">Résultat</label>
+<select id="resultStatus">
+<option value="PENDING">Résultat à renseigner</option>
+<option value="WON">VALIDÉ</option>
+<option value="LOST">PERDU</option>
+<option value="CANCELLED">ANNULÉ</option>
+</select>
+</div>
+</div>
+<div class="section">
+<h3 class="section-title">Sélections / Matchs</h3>
+<div id="selectionsContainer"></div>
+<button class="button button-dark" onclick="addSelection()">+ Ajouter une sélection</button>
+</div>
+<div class="actions">
+<button class="button button-dark save-analysis" onclick="saveAnalysis('DRAFT')">Enregistrer le brouillon</button>
+<button class="button button-green save-analysis" onclick="saveAnalysis('PUBLISHED')">Publier l'analyse</button>
+</div>
+<div id="analysisMessage" class="message"></div>
+</section>
+<section id="users" class="page">
+<h2 class="title">Utilisateurs</h2>
+<p class="subtitle">Gère les comptes et les abonnements Premium de 30 jours.</p>
+<div class="section">
+<div class="users-tools"><input id="userSearch" placeholder="Rechercher par nom..." oninput="filterUsers()"></div>
+<div id="usersMessage" class="message"></div>
+<div id="usersList"><div class="empty">Chargement...</div></div>
+</div>
+</section>
+<section id="results" class="page">
+<h2 class="title">Résultats</h2>
+<p class="subtitle">Renseigne manuellement les résultats des analyses publiées.</p>
+<div id="resultsList"><div class="empty">Chargement...</div></div>
+</section>
+<section id="partners" class="page">
+<h2 class="title">Partenaires</h2>
+<p class="subtitle">Gestion des partenaires CouponIQ.</p>
+<div class="section"><div class="empty">La gestion des partenaires sera connectée à Supabase dans une prochaine étape.</div></div>
+</section>
+</main>
+<nav class="bottom-nav">
+<button class="nav active" data-page="dashboard" onclick="openPage('dashboard')">Tableau</button>
+<button class="nav" data-page="analyses" onclick="openPage('analyses')">Analyses</button>
+<button class="nav" data-page="users" onclick="openPage('users')">Utilisateurs</button>
+<button class="nav" data-page="results" onclick="openPage('results')">Résultats</button>
+</nav>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL =
-  "https://zkgdhjjvgfpwpwoevieb.supabase.co";
+const SUPABASE_URL='https://zkgdhjjvgfpwpwoevieb.supabase.co';
+const SUPABASE_KEY='sb_publishable_UCwOPMZn1sJaj3vbDu3Zzw_fZBu2V-6';
+let db=null,currentUser=null,allUsers=[],currentAnalysisId=null,loadingAnalysisKey=0,analysisBusy=false,premiumBusy=false;
+const $=id=>document.getElementById(id);
 
-const SUPABASE_KEY =
-  "sb_publishable_UCwOPMZn1sJaj3vbDu3Zzw_fZBu2V-6";
+function esc(v){
+ return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+function showMessage(id,msg,ok){
+ const e=$(id);e.textContent=msg;e.className='message '+(ok?'success':'error');
+}
+function clearMessage(id){
+ const e=$(id);e.textContent='';e.className='message';
+}
+function todayOuaga(){
+ const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Africa/Ouagadougou',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+ const v={};parts.forEach(p=>v[p.type]=p.value);
+ return `${v.year}-${v.month}-${v.day}`;
+}
+function dateDisplay(v){
+ if(!v)return '—';
+ const d=new Date(/^\d{4}-\d{2}-\d{2}$/.test(v)?v+'T12:00:00Z':v);
+ return isNaN(d.getTime())?'—':d.toLocaleDateString('fr-FR',{timeZone:'Africa/Ouagadougou',day:'2-digit',month:'2-digit',year:'numeric'});
+}
+function dateTimeDisplay(v){
+ if(!v)return 'Non renseignée';
+ const d=new Date(v);
+ return isNaN(d.getTime())?'—':d.toLocaleString('fr-FR',{timeZone:'Africa/Ouagadougou',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+function num(v){return v===''||v==null?null:Number(v)}
+function kickoffIso(v){return v?new Date(v+':00Z').toISOString():null}
+function kickoffInput(v){return v?new Date(v).toISOString().slice(0,16):''}
 
-let supabaseClient = null;
-let currentUser = null;
-let currentProfile = null;
-let allUsers = [];
-let currentAnalysisId = null;
-
-
-/* ==========================================
-   OUTILS
-========================================== */
-
-function getOuagaDateString(){
-
-  const parts =
-    new Intl.DateTimeFormat("en-US",{
-      timeZone:"Africa/Ouagadougou",
-      year:"numeric",
-      month:"2-digit",
-      day:"2-digit"
-    }).formatToParts(new Date());
-
-  const values = {};
-
-  parts.forEach(part=>{
-    values[part.type] = part.value;
+function deny(){
+ $('loadingScreen').classList.add('hidden');
+ $('adminApp').classList.add('hidden');
+ $('deniedScreen').classList.remove('hidden');
+}
+async function init(){
+ try{
+  if(!window.supabase)throw Error('Bibliothèque Supabase indisponible');
+  db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+  const {data:{session},error}=await db.auth.getSession();
+  if(error)throw error;
+  if(!session?.user)return deny();
+  currentUser=session.user;
+  const {data:p,error:pe}=await db.from('profiles').select('role').eq('id',currentUser.id).maybeSingle();
+  if(pe)throw pe;
+  if(String(p?.role).toUpperCase()!=='ADMIN')return deny();
+  $('loadingScreen').classList.add('hidden');
+  $('adminApp').classList.remove('hidden');
+  $('analysisDate').value=todayOuaga();
+  await loadDashboard();
+  db.auth.onAuthStateChange((event,session)=>{
+   if(!session){location.href='index.html'}
   });
-
-  return values.year + "-" +
-         values.month + "-" +
-         values.day;
+ }catch(e){console.error(e);deny()}
 }
-
-
-function formatDate(value){
-
-  if(!value) return "—";
-
-  const date = new Date(value);
-
-  if(Number.isNaN(date.getTime()))
-    return "—";
-
-  return date.toLocaleDateString(
-    "fr-FR",
-    {
-      timeZone:"Africa/Ouagadougou",
-      day:"2-digit",
-      month:"2-digit",
-      year:"numeric"
-    }
-  );
-}
-
-
-function escapeHtml(value){
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-
-function nullableNumber(value){
-
-  if(value === "" || value === null)
-    return null;
-
-  const number = Number(value);
-
-  return Number.isFinite(number)
-    ? number
-    : null;
-}
-
-
-function ouagaInputToIso(value){
-
-  if(!value) return null;
-
-  const date = new Date(value + ":00Z");
-
-  if(Number.isNaN(date.getTime()))
-    return null;
-
-  return date.toISOString();
-}
-
-
-function isoToOuagaInput(value){
-
-  if(!value) return "";
-
-  const date = new Date(value);
-
-  if(Number.isNaN(date.getTime()))
-    return "";
-
-  return date.toISOString().slice(0,16);
-}
-
-
-/* ==========================================
-   NAVIGATION
-========================================== */
-
-function openPage(page){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(element=>{
-      element.classList.remove("active");
-    });
-
-  const target =
-    document.getElementById(page);
-
-  if(target)
-    target.classList.add("active");
-
-
-  document
-    .querySelectorAll(".nav")
-    .forEach(button=>{
-      button.classList.toggle(
-        "active",
-        button.dataset.page === page
-      );
-    });
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-
-  if(page === "dashboard"){
-    loadDashboard();
-  }
-
-  if(page === "users"){
-    loadUsers();
-  }
-
-  if(page === "results"){
-    loadResults();
-  }
-
-  if(page === "analyses"){
-    prepareAnalysisPage();
-  }
-}
-
-
-/* ==========================================
-   AUTHENTIFICATION ADMIN
-========================================== */
-
-async function initializeAdmin(){
-
-  try{
-
-    await loadSupabaseLibrary();
-
-    supabaseClient =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
-
-
-    const {
-      data:{session},
-      error
-    } =
-      await supabaseClient.auth.getSession();
-
-
-    if(error)
-      throw error;
-
-
-    if(!session || !session.user){
-
-      denyAccess();
-      return;
-    }
-
-
-    currentUser = session.user;
-
-
-    const {
-      data:profile,
-      error:profileError
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select("role")
-        .eq("id",currentUser.id)
-        .maybeSingle();
-
-
-    if(profileError)
-      throw profileError;
-
-
-    currentProfile = profile;
-
-
-    if(
-      !currentProfile ||
-      String(currentProfile.role)
-        .toUpperCase() !== "ADMIN"
-    ){
-
-      denyAccess();
-      return;
-    }
-
-
-    document
-      .getElementById("loadingScreen")
-      .classList.add("hidden");
-
-    document
-      .getElementById("adminApp")
-      .classList.remove("hidden");
-
-
-    document.getElementById("analysisDate").value =
-      getOuagaDateString();
-
-
-    setAnalysisDefaults();
-
-    await loadDashboard();
-
-
-    supabaseClient.auth.onAuthStateChange(
-      async(event,session)=>{
-
-        if(!session){
-
-          window.location.href =
-            "index.html";
-
-        }
-
-      }
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "Erreur administration :",
-      error
-    );
-
-    denyAccess();
-  }
-}
-
-
-function loadSupabaseLibrary(){
-
-  return new Promise((resolve,reject)=>{
-
-    if(window.supabase){
-      resolve();
-      return;
-    }
-
-    const script =
-      document.createElement("script");
-
-    script.src =
-      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-
-    script.onload = resolve;
-    script.onerror = reject;
-
-    document.head.appendChild(script);
-
-  });
-}
-
-
-function denyAccess(){
-
-  document
-    .getElementById("loadingScreen")
-    .classList.add("hidden");
-
-  document
-    .getElementById("adminApp")
-    .classList.add("hidden");
-
-  document
-    .getElementById("deniedScreen")
-    .classList.remove("hidden");
-}
-
-
 async function logoutAdmin(){
-
-  if(supabaseClient)
-    await supabaseClient.auth.signOut();
-
-  window.location.href =
-    "index.html";
+ if(db)await db.auth.signOut();
+ location.href='index.html';
 }
-
-
-/* ==========================================
-   TABLEAU DE BORD
-========================================== */
-
+function openPage(id){
+ document.querySelectorAll('.page').forEach(e=>e.classList.toggle('active',e.id===id));
+ document.querySelectorAll('.nav').forEach(e=>e.classList.toggle('active',e.dataset.page===id));
+ window.scrollTo(0,0);
+ if(id==='dashboard')loadDashboard();
+ if(id==='users')loadUsers();
+ if(id==='results')loadResults();
+ if(id==='analyses')loadExistingAnalysis();
+}
 async function loadDashboard(){
-
-  if(!supabaseClient) return;
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .rpc("couponiq_admin_stats");
-
-
-    if(error)
-      throw error;
-
-
-    const stats =
-      Array.isArray(data)
-        ? data[0]
-        : data;
-
-
-    document.getElementById("statTotal").textContent =
-      stats?.total_users ?? 0;
-
-    document.getElementById("statFree").textContent =
-      stats?.free_users ?? 0;
-
-    document.getElementById("statPremium").textContent =
-      stats?.premium_users ?? 0;
-
-    document.getElementById("statAdmin").textContent =
-      stats?.admin_users ?? 0;
-
-    document.getElementById("statPremiumMonth").textContent =
-      stats?.premium_this_month ?? 0;
-
-    document.getElementById("statExpired").textContent =
-      stats?.expired_premium ?? 0;
-
-
-    await loadTodayAnalyses();
-
-
-  }catch(error){
-
-    console.error(
-      "Erreur statistiques :",
-      error
-    );
+ try{
+  clearMessage('dashboardMessage');
+  const {data,error}=await db.rpc('couponiq_admin_stats');
+  if(error)throw error;
+  const s=Array.isArray(data)?data[0]:data;
+  for(const [id,key] of [
+   ['statTotal','total_users'],['statFree','free_users'],
+   ['statPremium','premium_users'],['statAdmin','admin_users'],
+   ['statPremiumMonth','premium_this_month'],['statExpired','expired_premium']
+  ])$(id).textContent=s?.[key]??0;
+  const {data:a,error:ae}=await db.from('analyses').select('analysis_type,status').eq('analysis_date',todayOuaga());
+  if(ae)throw ae;
+  for(const [id,type] of [
+   ['todayConfidence','confidence'],['todayCombined','combined'],['todayChallenge','challenge']
+  ]){
+   const e=$(id),v=(a||[]).find(x=>x.analysis_type===type);
+   e.textContent=!v?'À CRÉER':v.status==='PUBLISHED'?'PUBLIÉE':'BROUILLON';
+   e.className='badge '+(!v?'missing':v.status==='PUBLISHED'?'published':'draft');
   }
+ }catch(e){
+  console.error(e);
+  showMessage('dashboardMessage','Impossible de charger certaines statistiques.',false);
+ }
 }
 
-
-async function loadTodayAnalyses(){
-
-  const today =
-    getOuagaDateString();
-
-
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("analyses")
-      .select("analysis_type,status")
-      .eq("analysis_date",today);
-
-
-  if(error){
-
-    console.error(error);
-    return;
-  }
-
-
-  updateTodayBadge(
-    "todayConfidence",
-    data,
-    "confidence"
-  );
-
-  updateTodayBadge(
-    "todayCombined",
-    data,
-    "combined"
-  );
-
-  updateTodayBadge(
-    "todayChallenge",
-    data,
-    "challenge"
-  );
+const defaults={
+ confidence:['Confiance du jour','5.00'],
+ combined:['Combiné du jour','10.00'],
+ challenge:['Challenge 50','50.00']
+};
+function resetAnalysis(){
+ const [title,odd]=defaults[$('analysisType').value];
+ $('analysisTitle').value=title;
+ $('targetOdd').value=odd;
+ $('totalOdd').value='';
+ $('code1xbet').value='';
+ $('codeBetwinner').value='';
+ $('resultStatus').value='PENDING';
+ $('selectionsContainer').replaceChildren();
+ addSelection();
 }
-
-
-function updateTodayBadge(
-  elementId,
-  analyses,
-  type
-){
-
-  const element =
-    document.getElementById(elementId);
-
-  const analysis =
-    analyses.find(
-      item=>item.analysis_type === type
-    );
-
-
-  element.className = "badge";
-
-
-  if(!analysis){
-
-    element.textContent = "À CRÉER";
-    element.classList.add("missing");
-    return;
-  }
-
-
-  if(analysis.status === "PUBLISHED"){
-
-    element.textContent = "PUBLIÉE";
-    element.classList.add("published");
-
-  }else{
-
-    element.textContent = "BROUILLON";
-    element.classList.add("draft");
-
-  }
-}
-
-
-/* ==========================================
-   ANALYSES
-========================================== */
-
-function prepareAnalysisPage(){
-
-  if(!document.getElementById("analysisDate").value)
-    document.getElementById("analysisDate").value =
-      getOuagaDateString();
-
-
-  if(
-    document
-      .getElementById("selectionsContainer")
-      .children.length === 0
-  ){
-    addSelection();
-  }
-}
-
-
-function setAnalysisDefaults(){
-
-  const type =
-    document.getElementById("analysisType").value;
-
-
-  const defaults = {
-
-    confidence:{
-      title:"Confiance du jour",
-      odd:"5.00"
-    },
-
-    combined:{
-      title:"Combiné du jour",
-      odd:"10.00"
-    },
-
-    challenge:{
-      title:"Challenge 50",
-      odd:"50.00"
-    }
-
-  };
-
-
-  document.getElementById("analysisTitle").value =
-    defaults[type].title;
-
-  document.getElementById("targetOdd").value =
-    defaults[type].odd;
-}
-
-
-document
-  .getElementById("analysisType")
-  .addEventListener(
-    "change",
-    async()=>{
-
-      setAnalysisDefaults();
-      await loadExistingAnalysis();
-
-    }
-  );
-
-
-document
-  .getElementById("analysisDate")
-  .addEventListener(
-    "change",
-    loadExistingAnalysis
-  );
-
+$('analysisType').addEventListener('change',loadExistingAnalysis);
+$('analysisDate').addEventListener('change',loadExistingAnalysis);
 
 function addSelection(data={}){
-
-  const container =
-    document.getElementById(
-      "selectionsContainer"
-    );
-
-
-  const selection =
-    document.createElement("div");
-
-  selection.className =
-    "selection";
-
-
-  selection.innerHTML = `
-    <div class="selection-head">
-      <strong class="selection-number">
-        Sélection
-      </strong>
-
-      <button
-        type="button"
-        class="remove">
-        Supprimer
-      </button>
-    </div>
-
-    <div class="field">
-      <label>Championnat</label>
-      <input
-        class="sel-league"
-        type="text"
-        placeholder="Ex : Premier League">
-    </div>
-
-    <div class="field">
-      <label>Match</label>
-      <input
-        class="sel-match"
-        type="text"
-        placeholder="Ex : Arsenal - Chelsea">
-    </div>
-
-    <div class="field">
-      <label>Heure du match</label>
-      <input
-        class="sel-kickoff"
-        type="datetime-local">
-    </div>
-
-    <div class="grid2">
-
-      <div class="field">
-        <label>Pronostic</label>
-        <input
-          class="sel-prediction"
-          type="text"
-          placeholder="Ex : Plus de 1,5 buts">
-      </div>
-
-      <div class="field">
-        <label>Cote</label>
-        <input
-          class="sel-odd"
-          type="number"
-          step="0.01"
-          placeholder="1.45">
-      </div>
-
-    </div>
-
-    <div class="field">
-      <label>Pourquoi ce choix ?</label>
-      <textarea
-        class="sel-explanation"
-        placeholder="Ton analyse du match..."></textarea>
-    </div>
-  `;
-
-
-  selection
-    .querySelector(".sel-league")
-    .value =
-      data.league || "";
-
-  selection
-    .querySelector(".sel-match")
-    .value =
-      data.match_name || "";
-
-  selection
-    .querySelector(".sel-kickoff")
-    .value =
-      isoToOuagaInput(
-        data.kickoff_at
-      );
-
-  selection
-    .querySelector(".sel-prediction")
-    .value =
-      data.prediction || "";
-
-  selection
-    .querySelector(".sel-odd")
-    .value =
-      data.odd ?? "";
-
-  selection
-    .querySelector(".sel-explanation")
-    .value =
-      data.explanation || "";
-
-
-  selection
-    .querySelector(".remove")
-    .addEventListener(
-      "click",
-      ()=>{
-
-        selection.remove();
-        renumberSelections();
-
-      }
-    );
-
-
-  container.appendChild(selection);
-
-  renumberSelections();
+ const e=document.createElement('div');
+ e.className='selection';
+ e.innerHTML=`
+ <div class="selection-head"><strong class="selection-number">Sélection</strong><button type="button" class="remove">Supprimer</button></div>
+ <div class="field"><label>Championnat</label><input class="sel-league" placeholder="Ex : Premier League"></div>
+ <div class="field"><label>Match</label><input class="sel-match" placeholder="Ex : Arsenal - Chelsea"></div>
+ <div class="field"><label>Heure du match (Burkina Faso)</label><input class="sel-kickoff" type="datetime-local"></div>
+ <div class="grid2">
+ <div class="field"><label>Pronostic</label><input class="sel-prediction" placeholder="Plus de 1,5 buts"></div>
+ <div class="field"><label>Cote</label><input class="sel-odd" type="number" min="0" step="0.01"></div>
+ </div>
+ <div class="field"><label>Pourquoi ce choix ?</label><textarea class="sel-explanation"></textarea></div>`;
+ for(const [cls,value] of [
+  ['sel-league',data.league],
+  ['sel-match',data.match_name],
+  ['sel-kickoff',kickoffInput(data.kickoff_at)],
+  ['sel-prediction',data.prediction],
+  ['sel-odd',data.odd],
+  ['sel-explanation',data.explanation]
+ ])e.querySelector('.'+cls).value=value??'';
+ e.querySelector('.remove').onclick=()=>{e.remove();renumber()};
+ $('selectionsContainer').append(e);
+ renumber();
 }
-
-
-function renumberSelections(){
-
-  document
-    .querySelectorAll(".selection")
-    .forEach((selection,index)=>{
-
-      selection
-        .querySelector(".selection-number")
-        .textContent =
-          "Sélection " + (index + 1);
-
-    });
+function renumber(){
+ document.querySelectorAll('.selection').forEach((e,i)=>
+  e.querySelector('.selection-number').textContent='Sélection '+(i+1)
+ );
 }
-
-
 async function loadExistingAnalysis(){
-
-  if(!supabaseClient)
-    return;
-
-
-  currentAnalysisId = null;
-
-
-  const date =
-    document.getElementById(
-      "analysisDate"
-    ).value;
-
-  const type =
-    document.getElementById(
-      "analysisType"
-    ).value;
-
-
-  if(!date || !type)
-    return;
-
-
-  const message =
-    document.getElementById(
-      "analysisMessage"
-    );
-
-  message.className =
-    "message";
-
-  message.textContent =
-    "";
-
-
-  try{
-
-    const {
-      data:analysis,
-      error
-    } =
-      await supabaseClient
-        .from("analyses")
-        .select("*")
-        .eq("analysis_date",date)
-        .eq("analysis_type",type)
-        .maybeSingle();
-
-
-    if(error)
-      throw error;
-
-
-    const container =
-      document.getElementById(
-        "selectionsContainer"
-      );
-
-    container.innerHTML = "";
-
-
-    if(!analysis){
-
-      setAnalysisDefaults();
-
-      document.getElementById("totalOdd").value = "";
-      document.getElementById("code1xbet").value = "";
-      document.getElementById("codeBetwinner").value = "";
-      document.getElementById("resultStatus").value = "PENDING";
-
-      addSelection();
-
-      return;
-    }
-
-
-    currentAnalysisId =
-      analysis.id;
-
-
-    document.getElementById("analysisTitle").value =
-      analysis.title || "";
-
-    document.getElementById("targetOdd").value =
-      analysis.target_odd ?? "";
-
-    document.getElementById("totalOdd").value =
-      analysis.total_odd ?? "";
-
-    document.getElementById("code1xbet").value =
-      analysis.code_1xbet || "";
-
-    document.getElementById("codeBetwinner").value =
-      analysis.code_betwinner || "";
-
-    document.getElementById("resultStatus").value =
-      analysis.result_status || "PENDING";
-
-
-    const {
-      data:selections,
-      error:selectionError
-    } =
-      await supabaseClient
-        .from("analysis_selections")
-        .select("*")
-        .eq("analysis_id",analysis.id)
-        .order("position",{
-          ascending:true
-        });
-
-
-    if(selectionError)
-      throw selectionError;
-
-
-    if(
-      !selections ||
-      selections.length === 0
-    ){
-
-      addSelection();
-
-    }else{
-
-      selections.forEach(
-        item=>addSelection(item)
-      );
-
-    }
-
-
-  }catch(error){
-
-    console.error(error);
-
-    showAnalysisMessage(
-      "Impossible de charger cette analyse.",
-      false
-    );
-  }
+ const key=++loadingAnalysisKey;
+ currentAnalysisId=null;
+ clearMessage('analysisMessage');
+ resetAnalysis();
+ const date=$('analysisDate').value,type=$('analysisType').value;
+ if(!date||!type)return;
+ try{
+  const {data:a,error}=await db.from('analyses').select('*')
+   .eq('analysis_date',date).eq('analysis_type',type).maybeSingle();
+  if(error)throw error;
+  if(key!==loadingAnalysisKey||!a)return;
+  const {data:rows,error:re}=await db.from('analysis_selections')
+   .select('*').eq('analysis_id',a.id).order('position',{ascending:true});
+  if(re)throw re;
+  if(key!==loadingAnalysisKey)return;
+  currentAnalysisId=a.id;
+  for(const [id,val] of [
+   ['analysisTitle',a.title],['targetOdd',a.target_odd],
+   ['totalOdd',a.total_odd],['code1xbet',a.code_1xbet],
+   ['codeBetwinner',a.code_betwinner],['resultStatus',a.result_status]
+  ])$(id).value=val??(id==='resultStatus'?'PENDING':'');
+  $('selectionsContainer').replaceChildren();
+  if(rows?.length)rows.forEach(r=>addSelection(r));
+  else addSelection();
+ }catch(e){
+  console.error(e);
+  if(key===loadingAnalysisKey)showMessage('analysisMessage','Impossible de charger cette analyse.',false);
+ }
 }
-
-
 function collectSelections(){
-
-  const rows =
-    Array.from(
-      document.querySelectorAll(
-        ".selection"
-      )
-    );
-
-
-  return rows.map(
-    (row,index)=>({
-
-      position:index + 1,
-
-      league:
-        row
-          .querySelector(".sel-league")
-          .value.trim() || null,
-
-      match_name:
-        row
-          .querySelector(".sel-match")
-          .value.trim(),
-
-      kickoff_at:
-        ouagaInputToIso(
-          row
-            .querySelector(".sel-kickoff")
-            .value
-        ),
-
-      prediction:
-        row
-          .querySelector(".sel-prediction")
-          .value.trim(),
-
-      odd:
-        nullableNumber(
-          row
-            .querySelector(".sel-odd")
-            .value
-        ),
-
-      explanation:
-        row
-          .querySelector(".sel-explanation")
-          .value.trim() || null
-
-    }));
+ return [...document.querySelectorAll('.selection')].map((r,i)=>({
+  position:i+1,
+  league:r.querySelector('.sel-league').value.trim()||null,
+  match_name:r.querySelector('.sel-match').value.trim(),
+  kickoff_at:kickoffIso(r.querySelector('.sel-kickoff').value),
+  prediction:r.querySelector('.sel-prediction').value.trim(),
+  odd:num(r.querySelector('.sel-odd').value),
+  explanation:r.querySelector('.sel-explanation').value.trim()||null
+ }));
 }
-
-
 async function saveAnalysis(status){
-
-  if(
-    !currentProfile ||
-    String(currentProfile.role)
-      .toUpperCase() !== "ADMIN"
-  ){
-
-    denyAccess();
-    return;
+ if(analysisBusy)return;
+ const date=$('analysisDate').value,type=$('analysisType').value;
+ const title=$('analysisTitle').value.trim(),rows=collectSelections();
+ if(!date||!title)return showMessage('analysisMessage','La date et le titre sont obligatoires.',false);
+ if(status==='PUBLISHED'&&(!rows.length||rows.some(r=>!r.match_name||!r.prediction)))
+  return showMessage('analysisMessage','Chaque sélection publiée doit avoir un match et un pronostic.',false);
+ if(rows.some(r=>(r.match_name&&!r.prediction)||(!r.match_name&&r.prediction)))
+  return showMessage('analysisMessage','Complète le match et le pronostic de chaque sélection.',false);
+ analysisBusy=true;
+ document.querySelectorAll('.save-analysis').forEach(b=>b.disabled=true);
+ try{
+  showMessage('analysisMessage','Enregistrement en cours...',true);
+  const now=new Date().toISOString();
+  const payload={
+   analysis_date:date,analysis_type:type,title,
+   target_odd:num($('targetOdd').value),
+   total_odd:num($('totalOdd').value),
+   code_1xbet:$('code1xbet').value.trim()||null,
+   code_betwinner:$('codeBetwinner').value.trim()||null,
+   status,result_status:$('resultStatus').value,
+   published_at:status==='PUBLISHED'?now:null,
+   updated_at:now
+  };
+  const {data:a,error}=await db.from('analyses')
+   .upsert(payload,{onConflict:'analysis_date,analysis_type'})
+   .select('id').single();
+  if(error)throw error;
+  currentAnalysisId=a.id;
+  const {error:de}=await db.from('analysis_selections')
+   .delete().eq('analysis_id',a.id);
+  if(de)throw de;
+  const clean=rows.filter(r=>r.match_name&&r.prediction);
+  if(clean.length){
+   const {error:ie}=await db.from('analysis_selections')
+    .insert(clean.map(r=>({...r,analysis_id:a.id})));
+   if(ie)throw ie;
   }
-
-
-  const date =
-    document.getElementById(
-      "analysisDate"
-    ).value;
-
-  const type =
-    document.getElementById(
-      "analysisType"
-    ).value;
-
-  const title =
-    document.getElementById(
-      "analysisTitle"
-    ).value.trim();
-
-  const selections =
-    collectSelections();
-
-
-  if(!date || !title){
-
-    showAnalysisMessage(
-      "La date et le titre sont obligatoires.",
-      false
-    );
-
-    return;
-  }
-
-
-  const invalidSelection =
-    selections.find(
-      item=>
-        !item.match_name ||
-        !item.prediction
-    );
-
-
-  if(
-    status === "PUBLISHED" &&
-    (
-      selections.length === 0 ||
-      invalidSelection
-    )
-  ){
-
-    showAnalysisMessage(
-      "Pour publier, chaque sélection doit avoir au minimum un match et un pronostic.",
-      false
-    );
-
-    return;
-  }
-
-
-  try{
-
-    showAnalysisMessage(
-      status === "PUBLISHED"
-        ? "Publication en cours..."
-        : "Enregistrement en cours...",
-      true
-    );
-
-
-    const payload = {
-
-      analysis_date:date,
-
-      analysis_type:type,
-
-      title:title,
-
-      target_odd:
-        nullableNumber(
-          document.getElementById(
-            "targetOdd"
-          ).value
-        ),
-
-      total_odd:
-        nullableNumber(
-          document.getElementById(
-            "totalOdd"
-          ).value
-        ),
-
-      code_1xbet:
-        document.getElementById(
-          "code1xbet"
-        ).value.trim() || null,
-
-      code_betwinner:
-        document.getElementById(
-          "codeBetwinner"
-        ).value.trim() || null,
-
-      status:status,
-
-      result_status:
-        document.getElementById(
-          "resultStatus"
-        ).value,
-
-      published_at:
-        status === "PUBLISHED"
-          ? new Date().toISOString()
-          : null,
-
-      updated_at:
-        new Date().toISOString()
-
-    };
-
-
-    const {
-      data:analysis,
-      error
-    } =
-      await supabaseClient
-        .from("analyses")
-        .upsert(
-          payload,
-          {
-            onConflict:
-              "analysis_date,analysis_type"
-          }
-        )
-        .select("id")
-        .single();
-
-
-    if(error)
-      throw error;
-
-
-    currentAnalysisId =
-      analysis.id;
-
-
-    const {
-      error:deleteError
-    } =
-      await supabaseClient
-        .from("analysis_selections")
-        .delete()
-        .eq(
-          "analysis_id",
-          currentAnalysisId
-        );
-
-
-    if(deleteError)
-      throw deleteError;
-
-
-    const cleanSelections =
-      selections.filter(
-        item=>
-          item.match_name &&
-          item.prediction
-      );
-
-
-    if(cleanSelections.length){
-
-      const payloadSelections =
-        cleanSelections.map(
-          item=>({
-            ...item,
-            analysis_id:
-              currentAnalysisId
-          })
-        );
-
-
-      const {
-        error:insertError
-      } =
-        await supabaseClient
-          .from("analysis_selections")
-          .insert(payloadSelections);
-
-
-      if(insertError)
-        throw insertError;
-    }
-
-
-    showAnalysisMessage(
-      status === "PUBLISHED"
-        ? "Analyse publiée avec succès."
-        : "Brouillon enregistré avec succès.",
-      true
-    );
-
-
-    await loadDashboard();
-
-
-  }catch(error){
-
-    console.error(
-      "Erreur sauvegarde :",
-      error
-    );
-
-    showAnalysisMessage(
-      "Impossible d'enregistrer l'analyse. Vérifie les autorisations Supabase.",
-      false
-    );
-  }
+  showMessage('analysisMessage',status==='PUBLISHED'
+   ?'Analyse publiée avec succès.':'Brouillon enregistré avec succès.',true);
+ }catch(e){
+  console.error(e);
+  showMessage('analysisMessage','Enregistrement impossible : '+(e.message||'Vérifie les autorisations Supabase.'),false);
+ }finally{
+  analysisBusy=false;
+  document.querySelectorAll('.save-analysis').forEach(b=>b.disabled=false);
+ }
 }
-
-
-function showAnalysisMessage(
-  text,
-  success
-){
-
-  const message =
-    document.getElementById(
-      "analysisMessage"
-    );
-
-  message.textContent =
-    text;
-
-  message.className =
-    "message " +
-    (
-      success
-        ? "success"
-        : "error"
-    );
-}
-
-
-/* ==========================================
-   UTILISATEURS
-========================================== */
-
 async function loadUsers(){
-
-  const container =
-    document.getElementById(
-      "usersList"
-    );
-
-
-  container.innerHTML =
-    '<div class="empty">Chargement...</div>';
-
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .rpc(
-          "couponiq_admin_users"
-        );
-
-
-    if(error)
-      throw error;
-
-
-    allUsers =
-      data || [];
-
-
-    renderUsers(allUsers);
-
-
-  }catch(error){
-
-    console.error(error);
-
-    container.innerHTML =
-      '<div class="empty">Impossible de charger les utilisateurs.</div>';
-  }
+ const el=$('usersList');
+ el.innerHTML='<div class="empty">Chargement...</div>';
+ clearMessage('usersMessage');
+ try{
+  const {data,error}=await db.rpc('couponiq_admin_users');
+  if(error)throw error;
+  allUsers=data||[];
+  filterUsers();
+ }catch(e){
+  console.error(e);
+  el.innerHTML='<div class="empty">Impossible de charger les utilisateurs.</div>';
+  showMessage('usersMessage',e.message||'Erreur de chargement',false);
+ }
 }
-
-
-function renderUsers(users){
-
-  const container =
-    document.getElementById(
-      "usersList"
-    );
-
-
-  container.innerHTML = "";
-
-
-  if(!users.length){
-
-    container.innerHTML =
-      '<div class="empty">Aucun utilisateur trouvé.</div>';
-
-    return;
-  }
-
-
-  users.forEach(user=>{
-
-    const role =
-      String(
-        user.role || "GRATUIT"
-      ).toUpperCase();
-
-
-    const element =
-      document.createElement("div");
-
-    element.className =
-      "user";
-
-
-    const premiumInfo =
-      role === "PREMIUM"
-        ? `
-          <div class="user-meta">
-            Premium :
-            ${formatDate(user.premium_start)}
-            →
-            ${formatDate(user.premium_end)}
-          </div>
-        `
-        : "";
-
-
-    element.innerHTML = `
-      <div class="user-top">
-
-        <div>
-          <div class="user-name">
-            ${escapeHtml(
-              user.full_name ||
-              "Utilisateur CouponIQ"
-            )}
-          </div>
-
-          <div class="user-meta">
-            Inscrit le
-            ${escapeHtml(
-              formatDate(
-                user.created_at
-              )
-            )}
-          </div>
-
-          ${premiumInfo}
-        </div>
-
-        <span class="badge ${
-          role === "PREMIUM"
-            ? "published"
-            : role === "ADMIN"
-              ? "draft"
-              : "missing"
-        }">
-          ${escapeHtml(role)}
-        </span>
-
-      </div>
-    `;
-
-
-    container.appendChild(element);
-  });
-}
-
-
 function filterUsers(){
-
-  const search =
-    document.getElementById(
-      "userSearch"
-    )
-    .value
-    .trim()
-    .toLowerCase();
-
-
-  if(!search){
-
-    renderUsers(allUsers);
-    return;
-  }
-
-
-  const filtered =
-    allUsers.filter(
-      user=>
-        String(
-          user.full_name || ""
-        )
-        .toLowerCase()
-        .includes(search)
-    );
-
-
-  renderUsers(filtered);
+ const q=$('userSearch').value.trim().toLowerCase();
+ renderUsers(allUsers.filter(u=>String(u.full_name||'').toLowerCase().includes(q)));
 }
-
-
-/* ==========================================
-   RESULTATS
-========================================== */
-
+function renderUsers(users){
+ const el=$('usersList');
+ el.replaceChildren();
+ if(!users.length){
+  el.innerHTML='<div class="empty">Aucun utilisateur trouvé.</div>';
+  return;
+ }
+ for(const u of users){
+  const role=String(u.role||'GRATUIT').toUpperCase();
+  const active=role==='PREMIUM'&&(!u.premium_end||new Date(u.premium_end)>new Date());
+  const expired=role==='PREMIUM'&&u.premium_end&&new Date(u.premium_end)<=new Date();
+  const div=document.createElement('div');
+  div.className='user';
+  div.innerHTML=`
+   <div class="user-top">
+    <div>
+     <div class="user-name">${esc(u.full_name||'Utilisateur CouponIQ')}</div>
+     <div class="user-meta">Inscrit le ${esc(dateDisplay(u.created_at))}</div>
+     ${role==='PREMIUM'?`
+      <div class="user-meta">
+       Début : ${esc(dateTimeDisplay(u.premium_start))}<br>
+       Expiration : ${esc(dateTimeDisplay(u.premium_end))}
+      </div>`:''}
+    </div>
+    <span class="badge ${role==='ADMIN'?'draft':active?'published':'missing'}">
+     ${esc(expired?'PREMIUM EXPIRÉ':role)}
+    </span>
+   </div>
+   <div class="user-actions"></div>`;
+  const buttons=div.querySelector('.user-actions');
+  if(role!=='ADMIN'){
+   if(role==='GRATUIT'){
+    addUserButton(buttons,'Activer Premium 30 jours','button-green',
+     ()=>managePremium(u,'ACTIVATE'));
+   }else{
+    addUserButton(buttons,'Renouveler +30 jours','button-green',
+     ()=>managePremium(u,'RENEW'));
+    addUserButton(buttons,'Retirer Premium','button-danger',
+     ()=>managePremium(u,'REMOVE'));
+   }
+  }
+  el.append(div);
+ }
+}
+function addUserButton(parent,label,cls,fn){
+ const b=document.createElement('button');
+ b.className='button '+cls;
+ b.textContent=label;
+ b.onclick=fn;
+ parent.append(b);
+}
+async function managePremium(user,action){
+ if(premiumBusy)return;
+ const name=user.full_name||'cet utilisateur';
+ const prompts={
+  ACTIVATE:`Activer Premium pendant 30 jours pour ${name} ?`,
+  RENEW:`Ajouter 30 jours à l'abonnement de ${name} ?`,
+  REMOVE:`Retirer immédiatement Premium à ${name} ?`
+ };
+ if(!confirm(prompts[action]))return;
+ premiumBusy=true;
+ document.querySelectorAll('.user-actions button').forEach(b=>b.disabled=true);
+ try{
+  const {data,error}=await db.rpc('couponiq_manage_premium',{
+   p_user_id:user.id,p_action:action
+  });
+  if(error)throw error;
+  await loadUsers();
+  showMessage('usersMessage',data||'Modification enregistrée.',true);
+ }catch(e){
+  console.error(e);
+  showMessage('usersMessage','Modification impossible : '+(e.message||'Erreur Supabase'),false);
+ }finally{
+  premiumBusy=false;
+  document.querySelectorAll('.user-actions button').forEach(b=>b.disabled=false);
+ }
+}
 async function loadResults(){
-
-  const container =
-    document.getElementById(
-      "resultsList"
-    );
-
-
-  container.innerHTML =
-    '<div class="empty">Chargement...</div>';
-
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("analyses")
-        .select(
-          "id,analysis_date,analysis_type,title,total_odd,result_status,status"
-        )
-        .eq(
-          "status",
-          "PUBLISHED"
-        )
-        .order(
-          "analysis_date",
-          {
-            ascending:false
-          }
-        )
-        .limit(60);
-
-
-    if(error)
-      throw error;
-
-
-    container.innerHTML = "";
-
-
-    if(!data || !data.length){
-
-      container.innerHTML =
-        '<div class="empty">Aucune analyse publiée.</div>';
-
-      return;
-    }
-
-
-    data.forEach(analysis=>{
-
-      const card =
-        document.createElement("div");
-
-      card.className =
-        "result-card";
-
-
-      const selectId =
-        "result-" +
-        analysis.id;
-
-
-      card.innerHTML = `
-        <h3>
-          ${escapeHtml(
-            analysis.title
-          )}
-        </h3>
-
-        <p>
-          ${escapeHtml(
-            formatDate(
-              analysis.analysis_date
-            )
-          )}
-          · Cote :
-          ${escapeHtml(
-            analysis.total_odd ?? "—"
-          )}
-        </p>
-
-        <select id="${selectId}">
-          <option value="PENDING">
-            Résultat à renseigner
-          </option>
-
-          <option value="WON">
-            VALIDÉ
-          </option>
-
-          <option value="LOST">
-            PERDU
-          </option>
-
-          <option value="CANCELLED">
-            ANNULÉ
-          </option>
-        </select>
-
-        <button
-          class="button button-green"
-          style="margin-top:10px"
-          onclick="saveResult(
-            ${analysis.id},
-            '${selectId}'
-          )">
-          Enregistrer le résultat
-        </button>
-      `;
-
-
-      container.appendChild(card);
-
-
-      document
-        .getElementById(selectId)
-        .value =
-          analysis.result_status ||
-          "PENDING";
-    });
-
-
-  }catch(error){
-
-    console.error(error);
-
-    container.innerHTML =
-      '<div class="empty">Impossible de charger les résultats.</div>';
+ const el=$('resultsList');
+ el.innerHTML='<div class="empty">Chargement...</div>';
+ try{
+  const {data,error}=await db.from('analyses')
+   .select('id,analysis_date,title,total_odd,result_status')
+   .eq('status','PUBLISHED')
+   .order('analysis_date',{ascending:false}).limit(60);
+  if(error)throw error;
+  el.replaceChildren();
+  if(!data?.length){
+   el.innerHTML='<div class="empty">Aucune analyse publiée.</div>';
+   return;
   }
-}
-
-
-async function saveResult(
-  analysisId,
-  selectId
-){
-
-  const value =
-    document.getElementById(
-      selectId
-    ).value;
-
-
-  try{
-
-    const {
-      error
-    } =
-      await supabaseClient
-        .from("analyses")
-        .update({
-          result_status:value,
-          updated_at:
-            new Date().toISOString()
-        })
-        .eq(
-          "id",
-          analysisId
-        );
-
-
-    if(error)
-      throw error;
-
-
-    alert(
-      "Résultat enregistré avec succès."
-    );
-
-
-  }catch(error){
-
-    console.error(error);
-
-    alert(
-      "Impossible d'enregistrer le résultat."
-    );
+  for(const a of data){
+   const card=document.createElement('div');
+   card.className='result-card';
+   const title=document.createElement('h3');
+   title.textContent=a.title;
+   const info=document.createElement('p');
+   info.textContent=`${dateDisplay(a.analysis_date)} · Cote : ${a.total_odd??'—'}`;
+   const sel=document.createElement('select');
+   for(const [v,t] of [
+    ['PENDING','Résultat à renseigner'],
+    ['WON','VALIDÉ'],['LOST','PERDU'],['CANCELLED','ANNULÉ']
+   ]){
+    const opt=document.createElement('option');
+    opt.value=v;opt.textContent=t;sel.append(opt);
+   }
+   sel.value=a.result_status||'PENDING';
+   const btn=document.createElement('button');
+   btn.className='button button-green';
+   btn.style.marginTop='10px';
+   btn.textContent='Enregistrer le résultat';
+   btn.onclick=async()=>{
+    btn.disabled=true;
+    try{
+     const {error}=await db.from('analyses').update({
+      result_status:sel.value,updated_at:new Date().toISOString()
+     }).eq('id',a.id);
+     if(error)throw error;
+     alert('Résultat enregistré avec succès.');
+    }catch(e){
+     console.error(e);
+     alert('Impossible d’enregistrer : '+e.message);
+    }finally{btn.disabled=false}
+   };
+   card.append(title,info,sel,btn);
+   el.append(card);
   }
+ }catch(e){
+  console.error(e);
+  el.innerHTML='<div class="empty">Impossible de charger les résultats.</div>';
+ }
 }
-
-
-/* ==========================================
-   DÉMARRAGE
-========================================== */
-
-initializeAdmin();
-
+init();
 </script>
-
 </body>
 </html>
