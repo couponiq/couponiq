@@ -76,10 +76,19 @@ textarea{resize:vertical;min-height:85px}
 .access-denied{max-width:400px;text-align:center}
 .access-denied h2{margin-bottom:10px}
 .access-denied p{color:var(--muted);line-height:1.6;margin-bottom:18px}
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:760px;background:#080d13;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);z-index:30}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:760px;background:#080d13;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(5,1fr);z-index:30}
 .nav{padding:13px 5px;border:0;background:transparent;color:#748191;font-size:10px;font-weight:700}
 .nav.active{color:var(--green)}
 @media(min-width:600px){.stats{grid-template-columns:repeat(3,1fr)}.content{padding:24px 20px}}
+.pay-item{background:#080d13;border:1px solid var(--border);border-radius:14px;padding:15px;margin-bottom:12px}
+.pay-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.pay-head strong{font-size:14px}.pay-meta{font-size:12px;color:var(--muted);line-height:1.9;overflow-wrap:anywhere}
+.pay-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+.pay-proof{width:100%;max-height:340px;object-fit:contain;border-radius:10px;margin-top:12px;background:#111a25}
+.pay-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:15px}
+.pay-tabs button{padding:11px 5px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:#fff;font-size:11px;font-weight:700}
+.pay-tabs button.selected{border-color:var(--green);color:var(--green)}
+@media(max-width:380px){.nav{font-size:9px;padding:13px 2px}}
 </style>
 </head>
 <body>
@@ -127,6 +136,7 @@ textarea{resize:vertical;min-height:85px}
 <div class="quick-grid">
 <button class="quick" onclick="openPage('analyses')">Créer une analyse</button>
 <button class="quick" onclick="openPage('users')">Gérer les utilisateurs</button>
+<button class="quick" onclick="openPage('payments')">Vérifier les paiements</button>
 <button class="quick" onclick="openPage('results')">Gérer les résultats</button>
 <button class="quick" onclick="openPage('partners')">Gérer les partenaires</button>
 </div>
@@ -184,6 +194,20 @@ textarea{resize:vertical;min-height:85px}
 <div id="usersList"><div class="empty">Chargement...</div></div>
 </div>
 </section>
+<section id="payments" class="page">
+<h2 class="title">Demandes de paiement</h2>
+<p class="subtitle">Vérifie la réception réelle des transferts avant de valider un abonnement de 30 jours.</p>
+<div class="section">
+<div class="pay-tabs">
+<button type="button" data-pay-filter="PENDING" class="selected" onclick="setPaymentFilter('PENDING')">En attente</button>
+<button type="button" data-pay-filter="APPROVED" onclick="setPaymentFilter('APPROVED')">Validés</button>
+<button type="button" data-pay-filter="REJECTED" onclick="setPaymentFilter('REJECTED')">Refusés</button>
+</div>
+<button class="button button-dark" onclick="loadPayments()" style="margin-bottom:13px">Actualiser les demandes</button>
+<div id="paymentsMessage" class="message"></div>
+<div id="paymentsList"><div class="empty">Chargement...</div></div>
+</div>
+</section>
 <section id="results" class="page">
 <h2 class="title">Résultats</h2>
 <p class="subtitle">Renseigne manuellement les résultats des analyses publiées.</p>
@@ -199,6 +223,7 @@ textarea{resize:vertical;min-height:85px}
 <button class="nav active" data-page="dashboard" onclick="openPage('dashboard')">Tableau</button>
 <button class="nav" data-page="analyses" onclick="openPage('analyses')">Analyses</button>
 <button class="nav" data-page="users" onclick="openPage('users')">Utilisateurs</button>
+<button class="nav" data-page="payments" onclick="openPage('payments')">Paiements</button>
 <button class="nav" data-page="results" onclick="openPage('results')">Résultats</button>
 </nav>
 </div>
@@ -206,7 +231,7 @@ textarea{resize:vertical;min-height:85px}
 <script>
 const SUPABASE_URL='https://zkgdhjjvgfpwpwoevieb.supabase.co';
 const SUPABASE_KEY='sb_publishable_UCwOPMZn1sJaj3vbDu3Zzw_fZBu2V-6';
-let db=null,currentUser=null,allUsers=[],currentAnalysisId=null,loadingAnalysisKey=0,analysisBusy=false,premiumBusy=false;
+let db=null,currentUser=null,allUsers=[],currentAnalysisId=null,loadingAnalysisKey=0,analysisBusy=false,premiumBusy=false,paymentBusy=false,paymentFilter='PENDING',allPayments=[];
 const $=id=>document.getElementById(id);
 
 function esc(v){
@@ -272,6 +297,7 @@ function openPage(id){
  window.scrollTo(0,0);
  if(id==='dashboard')loadDashboard();
  if(id==='users')loadUsers();
+  if(id==='payments')loadPayments();
  if(id==='results')loadResults();
  if(id==='analyses')loadExistingAnalysis();
 }
@@ -590,6 +616,102 @@ async function loadResults(){
   el.innerHTML='<div class="empty">Impossible de charger les résultats.</div>';
  }
 }
+
+/* PAIEMENTS MANUELS — validation réservée à l'administrateur */
+function setPaymentFilter(status){
+ paymentFilter=status;
+ document.querySelectorAll('[data-pay-filter]').forEach(b=>b.classList.toggle('selected',b.dataset.payFilter===status));
+ renderPayments();
+}
+async function loadPayments(){
+ const list=$('paymentsList');
+ list.innerHTML='<div class="empty">Chargement des demandes...</div>';
+ clearMessage('paymentsMessage');
+ try{
+  const {data,error}=await db.rpc('couponiq_admin_payments');
+  if(error)throw error;
+  allPayments=(data||[]).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  renderPayments();
+ }catch(e){
+  console.error('Chargement paiements',e);
+  list.innerHTML='<div class="empty">Impossible de charger les demandes.</div>';
+  showMessage('paymentsMessage',e.message||'Erreur Supabase',false);
+ }
+}
+function renderPayments(){
+ const list=$('paymentsList');
+ list.replaceChildren();
+ const rows=allPayments.filter(p=>p.status===paymentFilter);
+ if(!rows.length){list.innerHTML='<div class="empty">Aucune demande dans cette catégorie.</div>';return;}
+ const methodNames={ORANGE:'Orange Money',MOOV:'Moov Money',WAVE:'Wave'};
+ for(const p of rows){
+  const item=document.createElement('div');item.className='pay-item';
+  const label=p.status==='PENDING'?'EN ATTENTE':p.status==='APPROVED'?'VALIDÉ':'REFUSÉ';
+  const badge=p.status==='PENDING'?'draft':p.status==='APPROVED'?'published':'missing';
+  item.innerHTML=`
+   <div class="pay-head"><strong>${esc(p.full_name)}</strong><span class="badge ${badge}">${label}</span></div>
+   <div class="pay-meta">
+    Moyen : <strong>${esc(methodNames[p.payment_method]||p.payment_method)}</strong><br>
+    Montant déclaré : <strong>${Number(p.amount||0).toLocaleString('fr-FR')} F CFA</strong><br>
+    Numéro expéditeur : <strong>${esc(p.payer_phone)}</strong><br>
+    Demande n° ${esc(p.id)} · ${esc(dateTimeDisplay(p.created_at))}<br>
+    ${p.reviewed_at?'Traitée le '+esc(dateTimeDisplay(p.reviewed_at))+'<br>':''}
+   </div>
+   <div class="pay-proof-container"></div>
+   <div class="pay-actions"></div>`;
+  const proof=item.querySelector('.pay-proof-container');
+  if(p.screenshot_path){
+   const button=document.createElement('button');
+   button.className='button button-dark';button.style.marginTop='12px';button.textContent='Voir la capture du paiement';
+   button.onclick=async()=>{
+    button.disabled=true;
+    try{
+     const {data,error}=await db.storage.from('payment-proofs').createSignedUrl(p.screenshot_path,60);
+     if(error)throw error;
+     const img=document.createElement('img');img.className='pay-proof';img.alt='Capture du paiement envoyée par le client';
+     img.src=data.signedUrl;
+     proof.querySelectorAll('img').forEach(x=>x.remove());proof.append(img);
+     button.textContent='Actualiser la capture';
+    }catch(e){alert('Capture indisponible : '+(e.message||'Erreur de chargement'));}
+    finally{button.disabled=false;}
+   };
+   proof.append(button);
+  }else{
+   const text=document.createElement('div');text.className='pay-meta';text.textContent='Aucune capture fournie (facultative).';proof.append(text);
+  }
+  if(p.status==='PENDING'){
+   const actions=item.querySelector('.pay-actions');
+   const approve=document.createElement('button');approve.className='button button-green';approve.textContent='Valider';
+   approve.onclick=()=>reviewPayment(p,true);
+   const reject=document.createElement('button');reject.className='button button-danger';reject.textContent='Refuser';
+   reject.onclick=()=>reviewPayment(p,false);
+   actions.append(approve,reject);
+  }
+  list.append(item);
+ }
+}
+async function reviewPayment(p,approve){
+ if(paymentBusy)return;
+ const question=approve
+  ?`As-tu vérifié la réception réelle de ${p.amount} F CFA par ${p.full_name} (${p.payer_phone}) ? Valider activera 30 jours Premium.`
+  :`Refuser la demande de paiement de ${p.full_name} ?`;
+ if(!confirm(question))return;
+ paymentBusy=true;
+ document.querySelectorAll('.pay-actions button').forEach(b=>b.disabled=true);
+ try{
+  const {data,error}=await db.rpc('couponiq_review_payment',{p_payment_id:p.id,p_approve:approve});
+  if(error)throw error;
+  await loadPayments();
+  showMessage('paymentsMessage',data|| (approve?'Paiement validé.':'Paiement refusé.'),true);
+ }catch(e){
+  console.error('Validation paiement',e);
+  showMessage('paymentsMessage','Opération impossible : '+(e.message||'Erreur Supabase'),false);
+ }finally{
+  paymentBusy=false;
+  document.querySelectorAll('.pay-actions button').forEach(b=>b.disabled=false);
+ }
+}
+
 init();
 </script>
 </body>
