@@ -991,6 +991,8 @@ main{padding:0 15px}
 .ciq-method{display:flex;align-items:center;gap:12px;width:100%;padding:13px;background:var(--card2);color:white;border:1px solid var(--border);border-radius:14px;margin-bottom:10px;cursor:pointer;text-align:left}
 .ciq-method strong{flex:1}.ciq-logo{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:12px;font-size:13px;font-weight:900;color:#fff}
 .ciq-logo.orange{background:#f77b00}.ciq-logo.moov{background:#0765bb}.ciq-logo.wave{background:#267bfa}
+.ciq-logo{overflow:hidden;flex-shrink:0}
+.ciq-logo img{display:block;width:100%;height:100%;object-fit:contain;border-radius:10px}
 .ciq-number{text-align:center;color:var(--green);font-size:28px;font-weight:900;letter-spacing:1px;padding:15px 0}
 .ciq-warning{background:rgba(255,173,66,.08);border:1px solid rgba(255,173,66,.3);color:#ffcb85;padding:14px;border-radius:12px;font-size:12px;line-height:1.6;margin:15px 0}
 .ciq-label{display:block;font-size:11px;font-weight:800;margin:13px 0 7px}.ciq-input{width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--card2);color:white;font-size:13px}
@@ -3260,13 +3262,13 @@ document.addEventListener("visibilitychange",function(){
    PAIEMENT MANUEL COUPONIQ
 ================================ */
 const CIQ_METHODS={
- ORANGE:{name:"Orange Money",number:"75863037",display:"75 86 30 37",label:"OM",css:"orange"},
- MOOV:{name:"Moov Money",number:"03247949",display:"03 24 79 49",label:"MM",css:"moov"},
- WAVE:{name:"Wave",number:"75863037",display:"75 86 30 37",label:"W",css:"wave"}
+ ORANGE:{name:"Orange Money",number:"+22675863037",display:"+226 75 86 30 37",image:"orange-money.png",css:"orange"},
+ MOOV:{name:"Moov Money",number:"+22603247949",display:"+226 03 24 79 49",image:"moov-money.png",css:"moov"},
+ WAVE:{name:"Wave",number:"+22675863037",display:"+226 75 86 30 37",image:"wave.png",css:"wave"}
 };
 let ciqSelectedMethod=null;
 let ciqPaymentBusy=false;
-function ciqLogo(method){const m=CIQ_METHODS[method];return `<span class="ciq-logo ${m.css}" aria-hidden="true">${m.label}</span>`;}
+function ciqLogo(method){const m=CIQ_METHODS[method];return `<span class="ciq-logo ${m.css}"><img src="${m.image}" alt="Logo ${m.name}" loading="lazy"></span>`;}
 function ciqRenderMethods(){
  ciqSelectedMethod=null;
  const box=document.getElementById('ciqPaymentContent');
