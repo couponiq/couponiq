@@ -980,6 +980,23 @@ main{padding:0 15px}
 @media(min-width:800px){
   .app,.bottom-nav{max-width:620px}
 }
+
+/* PAIEMENT COUPONIQ */
+.ciq-card{background:var(--card);border:1px solid var(--border);border-radius:19px;padding:18px;margin:12px 0}
+.ciq-title{font-size:23px;font-weight:900;margin-bottom:10px}
+.ciq-sub{color:var(--muted);font-size:12px;line-height:1.6;margin-bottom:15px}
+.ciq-price{text-align:center;border:1px solid rgba(0,237,115,.3);border-radius:16px;background:rgba(0,237,115,.07);padding:20px;margin:14px 0 20px}
+.ciq-price strong{display:block;font-size:30px;color:var(--green)}
+.ciq-price small{color:var(--muted)}
+.ciq-method{display:flex;align-items:center;gap:12px;width:100%;padding:13px;background:var(--card2);color:white;border:1px solid var(--border);border-radius:14px;margin-bottom:10px;cursor:pointer;text-align:left}
+.ciq-method strong{flex:1}.ciq-logo{width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:12px;font-size:13px;font-weight:900;color:#fff}
+.ciq-logo.orange{background:#f77b00}.ciq-logo.moov{background:#0765bb}.ciq-logo.wave{background:#267bfa}
+.ciq-number{text-align:center;color:var(--green);font-size:28px;font-weight:900;letter-spacing:1px;padding:15px 0}
+.ciq-warning{background:rgba(255,173,66,.08);border:1px solid rgba(255,173,66,.3);color:#ffcb85;padding:14px;border-radius:12px;font-size:12px;line-height:1.6;margin:15px 0}
+.ciq-label{display:block;font-size:11px;font-weight:800;margin:13px 0 7px}.ciq-input{width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--card2);color:white;font-size:13px}
+.ciq-button{width:100%;border:0;border-radius:12px;background:var(--green);color:#021009;font-size:13px;font-weight:900;padding:14px;cursor:pointer;margin-top:10px}
+.ciq-button:disabled{opacity:.55}.ciq-secondary{width:100%;border:1px solid var(--border);border-radius:12px;background:var(--card2);color:white;font-size:12px;font-weight:800;padding:13px;cursor:pointer;margin-top:10px}
+.ciq-status{background:var(--card2);border:1px solid var(--border);border-radius:13px;padding:14px;margin:10px 0;font-size:12px;line-height:1.7}.ciq-error{color:#ff8d97;font-size:12px;margin:10px 0}.ciq-success{color:var(--green);font-size:12px;margin:10px 0}
 </style>
 </head>
 
@@ -1268,7 +1285,7 @@ CouponIQ Premium
 
 </div>
 
-<button class="primary-button" onclick="premiumPaymentComingSoon()">
+<button class="primary-button" onclick="ciqOpenPayment()">
 Débloquer toutes les analyses
 </button>
 
@@ -1504,7 +1521,7 @@ COMPTE GRATUIT
 
 </div>
 
-<div class="profile-option" onclick="unlockPremium()">
+<div class="profile-option" onclick="ciqOpenSubscription()">
 <span>Mon abonnement</span><span>›</span>
 </div>
 
@@ -1718,6 +1735,17 @@ J'ai confirmé mon email
 
 </section>
 
+
+<!-- PAIEMENT PREMIUM -->
+<section id="ciqPayment" class="page">
+<div class="back" onclick="ciqRenderMethods();openPage('ciqPayment')">← Choisir un moyen de paiement</div>
+<div id="ciqPaymentContent"></div>
+</section>
+<section id="ciqSubscription" class="page">
+<div class="back" onclick="openPage('profile')">← Retour au profil</div>
+<div class="page-header"><h1>Mon abonnement</h1><p>Consultez votre abonnement et vos demandes de paiement.</p></div>
+<div class="ciq-card" id="ciqSubscriptionContent">Chargement...</div>
+</section>
 </main>
 </div>
 
@@ -2072,39 +2100,11 @@ function requestAnalysis(type){
 ================================ */
 
 function unlockPremium(){
-
-  if(!currentUser){
-
-    openPage("authRequired");
-    return;
-
-  }
-
-  if(hasPremiumAccess()){
-
-    openPage("analyses");
-    return;
-
-  }
-
-  openPage("premiumRequired");
+  if(!currentUser){openPage("authRequired");return;}
+  if(hasPremiumAccess()){openPage("analyses");return;}
+  ciqOpenPayment();
 }
-
-
-function premiumPaymentComingSoon(){
-
-  if(hasPremiumAccess()){
-
-    openPage("analyses");
-    return;
-
-  }
-
-  alert(
-    "Le système de paiement Premium sera connecté à une prochaine étape."
-  );
-}
-
+function premiumPaymentComingSoon(){ciqOpenPayment();}
 
 /* ==============================
    ANALYSES SUPABASE
@@ -3254,6 +3254,95 @@ document.addEventListener("visibilitychange",function(){
     loadCurrentProfile();
   }
 });
+
+
+/* ==============================
+   PAIEMENT MANUEL COUPONIQ
+================================ */
+const CIQ_METHODS={
+ ORANGE:{name:"Orange Money",number:"75863037",display:"75 86 30 37",label:"OM",css:"orange"},
+ MOOV:{name:"Moov Money",number:"03247949",display:"03 24 79 49",label:"MM",css:"moov"},
+ WAVE:{name:"Wave",number:"75863037",display:"75 86 30 37",label:"W",css:"wave"}
+};
+let ciqSelectedMethod=null;
+let ciqPaymentBusy=false;
+function ciqLogo(method){const m=CIQ_METHODS[method];return `<span class="ciq-logo ${m.css}" aria-hidden="true">${m.label}</span>`;}
+function ciqRenderMethods(){
+ ciqSelectedMethod=null;
+ const box=document.getElementById('ciqPaymentContent');
+ box.innerHTML=`<div class="ciq-card"><h1 class="ciq-title">Activer CouponIQ Premium</h1><p class="ciq-sub">Choisissez votre moyen de paiement pour accéder aux analyses complètes.</p><div class="ciq-price"><strong>1 000 F CFA</strong><small>Abonnement de 30 jours</small></div><h3 style="font-size:15px;margin-bottom:14px">Choisissez votre moyen de paiement</h3>${Object.entries(CIQ_METHODS).map(([key,m])=>`<button class="ciq-method" data-method="${key}">${ciqLogo(key)}<strong>${m.name}</strong><span style="color:var(--green)">›</span></button>`).join('')}<p class="ciq-sub">Activation après vérification du transfert par l'administrateur.</p></div>`;
+ box.querySelectorAll('[data-method]').forEach(b=>b.addEventListener('click',()=>ciqRenderTransfer(b.dataset.method)));
+}
+function ciqRenderTransfer(method){
+ if(!CIQ_METHODS[method])return;
+ ciqSelectedMethod=method;
+ const m=CIQ_METHODS[method];
+ const box=document.getElementById('ciqPaymentContent');
+ box.innerHTML=`<div class="ciq-card"><h1 class="ciq-title">Paiement ${m.name}</h1><div class="ciq-price"><strong>1 000 F CFA</strong><small>30 jours Premium</small></div><div style="display:flex;align-items:center;gap:12px;justify-content:center">${ciqLogo(method)}<strong>${m.name}</strong></div><p class="ciq-sub" style="text-align:center;margin-top:17px">Envoyez 1 000 F CFA au numéro suivant :</p><div class="ciq-number">${m.display}</div><button type="button" class="ciq-button" id="ciqCopy">Copier le numéro</button><div class="ciq-warning"><strong>Effectuez d'abord votre paiement de 1 000 F CFA vers le numéro indiqué.</strong><br><br>Une fois le transfert effectué, remplissez le formulaire ci-dessous pour demander l'activation de votre abonnement Premium.</div><form id="ciqForm"><h3 style="font-size:16px;margin:15px 0">Confirmer mon paiement</h3><label class="ciq-label" for="ciqName">Nom complet</label><input class="ciq-input" id="ciqName" maxlength="150" autocomplete="name" required placeholder="Votre nom et prénom"><label class="ciq-label" for="ciqPhone">Numéro utilisé pour effectuer le paiement</label><input class="ciq-input" id="ciqPhone" type="tel" maxlength="25" autocomplete="tel" required placeholder="Exemple : 75 00 00 00"><label class="ciq-label" for="ciqProof">Capture du paiement (facultative)</label><input class="ciq-input" id="ciqProof" type="file" accept="image/jpeg,image/png,image/webp"><p class="ciq-sub" style="margin-top:8px">JPG, PNG ou WEBP — maximum 5 Mo.</p><label style="display:flex;gap:9px;font-size:11px;line-height:1.5;margin:15px 0"><input type="checkbox" id="ciqConfirm" required><span>Je confirme avoir déjà effectué le transfert de 1 000 F CFA vers le numéro indiqué.</span></label><div id="ciqMessage" role="status"></div><button class="ciq-button" id="ciqSubmit" type="submit">J'ai effectué le paiement</button></form><button class="ciq-secondary" type="button" id="ciqChange">Choisir un autre moyen de paiement</button></div>`;
+ document.getElementById('ciqCopy').addEventListener('click',async function(){try{await navigator.clipboard.writeText(m.number);this.textContent='Numéro copié !';}catch(e){this.textContent=m.display;}});
+ document.getElementById('ciqChange').addEventListener('click',ciqRenderMethods);
+ document.getElementById('ciqForm').addEventListener('submit',ciqSubmitPayment);
+}
+function ciqMessage(text,ok=false){const e=document.getElementById('ciqMessage');if(e){e.className=ok?'ciq-success':'ciq-error';e.textContent=text;}}
+async function ciqOpenPayment(){
+ if(!currentUser){openPage('authRequired');return;}
+ if(hasPremiumAccess()){openPage('analyses');return;}
+ if(!supabaseClient){alert('Connexion momentanément indisponible.');return;}
+ try{
+  const r=await supabaseClient.from('payment_requests').select('id').eq('user_id',currentUser.id).eq('status','PENDING').limit(1);
+  if(r.error)throw r.error;
+  if(r.data.length){await ciqOpenSubscription();return;}
+  ciqRenderMethods();openPage('ciqPayment');
+ }catch(e){console.error(e);alert('Impossible de vérifier votre abonnement. Réessayez.');}
+}
+async function ciqSubmitPayment(event){
+ event.preventDefault();if(ciqPaymentBusy)return;
+ if(!currentUser||!supabaseClient){ciqMessage('Veuillez vous connecter.');return;}
+ const name=document.getElementById('ciqName').value.trim(),phone=document.getElementById('ciqPhone').value.trim(),file=document.getElementById('ciqProof').files[0];
+ if(name.length<2||name.length>150){ciqMessage('Nom complet invalide.');return;}
+ if(phone.length<8||phone.length>25){ciqMessage('Numéro de téléphone invalide.');return;}
+ if(!document.getElementById('ciqConfirm').checked){ciqMessage('Confirmez le transfert avant de continuer.');return;}
+ const extensions={'image/jpeg':'jpg','image/png':'png','image/webp':'webp'};
+ if(file&&(!extensions[file.type]||file.size>5*1024*1024)){ciqMessage('Capture invalide : JPG, PNG ou WEBP, 5 Mo maximum.');return;}
+ ciqPaymentBusy=true;const btn=document.getElementById('ciqSubmit');btn.disabled=true;btn.textContent='Envoi en cours...';let path=null;
+ try{
+  const pending=await supabaseClient.from('payment_requests').select('id').eq('user_id',currentUser.id).eq('status','PENDING').limit(1);
+  if(pending.error)throw pending.error;
+  if(pending.data.length)throw new Error('Vous avez déjà une demande en attente.');
+  if(file){path=currentUser.id+'/'+crypto.randomUUID()+'.'+extensions[file.type];const upload=await supabaseClient.storage.from('payment-proofs').upload(path,file,{contentType:file.type,upsert:false});if(upload.error)throw upload.error;}
+  const result=await supabaseClient.rpc('couponiq_submit_payment',{p_method:ciqSelectedMethod,p_full_name:name,p_payer_phone:phone,p_screenshot_path:path});
+  if(result.error)throw result.error;
+  await ciqOpenSubscription();
+ }catch(e){console.error(e);ciqMessage(e.message||"Impossible d'envoyer votre demande.");}
+ finally{ciqPaymentBusy=false;btn.disabled=false;btn.textContent="J'ai effectué le paiement";}
+}
+async function ciqOpenSubscription(){
+ if(!currentUser){openPage('authRequired');return;}
+ openPage('ciqSubscription');const box=document.getElementById('ciqSubscriptionContent');box.textContent='Chargement de votre abonnement...';
+ try{
+  await loadCurrentProfile();
+  const result=await supabaseClient.from('payment_requests').select('id,payment_method,amount,status,created_at,screenshot_path').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(10);
+  if(result.error)throw result.error;
+  const requests=result.data||[];let html='';
+  if(hasPremiumAccess())html+=`<h2 class="ciq-title">Abonnement Premium actif</h2><div class="ciq-status"><strong style="color:var(--green)">Accès actif</strong><br>${getCurrentRole()==='ADMIN'?'Accès administrateur.':'Expiration : '+escapeHtml(formatPremiumExpiry())}</div><button class="ciq-button" id="ciqGoAnalyses">Accéder aux analyses</button>`;
+  else html+=`<h2 class="ciq-title">CouponIQ Premium</h2><div class="ciq-price"><strong>1 000 F CFA</strong><small>30 jours</small></div>`;
+  if(requests.length){html+='<h3 style="font-size:15px;margin:16px 0">Mes demandes de paiement</h3>';
+   for(const r of requests){const status=r.status==='APPROVED'?'Paiement validé':r.status==='REJECTED'?'Paiement refusé':'En attente de vérification';const color=r.status==='APPROVED'?'var(--green)':r.status==='REJECTED'?'#ff8d97':'#ffcb85';const date=new Date(r.created_at).toLocaleString('fr-FR',{timeZone:'Africa/Ouagadougou'});html+=`<div class="ciq-status"><strong style="color:${color}">${status}</strong><br>${escapeHtml(CIQ_METHODS[r.payment_method]?.name||'Paiement')} — ${Number(r.amount)||1000} F CFA<br><span style="color:var(--muted)">${escapeHtml(date)}</span>${r.screenshot_path?`<br><button class="ciq-secondary" data-proof="${r.id}">Voir ma capture</button>`:''}</div>`;}
+  }else html+='<p class="ciq-sub">Aucune demande de paiement envoyée.</p>';
+  const pending=requests.some(r=>r.status==='PENDING');
+  if(pending)html+='<div class="ciq-warning">Votre demande est en attente de vérification. L’abonnement sera activé uniquement après validation du paiement.</div>';
+  else if(!hasPremiumAccess())html+='<button class="ciq-button" id="ciqStartPayment">Débloquer toutes les analyses</button>';
+  box.innerHTML=html;
+  box.querySelector('#ciqStartPayment')?.addEventListener('click',ciqOpenPayment);
+  box.querySelector('#ciqGoAnalyses')?.addEventListener('click',()=>openPage('analyses'));
+  box.querySelectorAll('[data-proof]').forEach(button=>button.addEventListener('click',async()=>{
+   const r=requests.find(x=>String(x.id)===button.dataset.proof);if(!r?.screenshot_path)return;
+   const signed=await supabaseClient.storage.from('payment-proofs').createSignedUrl(r.screenshot_path,60);
+   if(signed.error){alert("Impossible d'afficher la capture.");return;}
+   window.open(signed.data.signedUrl,'_blank','noopener,noreferrer');
+  }));
+ }catch(e){console.error(e);box.innerHTML='<p class="ciq-error">Impossible de charger votre abonnement.</p><button class="ciq-secondary" onclick="ciqOpenSubscription()">Réessayer</button>';}
+}
 
 </script>
 
