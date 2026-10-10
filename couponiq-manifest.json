@@ -1,0 +1,18 @@
+
+{
+  "name": "CouponIQ — Analyses sportives",
+  "short_name": "CouponIQ",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#05080d",
+  "theme_color": "#00ed73",
+  "icons": [
+    {
+      "src": "logo-ouponiq.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
