@@ -1000,6 +1000,10 @@ main{padding:0 15px}
 .ciq-button:disabled{opacity:.55}.ciq-secondary{width:100%;border:1px solid var(--border);border-radius:12px;background:var(--card2);color:white;font-size:12px;font-weight:800;padding:13px;cursor:pointer;margin-top:10px}
 .ciq-status{background:var(--card2);border:1px solid var(--border);border-radius:13px;padding:14px;margin:10px 0;font-size:12px;line-height:1.7}.ciq-error{color:#ff8d97;font-size:12px;margin:10px 0}.ciq-success{color:var(--green);font-size:12px;margin:10px 0}
 </style>
+<link rel="manifest" href="couponiq-manifest.json">
+<meta name="theme-color" content="#05080d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CouponIQ">
 </head>
 
 <body>
@@ -3348,5 +3352,16 @@ async function ciqOpenSubscription(){
 
 </script>
 
+<script>
+// Préparation PWA : le service worker permet la réception des notifications push.
+// L'abonnement push et l'envoi seront configurés à l'étape suivante.
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./couponiq-sw.js').catch(err =>
+      console.warn('CouponIQ : service worker indisponible', err)
+    );
+  });
+}
+</script>
 </body>
 </html>
