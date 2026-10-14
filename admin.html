@@ -406,6 +406,30 @@ async function loadExistingAnalysis(){
   if(key===loadingAnalysisKey)showMessage('analysisMessage','Impossible de charger cette analyse.',false);
  }
 }
+/* Notifications push : uniquement après une première publication réussie. */
+async function notifyPublishedAnalysis(title, type, date){
+  const {data:{session},error:sessionError}=await db.auth.getSession();
+  if(sessionError || !session?.access_token)throw new Error('Session administrateur expirée.');
+  const names={confidence:'Confiance du jour',combined:'Combiné du jour',challenge:'Challenge 50'};
+  const response=await fetch(SUPABASE_URL+'/functions/v1/couponiq-push',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'Authorization':'Bearer '+session.access_token,
+      'apikey':SUPABASE_KEY
+    },
+    body:JSON.stringify({
+      title:'Nouvelle analyse CouponIQ',
+      body:(names[type]||title)+' du '+date+' est disponible dans CouponIQ.'
+    })
+  });
+  const payload=await response.json().catch(()=>({}));
+  if(!response.ok || !payload.success){
+    throw new Error(payload.error||('Erreur serveur '+response.status));
+  }
+  return payload;
+}
+
 function collectSelections(){
  return [...document.querySelectorAll('.selection')].map((r,i)=>({
   position:i+1,
@@ -426,8 +450,16 @@ async function saveAnalysis(status){
   return showMessage('analysisMessage','Chaque sélection publiée doit avoir un match et un pronostic.',false);
  if(rows.some(r=>(r.match_name&&!r.prediction)||(!r.match_name&&r.prediction)))
   return showMessage('analysisMessage','Complète le match et le pronostic de chaque sélection.',false);
- analysisBusy=true;
- document.querySelectorAll('.save-analysis').forEach(b=>b.disabled=true);
+  // Vérifie l'état précédent pour ne pas renvoyer une notification à chaque correction.
+  let previouslyPublished=false;
+  if(status==='PUBLISHED'){
+    const {data:previous,error:previousError}=await db.from('analyses')
+      .select('status').eq('analysis_date',date).eq('analysis_type',type).maybeSingle();
+    if(previousError)return showMessage('analysisMessage','Vérification impossible : '+previousError.message,false);
+    previouslyPublished=previous?.status==='PUBLISHED';
+  }
+  analysisBusy=true;
+  document.querySelectorAll('.save-analysis').forEach(b=>b.disabled=true);
  try{
   showMessage('analysisMessage','Enregistrement en cours...',true);
   const now=new Date().toISOString();
@@ -455,8 +487,22 @@ async function saveAnalysis(status){
     .insert(clean.map(r=>({...r,analysis_id:a.id})));
    if(ie)throw ie;
   }
-  showMessage('analysisMessage',status==='PUBLISHED'
-   ?'Analyse publiée avec succès.':'Brouillon enregistré avec succès.',true);
+   if(status==='PUBLISHED' && !previouslyPublished){
+     showMessage('analysisMessage','Analyse publiée. Envoi des notifications en cours...',true);
+     try{
+       const push=await notifyPublishedAnalysis(title,type,date);
+       showMessage('analysisMessage',
+         'Analyse publiée. Notifications envoyées : '+push.sent+'. Échecs : '+push.failed+'.',true);
+     }catch(pushError){
+       console.error('Notification non envoyée',pushError);
+       showMessage('analysisMessage',
+         'Analyse publiée, mais notification non envoyée : '+pushError.message,false);
+     }
+   }else{
+     showMessage('analysisMessage',status==='PUBLISHED'
+       ?'Analyse mise à jour avec succès (sans nouvelle notification).'
+       :'Brouillon enregistré avec succès.',true);
+   }
  }catch(e){
   console.error(e);
   showMessage('analysisMessage','Enregistrement impossible : '+(e.message||'Vérifie les autorisations Supabase.'),false);
