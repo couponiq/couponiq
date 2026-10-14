@@ -1535,8 +1535,8 @@ COMPTE GRATUIT
 <span>Parrainage & affiliation</span><span>›</span>
 </div>
 
-<div class="profile-option">
-<span>Notifications</span><span>›</span>
+<div class="profile-option" onclick="ciqToggleNotifications()" role="button" tabindex="0" onkeydown="if(event.key==='Enter')ciqToggleNotifications()">
+<span id="ciqNotificationLabel">Activer les notifications</span><span id="ciqNotificationStatus">›</span>
 </div>
 
 <div class="profile-option">
@@ -3353,13 +3353,94 @@ async function ciqOpenSubscription(){
 </script>
 
 <script>
+// Notifications Web Push CouponIQ : consentement explicite de l'utilisateur.
+const CIQ_VAPID_PUBLIC_KEY = "BAzYebaOryMeqdiXeyvJMMlxwHOX7L7EfekeLISP02tL9jkN9I1g0-QfAq6si0g6SRzztkeoptNLc8aBFslk9ls";
+
+function ciqBase64ToUint8Array(base64) {
+  const normalized = base64.replace(/-/g, '+').replace(/_/g, '/');
+  const raw = atob(normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '='));
+  return Uint8Array.from(raw, char => char.charCodeAt(0));
+}
+
+async function ciqUpdateNotificationStatus() {
+  const label = document.getElementById('ciqNotificationLabel');
+  const status = document.getElementById('ciqNotificationStatus');
+  if (!label || !status) return;
+  if (!('Notification' in window) || !('serviceWorker' in navigator) || !('PushManager' in window)) {
+    label.textContent = 'Notifications non disponibles sur cet appareil';
+    status.textContent = '—';
+    return;
+  }
+  try {
+    const registration = await navigator.serviceWorker.getRegistration('./');
+    const subscription = registration ? await registration.pushManager.getSubscription() : null;
+    label.textContent = subscription ? 'Désactiver les notifications' : 'Activer les notifications';
+    status.textContent = subscription ? 'Activées' : '›';
+  } catch (error) {
+    console.warn('CouponIQ : état des notifications indisponible', error);
+  }
+}
+
+async function ciqToggleNotifications() {
+  if (!currentUser || !supabaseClient) {
+    alert('Connectez-vous à votre compte pour activer les notifications.');
+    openPage('login');
+    return;
+  }
+  if (!window.isSecureContext || !('Notification' in window) ||
+      !('serviceWorker' in navigator) || !('PushManager' in window)) {
+    alert('Les notifications ne sont pas disponibles ici. Sur iPhone, ajoutez CouponIQ à l’écran d’accueil puis ouvrez-le depuis son icône.');
+    return;
+  }
+  try {
+    const registration = await navigator.serviceWorker.register('./couponiq-sw.js');
+    const existing = await registration.pushManager.getSubscription();
+    if (existing) {
+      const { error } = await supabaseClient.from('push_subscriptions')
+        .delete().eq('endpoint', existing.endpoint).eq('user_id', currentUser.id);
+      if (error) throw error;
+      await existing.unsubscribe();
+      await ciqUpdateNotificationStatus();
+      alert('Notifications désactivées sur cet appareil.');
+      return;
+    }
+    if (Notification.permission === 'denied') {
+      alert('Les notifications sont bloquées dans les paramètres du navigateur. Autorisez-les pour CouponIQ, puis réessayez.');
+      return;
+    }
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      alert('Autorisation des notifications non accordée.');
+      return;
+    }
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: ciqBase64ToUint8Array(CIQ_VAPID_PUBLIC_KEY)
+    });
+    const { error } = await supabaseClient.from('push_subscriptions').upsert({
+      user_id: currentUser.id,
+      endpoint: subscription.endpoint,
+      subscription: subscription.toJSON()
+    }, { onConflict: 'endpoint' });
+    if (error) {
+      await subscription.unsubscribe();
+      throw error;
+    }
+    await ciqUpdateNotificationStatus();
+    alert('Notifications activées sur cet appareil !');
+  } catch (error) {
+    console.error('CouponIQ : erreur notifications', error);
+    alert('Impossible d’activer les notifications : ' + (error?.message || 'erreur inconnue'));
+  }
+}
+
 // Préparation PWA : le service worker permet la réception des notifications push.
 // L'abonnement push et l'envoi seront configurés à l'étape suivante.
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./couponiq-sw.js').catch(err =>
-      console.warn('CouponIQ : service worker indisponible', err)
-    );
+    navigator.serviceWorker.register('./couponiq-sw.js')
+      .then(() => ciqUpdateNotificationStatus())
+      .catch(err => console.warn('CouponIQ : service worker indisponible', err));
   });
 }
 </script>
